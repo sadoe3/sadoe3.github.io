@@ -190,7 +190,7 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 3 # amount of posts to show on the hompage (this works only on index.html)
+paginate: 5 # amount of posts to show on the hompage (this works only on index.html)
 paginate_path: /page:num/
 timezone: Asia/Seoul
 
