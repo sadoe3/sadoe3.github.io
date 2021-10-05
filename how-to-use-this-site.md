@@ -15,4 +15,5 @@ includes 폴더에 있는 nav_list_main 파일을 통해 커스터마이즈 할 
 
 
 ### index.html에 있는 Quick-Start Guide 지우는 방법
-data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다.
+data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
+이때, Quick-Start Guide 대신 다른 url과 title을 설정하여, 원하는 navigation button을 만드는 것도 가능합니다.
