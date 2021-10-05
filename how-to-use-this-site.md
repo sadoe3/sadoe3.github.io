@@ -9,5 +9,10 @@ markdown syntax는 [이곳](https://www.markdownguide.org/basic-syntax/)을 참�
 includes 폴더에 있는 nav_list_main 파일을 통해 커스터마이즈 할 수 있습니다. <br>
 이후, 해당 파일을 sidebar.html에 적용시켜야 하는데, 이러한 방법은 [사이드바 사용법](https://ansohxxn.github.io/blog/category/)을 읽어보면 쉽게 적용할 수 있습니다.
 
+
 ### 폰트 바꾸기
 [이곳](https://oilmlio.com/blog/Change-the-GitHub-Blog-Font-RIDIBatang/)을 참고하시면 됩니다.
+
+
+### index.html에 있는 Quick-Start Guide 지우는 방법
+data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다.
