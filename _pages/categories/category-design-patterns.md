@@ -1,9 +1,9 @@
 ---
 title: "Design Patterns"
 layout: archive
-permalink: categories/dp
+permalink: categories/design-patterns
 author_profile: true
 ---
 
-{% assign posts = site.categories.dp %}
+{% assign posts = site.categories.design-patterns %}
 {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
