@@ -47,4 +47,12 @@ local address에 저장된 폴더를 지우면 됩니다. <br>
 
 
 ### Github 블로그에 이미지를 올리는 방법
-[이곳](https://afsdzvcx123.tistory.com/entry/GitHub-%EA%B9%83%ED%97%88%EB%B8%8C-GitHub-%EA%B9%83-%ED%97%88%EB%B8%8C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%98%AC%EB%A6%AC%EA%B8%B0)을 참고하면 됩니다.
+[이곳](https://ahribori.com/article/5a03bcfd6c9eef13d882e29a)을 참고하면 됩니다. <br>
+간단하게 설명하자면 <br>
+1. 이미지 업로드 용 repository를 private visibility로 만든다.
+2. Issues 선택, create issue 선택
+3. Drag & Drop으로 이미지 업로드
+4. 그러면 자연스럽게 markdown syntax로 되어있는 업로드된 사진의 링크가 나오게됨
+5. 해당 링크들을 복사해서 포스트할 곳에 붙여넣는다.
+6. 조심해야할 점은 링크를 복사한 후 꼭 br tag를 써줘야한다 (그렇지 않으면, 사진이 링크로 출력됨)
+7. 이후 해당 issue를 open 하고, 바로 close 해주면 된다.
