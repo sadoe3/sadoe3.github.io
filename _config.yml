@@ -104,7 +104,7 @@ author:
   name             : "KangIn Choi"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Have a nice day :D"
-  location         : "Somewhere, South Korea"
+  location         : "South Korea"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
