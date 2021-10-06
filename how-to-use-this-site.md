@@ -47,4 +47,4 @@ local address에 저장된 폴더를 지우면 됩니다. <br>
 
 
 ### Github 블로그에 이미지를 올리는 방법
-[이곳]https://afsdzvcx123.tistory.com/entry/GitHub-%EA%B9%83%ED%97%88%EB%B8%8C-GitHub-%EA%B9%83-%ED%97%88%EB%B8%8C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%98%AC%EB%A6%AC%EA%B8%B0)을 참고하면 됩니다.
+[이곳](https://afsdzvcx123.tistory.com/entry/GitHub-%EA%B9%83%ED%97%88%EB%B8%8C-GitHub-%EA%B9%83-%ED%97%88%EB%B8%8C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%98%AC%EB%A6%AC%EA%B8%B0)을 참고하면 됩니다.
