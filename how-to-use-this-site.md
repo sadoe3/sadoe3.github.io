@@ -44,3 +44,7 @@ data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
 ### VS Code에서 clone 된 repository 제거 방법
 local address에 저장된 폴더를 지우면 됩니다. <br>
 이후, 다시 사용하고 싶으면, clone을 동일한 방법으로 진행하면 됩니다.
+
+
+### Github 블로그에 이미지를 올리는 방법
+[이곳]https://afsdzvcx123.tistory.com/entry/GitHub-%EA%B9%83%ED%97%88%EB%B8%8C-GitHub-%EA%B9%83-%ED%97%88%EB%B8%8C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%98%AC%EB%A6%AC%EA%B8%B0)을 참고하면 됩니다.
