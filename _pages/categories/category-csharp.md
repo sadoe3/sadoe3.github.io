@@ -3,6 +3,7 @@ title: "C# Programming"
 layout: archive
 permalink: categories/csharp
 author_profile: true
+sidebar_main: true
 ---
 
 {% assign posts = site.categories.csharp %}
