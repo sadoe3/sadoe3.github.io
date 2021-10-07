@@ -1,5 +1,5 @@
 ---
-title: "Game Development Knowledge"
+title: "Knowledge regarding Game Development"
 layout: archive
 permalink: categories/game-dev-knowledge
 author_profile: true
