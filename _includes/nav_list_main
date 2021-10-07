@@ -82,6 +82,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "game-dev-knowledge" %}
+                        <li><a href="/categories/game-dev-knowledge" class="">Knowledge regarding Game Dev ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
       </li>
   </ul>
 </nav>
