@@ -1,0 +1,18 @@
+---
+title: "proper title"
+
+categories:
+    - proper-category
+
+tags:
+    - [tag]
+
+toc: true
+toc_label: "목차"
+toc_sticky: true
+
+date: current_date
+---
+
+
+- [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
