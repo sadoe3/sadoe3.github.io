@@ -3,6 +3,7 @@ title: "Unreal Engine 4 Development"
 layout: archive
 permalink: categories/unreal-engine-4
 author_profile: true
+sidebar_main: true
 ---
 
 {% assign posts = site.categories.unreal-engine-4 %}
