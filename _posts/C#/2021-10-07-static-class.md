@@ -11,7 +11,7 @@ toc: true
 toc_label: "목차"
 toc_sticky: true
 
-date: 2021-10-06
+date: 2021-10-07
 ---
 
 ## Static classes
