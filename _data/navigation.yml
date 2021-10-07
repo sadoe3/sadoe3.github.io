@@ -2,6 +2,8 @@
 main:
   - title: "Home"
     url: https://sadoe3.github.io/
+  - title: "Categories"
+    url: https://sadoe3.github.io/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
