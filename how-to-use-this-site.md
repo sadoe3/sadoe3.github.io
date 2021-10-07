@@ -22,7 +22,7 @@ data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
 
 ### index.html에 있는 Categories 버튼 추가하는 방법
 github에서는 자동적으로 category별로 포스트를 정렬해준 페이지를 제공합니다. <br>
-해당 페이지의 주소는 {사이트주소}/categories 인데, 이 주소를 추가하면 되는 것입니다. <br>
+해당 페이지의 주소는 {사이트주소}/categories/ 인데, 이 주소를 추가하면 되는 것입니다. <br>
 즉, 위에서 나온 방법을 적용하여, data 폴더에 있는 navigation.yml 파일에 새로운 title을 Categories로하고, 새로운 url을 해당 주소로 설정해주시면 됩니다.
 
 
