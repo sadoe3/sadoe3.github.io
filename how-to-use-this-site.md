@@ -20,7 +20,7 @@ data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
 이때, Quick-Start Guide 대신 다른 url과 title을 설정하여, 원하는 navigation button을 만드는 것도 가능합니다.
 
 
-### github 블로그를 VS Code에 clone 하는 방법
+### Github 블로그를 VS Code에 clone 하는 방법
 1. git for windows를 설치
 2. git cmd를 열어서 git config --global user.name "username"을 입력
 3. git config --global user.email "email"을 입력
@@ -31,7 +31,7 @@ data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
 - 주의 할 점: 가끔씩 github관련 terminal을 작성해야 하는 경우가 있다.
 - 이러한 경우, git cmd에서 진행하는 것이 아니라, vs code에 있는 terminal에서 진행을 해야한다.
 
-### clone된 repository를 VS Code에서 작성 후, 변경사항을 적용시키는 방법
+### Clone된 repository를 VS Code에서 작성 후, 변경사항을 적용시키는 방법
 1. 변경사항을 저장
 2. vs code 왼쪽 하단에 synchronize changes 선택
 3. vs code 왼쪽 부분에 source control 선택
