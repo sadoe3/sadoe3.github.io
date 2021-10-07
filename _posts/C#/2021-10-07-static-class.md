@@ -20,7 +20,7 @@ date: 2021-10-06
 - 그렇기 때문에, static class를 사용하기 위해선, class의 이름을 이용하여 마치 class를 object처럼 사용하는 느낌으로 static class를 사용하면 된다.
 
 ```
-ClassName.MehtodName();     // static class usage example
+ClassName.MethodName();     // static class usage example
 ```
 
 
