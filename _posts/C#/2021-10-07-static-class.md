@@ -5,7 +5,7 @@ categories:
     - csharp
 
 tags:
-    - [Programming Language, C#, C]
+    - [Programming Language, C#, Static Class]
 
 toc: true
 toc_label: "목차"
