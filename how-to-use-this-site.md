@@ -27,7 +27,8 @@ data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
 5. 알맞는 repository를 선택 (이때, sign-in과정이 진행됨)
 6. 이후, clone된 repository를 저장할 local address를 선택
 7. Done
-
+- 주의 할 점: 가끔씩 github관련 terminal을 작성해야 하는 경우가 있다.
+- 이러한 경우, git cmd에서 진행하는 것이 아니라, vs code에 있는 terminal에서 진행을 해야한다.
 
 ### clone된 repository를 VS Code에서 작성 후, 변경사항을 적용시키는 방법
 1. 변경사항을 저장
@@ -39,7 +40,6 @@ data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
 7. 이후, 위쪽 버튼들 중 ... 버튼을 선택후, push to 선택
 8. 알맞은 repository를 선택
 9. Done
-10. 만약 적용중에 버그가 생기면, 그냥 아래 나오는 제거방법으로 repository를 지우고, github에서 vscode에서 하지 못한 일을 진행한 후, 다시 clone을 진행시키면 됩니다.
 
 ### VS Code에서 clone 된 repository 제거 방법
 local address에 저장된 폴더를 지우면 됩니다. <br>
@@ -56,4 +56,16 @@ local address에 저장된 폴더를 지우면 됩니다. <br>
 5. 해당 링크들을 복사해서 포스트할 곳에 붙여넣는다.
 6. 조심해야할 점은 링크를 복사한 후 꼭 br tag를 써줘야한다 (그렇지 않으면, 사진이 링크로 출력됨)
 7. 이후 해당 issue를 open 하고, 바로 close 해주면 된다.
-8. 주의할점 (가끔씩 vscode에서는 이미지를 포함한 포스팅이 업로드 안될수도있다. 이때에는 그냥 github에서 직접 포스팅해주면 된다.
+
+
+### VS Code에서 push를 하는데, git error: failed to push some refs to remote 라는 오류가 발생하는 경우
+- 이러한 경우 [이곳](https://stackoverflow.com/questions/24114676/git-error-failed-to-push-some-refs-to-remote)을 참고하자.
+- 다음은 간단한 해결 방법이다.
+1. VS Code의 terminal을 실행한다. 
+ - Terminal -> New Terminal
+2. 다음 코드를 작성한다.
+ ```
+git pull --rebase
+git push
+ ```
+3. 그렇게 되면, 오류가 발생했던 변경사항이 성공적으로 push가 된다.
