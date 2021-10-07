@@ -39,7 +39,7 @@ data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다. <br>
 7. 이후, 위쪽 버튼들 중 ... 버튼을 선택후, push to 선택
 8. 알맞은 repository를 선택
 9. Done
-
+10. 만약 적용중에 버그가 생기면, 그냥 아래 나오는 제거방법으로 repository를 지우고, github에서 vscode에서 하지 못한 일을 진행한 후, 다시 clone을 진행시키면 됩니다.
 
 ### VS Code에서 clone 된 repository 제거 방법
 local address에 저장된 폴더를 지우면 됩니다. <br>
