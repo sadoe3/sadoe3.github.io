@@ -1,4 +1,4 @@
-# Github.io 사용방법
+# Github.io 사용하는 방법
 
 ### 전반적인 사용법
 - minimal-mistakes의 전반적인 사용법은 [이곳](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)을 참고하면 됩니다.
