@@ -8,7 +8,7 @@ markdown syntax는 [이곳](https://www.markdownguide.org/basic-syntax/)을 참�
 ### 사이드바 커스터마이즈
 includes 폴더에 있는 nav_list_main 파일을 통해 커스터마이즈 할 수 있습니다. <br>
 이후, 해당 파일을 sidebar.html에 적용시켜야 하는데, 이러한 방법은 [사이드바 사용법](https://ansohxxn.github.io/blog/category/)을 읽어보면 쉽게 적용할 수 있습니다. <br>
-해당 사이트를 참고하게 되면, sidebar_main: true 값을 적용해야 sidebar가 적용된다.
+해당 사이트를 참고하여 naming을 동일하게 , sidebar_main: true 값을 적용해야 sidebar가 적용된다.
 
 
 ### 폰트 바꾸기
