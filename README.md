@@ -6,6 +6,7 @@
 - config 파일에서 layout값을 single로 설정해야 toc(table of contents)를 사용할수 있습니다.
 - 블로그 포스트는 [이곳](https://ansohxxn.github.io/blog/posting/)을 참고하여, markdown 파일로 작성하면 됩니다.
 - markdown syntax는 [이곳](https://www.markdownguide.org/basic-syntax/)을 참고하시면 됩니다.
+- 다른 markdown 관련 궁금증은 googling을 통해 해결할 수 도 있습니다.
 - README.md 파일을 만들면, github.io repository를 들어왔을 때, 해당 repository에 대한 설명에 관한 내용을, README.md 파일을 통해 보여줄 수 있다
  
  
