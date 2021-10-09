@@ -1,3 +1,5 @@
+# Github.io 사용방법
+
 ### 전반적인 사용법
 - minimal-mistakes의 전반적인 사용법은 [이곳](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)을 참고하면 됩니다.
 - config 파일을 수정할때, url과 baseurl값은 설정하지 않아야 config값이 적용됩니다.
