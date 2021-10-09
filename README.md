@@ -60,7 +60,7 @@
 ### Github 블로그에 코드를 올리는 방법
 1. backtick(\`)문자 3개를 연속으로 쓴 후, 원하는 프로그래밍 언어를 적은 다음 다음 줄부터 원하는 코드를 복사 및 붙여넣기 합니다.
 2. 다 붙여넣었으면, 마지막 코드 다음 줄에 backtick(\`)문자 3개를 연속으로 적음으로써 code block를 끝내시면 됩니다.
-- 예) c++ code block
+- 예) c++ code block <br>
 \`\`\`c++
 ~~ // this is the sample code
 \`\`\`
