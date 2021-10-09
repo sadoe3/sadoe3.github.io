@@ -103,7 +103,7 @@ analytics:
 author:
   name             : "KangIn Choi"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Have a nice day\n:D"
+  bio              : "Have a nice day <br> :D"
   location         : "South Korea"
   links:
     - label: "Email"
