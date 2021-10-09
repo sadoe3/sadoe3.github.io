@@ -9,6 +9,11 @@
 - README.md 파일을 만들면, github.io repository를 들어왔을 때, 해당 repository에 대한 설명에 관한 내용을, README.md 파일을 통해 보여줄 수 있다
  
  
+### jekyll-theme의 색상 변경하는 방법
+1. \_sass -> minimal-mistakes -> skins -> 에서 알맞은 스킨 파일을 선택합니다.
+2. 이후 변경하고자 하는 것의 hex값을 원하는 색의 hex값으로 변경하면 됩니다.
+ 
+ 
 ### 사이드바 커스터마이즈
 - includes 폴더에 있는 nav_list_main 파일을 통해 커스터마이즈 할 수 있습니다.
 - 이후, 해당 파일을 sidebar.html에 적용시켜야 하는데, 이러한 방법은 [사이드바 사용법](https://ansohxxn.github.io/blog/category/)을 읽어보면 쉽게 적용할 수 있습니다.
@@ -20,7 +25,7 @@
 
 
 ### index.html에 있는 Quick-Start Guide 버튼 지우는 방법
-- data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다.
+- \_data 폴더에 있는 navigation.yml 파일에서 지우면 됩니다.
 - 이때, Quick-Start Guide 대신 다른 url과 title을 설정하여, 원하는 navigation button을 만드는 것도 가능합니다.
 
 
@@ -41,6 +46,7 @@
 - 주의 할 점: 가끔씩 github관련 terminal을 작성해야 하는 경우가 있다.
 - 이러한 경우, git cmd에서 진행하는 것이 아니라, vs code에 있는 terminal에서 진행을 해야한다.
 
+
 ### Clone된 repository를 VS Code에서 작성 후, 변경사항을 적용시키는 방법
 1. 변경사항을 저장
 2. vs code 왼쪽 하단에 synchronize changes 선택
@@ -52,11 +58,14 @@
 8. 알맞은 repository를 선택
 9. Done
 
+
 ### VS Code에서 clone 된 repository 제거 방법
 - local address에 저장된 폴더를 지우면 됩니다. 
 
+
 ### VS Code에서 clone 된 repository 현재 변경 상태로 sync 맞추는 방법
 - 위에서 알려준 respository 제거방법을 이용한 후, 해당 repository를 다시 clone하면 됩니다.
+
 
 ### Github 블로그에 코드를 올리는 방법
 1. backtick(\`)문자 3개를 연속으로 쓴 후, 원하는 프로그래밍 언어를 적은 다음 다음 줄부터 원하는 코드를 복사 및 붙여넣기 합니다.
@@ -66,9 +75,6 @@
 ~~ // this is the sample code <br>
 \`\`\` <br>
 
-### jekyll-theme의 색상 변경하는 방법
-1. \_sass -> minimal-mistakes -> skins -> 에서 알맞은 스킨 파일을 선택합니다.
-2. 이후 변경하고자 하는 것의 hex값을 원하는 색의 hex값으로 변경하면 됩니다.
 
 ### Github 블로그에 이미지를 올리는 방법
 [이곳](https://ahribori.com/article/5a03bcfd6c9eef13d882e29a)을 참고하면 됩니다. <br>
@@ -80,6 +86,7 @@
 5. 해당 링크들을 복사해서 포스트할 곳에 붙여넣는다.
 6. 조심해야할 점은 링크를 복사한 후 꼭 br tag를 써줘야한다 (그렇지 않으면, 사진이 링크로 출력됨)
 7. 이후 해당 issue를 open 하고, 바로 close 해주면 된다.
+
 
 ### VS Code에서 push를 하는데, git error: failed to push some refs to remote 라는 오류가 발생하는 경우
 - 이러한 경우 [이곳](https://stackoverflow.com/questions/24114676/git-error-failed-to-push-some-refs-to-remote)을 참고하자.
