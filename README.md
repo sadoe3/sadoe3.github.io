@@ -66,6 +66,10 @@
 ~~ // this is the sample code <br>
 \`\`\` <br>
 
+### jekyll-theme의 색상 변경하는 방법
+1. \_sass -> minimal-mistakes -> skins -> 에서 알맞은 스킨 파일을 선택합니다.
+2. 이후 변경하고자 하는 것의 hex값을 원하는 색의 hex값으로 변경하면 됩니다.
+
 ### Github 블로그에 이미지를 올리는 방법
 [이곳](https://ahribori.com/article/5a03bcfd6c9eef13d882e29a)을 참고하면 됩니다. <br>
 간단하게 설명하자면 <br>
