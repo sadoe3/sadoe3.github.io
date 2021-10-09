@@ -53,8 +53,13 @@
 
 ### VS Code에서 clone 된 repository 제거 방법
 - local address에 저장된 폴더를 지우면 됩니다. 
-- 이후, 다시 사용하고 싶으면, clone을 동일한 방법으로 진행하면 됩니다.
 
+### VS Code에서 clone 된 repository 현재 변경 상태로 sync 맞추는 방법
+- 위에서 알려준 respository 제거방법을 이용한 후, 해당 repository를 다시 clone하면 됩니다.
+
+### Github 블로그에 코드를 올리는 방법
+1. backtick(\`)문자 3개를 연속으로 쓴 후, 원하는 프로그래밍 언어를 적은 다음 다음 줄부터 원하는 코드를 복사 및 붙여넣기 합니다.
+2. 다 붙여넣었으면, 마지막 코드 다음 줄에 backtick(\`)문자 3개를 연속으로 적음으로써 code block를 끝내시면 됩니다.
 
 ### Github 블로그에 이미지를 올리는 방법
 [이곳](https://ahribori.com/article/5a03bcfd6c9eef13d882e29a)을 참고하면 됩니다. <br>
@@ -66,7 +71,6 @@
 5. 해당 링크들을 복사해서 포스트할 곳에 붙여넣는다.
 6. 조심해야할 점은 링크를 복사한 후 꼭 br tag를 써줘야한다 (그렇지 않으면, 사진이 링크로 출력됨)
 7. 이후 해당 issue를 open 하고, 바로 close 해주면 된다.
-
 
 ### VS Code에서 push를 하는데, git error: failed to push some refs to remote 라는 오류가 발생하는 경우
 - 이러한 경우 [이곳](https://stackoverflow.com/questions/24114676/git-error-failed-to-push-some-refs-to-remote)을 참고하자.
