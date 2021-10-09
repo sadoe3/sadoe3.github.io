@@ -5,6 +5,7 @@
 - config 파일을 수정할때, url과 baseurl값은 설정하지 않아야 config값이 적용됩니다.
 - 블로그 포스트는 [이곳](https://ansohxxn.github.io/blog/posting/)을 참고하여, markdown 파일로 작성하면 됩니다.
 - markdown syntax는 [이곳](https://www.markdownguide.org/basic-syntax/)을 참고하시면 됩니다.
+- README.md 파일을 만들면, github.io repository를 들어왔을 때, 해당 repository에 대한 설명에 관한 내용을, README.md 파일을 통해 보여줄 수 있다
  
  
 ### 사이드바 커스터마이즈
