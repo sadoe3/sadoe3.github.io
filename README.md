@@ -75,6 +75,7 @@
 \`\`\`c++ <br>
 ~~ // this is the sample code <br>
 \`\`\` <br>
+- 주의할점: code block안에 new line을 넣으려고 enter를 이용하면 code block이 적용되지 않게됩니다. (즉, code block에는 빈공간이 없어야함)
 
 ### 공백을 포스트에 올리는 방법
 - pre 태그를 이용하면 모든 공백을 포스트 할 수 있다.
