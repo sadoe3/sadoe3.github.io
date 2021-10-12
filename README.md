@@ -42,8 +42,9 @@
 3. git config --global user.email "email"을 입력
 4. VS Code을 실행 후, F1을 누른 후, git: clone을 검색하여 enter를 입력
 5. 알맞는 repository를 선택 (이때, sign-in과정이 진행됨)
-6. 이후, clone된 repository를 저장할 local address를 선택
-7. Done
+ - 이때, repository의 경로는 github에서 해당 블로그의 repository 주소를 복사에서 붙여넣기를 하면 
+7. 이후, clone된 repository를 저장할 local address를 선택
+8. Done
 - 주의 할 점: 가끔씩 github관련 terminal을 작성해야 하는 경우가 있다.
 - 이러한 경우, git cmd에서 진행하는 것이 아니라, vs code에 있는 terminal에서 진행을 해야한다.
 
