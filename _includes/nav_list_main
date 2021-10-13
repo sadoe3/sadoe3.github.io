@@ -40,15 +40,22 @@
         <span class="nav__sub-title">Game Engines</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "unreal-engine-4" %}
-                        <li><a href="/categories/unreal-engine-4" class="">Unreal Engine 4 ({{category[1].size}})</a></li>
+                    {% if category[0] == "ue4-self" %}
+                        <li><a href="/categories/ue4-self" class="">UE4 through self-study ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "unity" %}
-                        <li><a href="/categories/unity" class="">Unity ({{category[1].size}})</a></li>
+                    {% if category[0] == "unity-lecture" %}
+                        <li><a href="/categories/unity-lecture" class="">Unity through lectures ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "unity-self" %}
+                        <li><a href="/categories/unity-self" class="">Unity through self-study ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
