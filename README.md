@@ -1,5 +1,12 @@
 # Github.io 사용하는 방법
 
+### 블로그 만드는 방법
+1. 원하는 Jekyll Theme을 결정하기
+  - 다양한 theme들이 있는데, 보통 minimal-mistakes를 자주 사용함
+2.  해당 theme의 repository를 fork하기
+3.  fork된 repository의 이름을 username.github.io 로 바꿔 주기
+4.  이후, 아래에 적어둔 전반적인 사용법을 참고하여, 블로그를 자신이 원하는대로 customize해주면 됨
+
 ### 전반적인 사용법
 - minimal-mistakes의 전반적인 사용법은 [이곳](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)을 참고하면 됩니다.
 - config 파일을 수정할때, url과 baseurl값은 설정하지 않아야 config값이 적용됩니다.
