@@ -29,6 +29,7 @@
 - 이후, 해당 파일을 sidebar.html에 적용시켜야 하는데, 이러한 방법은 [사이드바 사용법](https://ansohxxn.github.io/blog/category/)을 읽어보면 쉽게 적용할 수 있습니다.
 - 해당 사이트를 참고하여 naming을 동일하게 , sidebar_main: true 값을 적용해야 sidebar가 적용된다.
 
+
 ## comment 구현하기
 - 가이드에 나와있는 내용인데, 간단하게 설명하자면 다음과 같습니다.
 - 다양한 방식으로 comment를 구현할 수 있지만, 저는 utterances를 사용하는 방식을 정리하겠습니다.
@@ -38,6 +39,11 @@
 4. issue_term의 값은 "pathname"을 적용해주시면 됩니다.
     - 이때. pathname은 따로 변경하지말고, 영어단어 있는 그대로 적으시면 됩니다.
 6. 이렇게 하시면 comment를 사용할 수 있게 됩니다.
+
+
+### 방문자수 구현하기
+- [이곳](https://choiseonjae.github.io/jekyll/hits/)을 참고하시면 됩니다.
+- 추가적인 설명을 하자면, 방문자수를 출력하는 코드는 사이드바 출력하는 코드와 <\\div> 사이에 넣어주시면 됩니다.
 
 ### 폰트 바꾸기
 - [이곳](https://oilmlio.com/blog/Change-the-GitHub-Blog-Font-RIDIBatang/)을 참고하시면 됩니다.
