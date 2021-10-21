@@ -30,7 +30,7 @@
 - 해당 사이트를 참고하여 naming을 동일하게 , sidebar_main: true 값을 적용해야 sidebar가 적용된다.
 
 
-## comment 구현하기
+### comment 구현하기
 - 가이드에 나와있는 내용인데, 간단하게 설명하자면 다음과 같습니다.
 - 다양한 방식으로 comment를 구현할 수 있지만, 저는 utterances를 사용하는 방식을 정리하겠습니다.
 1. \_config.yml 파일에서 만약 새로운 줄을 추가하지 않았다면, 26번째 줄에 repository값을 설정할 수 있는 코드가 있을 것입니다.
