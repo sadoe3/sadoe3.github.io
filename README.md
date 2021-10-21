@@ -43,8 +43,10 @@
 
 ### 방문자수 구현하기
 - [이곳](https://choiseonjae.github.io/jekyll/hits/)을 참고하시면 됩니다.
-- 추가적인 설명을 하자면, HITS 페이지에서 링크를 생성할 때, 그냥 URL만 복사해서 사용하지말고, URL복사 후에 아이콘이나 TITLE같은 것들도 설정해준 후에 링크를 사용해주시는 것이 좋습니다.
-- 또한, 방문자수를 출력하는 코드는 사이드바 출력하는 코드와 <\\div> 사이에 넣어주시면 됩니다.
+- HITS 페이지에서 링크를 생성할 때, 그냥 URL만 복사해서 사용하지말고, URL복사 후에 아이콘이나 TITLE같은 것들도 설정해준 후에 링크를 사용해주시는 것이 좋습니다.
+- 방문자수를 출력하는 코드는 siderbar.html 파일에서 사이드바 출력하는 코드와 <\\div> 사이에 넣어주시면 됩니다.
+- 방문자수를 사용자가 클릭하는 것을 원하지 않을 경우, a tag를 없애주시면 됩니다.
+- 위에서 언급한 참고용 블로그를 보시면 img tag용 style을 위한 class를 만들었는데, 굳이 코드의 길이를 늘리고 싶지 않으시다면, style tag를 지우시고, style tag에 있던 값들을 img tag의 style attribute의 값에 넣어주시면 됩니다. 
 
 ### 폰트 바꾸기
 - [이곳](https://oilmlio.com/blog/Change-the-GitHub-Blog-Font-RIDIBatang/)을 참고하시면 됩니다.
