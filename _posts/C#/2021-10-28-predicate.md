@@ -34,5 +34,14 @@ while(.../* some condition */) {
     // if you don't want to pass any argument, then you need to type empty parenthesis () instead of the name of the element
 }
 ```
+- 다음은 2줄 이상의 body를 갖고 있는 predicate을 사용하는 예제이다.
+```c#
+List<string> tempList = new List<string> { "A", "B", "C" };
+Console("Find A: " + tempList.Find(x => 
+    { 
+        ... // some codes
+        return x == "A"
+    });
+```
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
