@@ -17,6 +17,7 @@ date: 2021-10-28
 ## Predicate
 - Predicate이란 입력값이 없거나 하나이고, return 값이 bool type인 delegate이다.
 - Predicate은 lambda expression으로 표현되며, 보통 generic collection과 함께 쓰인다.
+    - 참고로, generic collection을 사용하기 위해선 System.Collections.Generic namespace를 using 해줘야 한다.
 - 사용방법은 predicate을 argument로 보내야 할때, 다음과 같이 사용하면 된다.
 ```c#
 // example of using predicate in C#
