@@ -14,7 +14,7 @@
 - config 파일에서 layout값을 single로 설정해야 toc(table of contents)를 사용할수 있습니다.
   - toc_sticky 값을 true로 설정하면, scroll을 내려도 toc가 따라 내려오게 설정할 수 있습니다.
 - 블로그 포스트는 [이곳](https://ansohxxn.github.io/blog/posting/)을 참고하여, markdown 파일로 작성하면 됩니다.
-- markdown syntax는 [이곳](https://www.markdownguide.org/basic-syntax/)을 참고하시면 됩니다.
+- markdown syntax는 [이곳](https://simhyejin.github.io/2016/06/30/Markdown-syntax/)을 참고하시면 됩니다.
 - 다른 궁금증은 googling을 통해 해결할 수 도 있습니다.
 - README.md 파일을 만들면, github.io repository를 들어왔을 때, 해당 repository에 대한 설명에 관한 내용을, README.md 파일을 통해 보여줄 수 있다
  
@@ -97,6 +97,8 @@
 
 
 ### Github 블로그에 코드를 올리는 방법
+- 인라인 코드는 backtick(\`)문자 1개로 감싸면 됩니다.
+    - ex: It is the `Inline Code Block`
 1. backtick(\`)문자 3개를 연속으로 쓴 후, 원하는 프로그래밍 언어를 적은 다음 다음 줄부터 원하는 코드를 복사 및 붙여넣기 합니다.
 2. 다 붙여넣었으면, 마지막 코드 다음 줄에 backtick(\`)문자 3개를 연속으로 적음으로써 code block를 끝내시면 됩니다.
 - 예) c++ code block <br>
