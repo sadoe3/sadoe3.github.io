@@ -123,7 +123,7 @@
 
 ### VS Code에서 push를 하는데, git error: failed to push some refs to remote 라는 오류가 발생하는 경우
 - 이러한 경우 [이곳](https://stackoverflow.com/questions/24114676/git-error-failed-to-push-some-refs-to-remote)을 참고하자.
-- 즉, `pull`을 진행뒤, `push`를 해주면 쉽게 해결할 수 있다.
+- 즉, `pull`을 진행한 뒤, `push`를 해주면 쉽게 해결할 수 있다.
 - terminal에서 다음과 같은 codes를 작성해주면 된다.
  ```
 git pull --rebase
