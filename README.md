@@ -63,37 +63,33 @@
 - 즉, 위에서 나온 방법을 적용하여, data 폴더에 있는 navigation.yml 파일에 새로운 title을 Categories로하고, 새로운 url을 해당 주소로 설정해주시면 됩니다.
 
 
-### Github 블로그를 VS Code에 clone 하는 방법
-1. git for windows를 설치
-2. git cmd를 열어서 git config --global user.name "username"을 입력
-3. git config --global user.email "email"을 입력
-4. VS Code을 실행 후, F1을 누른 후, git: clone을 검색하여 enter를 입력
-5. 알맞는 repository를 선택 (이때, sign-in과정이 진행됨)
- - 이때, repository의 경로는 github에서 해당 블로그의 repository 주소를 복사에서 붙여넣기를 하면 
-7. 이후, clone된 repository를 저장할 local address를 선택
-8. Done
-- 주의 할 점: 가끔씩 github관련 terminal을 작성해야 하는 경우가 있다.
-- 이러한 경우, git cmd에서 진행하는 것이 아니라, vs code에 있는 terminal에서 진행을 해야한다.
+### Github 블로그를 clone 하는 방법
+- 일반적인 git 사용법과 동일하게 `clone`을 해주면 됩니다.
+- git을 사용하는 방법은 [이곳](https://sadoe3.github.io/etc/chatper2/)에 정리하였습니다.
+    - 필요하실때 참고하세요.
+- 즉, terminal에서 진행해도 되고, VS Code에서 진행해도 됩니다.
+- 만약 terminal을 이용한다면, `cd`를 이용하여 cloning될 repository가 들어갈 folder의 위치로 이동하고,
+- 이후 `git clone url`을 이용하여 cloning 해주면 됩니다.
+    - 여기서 url은 GitHub에 있는 repository에서 code button을 누르면 확인할 수 있습니다.
+    - 보통 cloning을 한뒤, `git remote add origin url`을 이용하여, origin을 해당 url로 설정하여, 이후에는 `git clone origin`으로 진행합니다.
 
 
-### Clone된 repository를 VS Code에서 작성 후, 변경사항을 적용시키는 방법
-1. 변경사항을 저장
-2. vs code 왼쪽 하단에 synchronize changes 선택
-3. vs code 왼쪽 부분에 source control 선택
-4. changes category에 왼쪽 부분에 있는 +(stage all changes) 선택
-5. 위쪽 버튼들 중 체크표시버튼(commit)을 선택
-6. commit message를 입력후 enter 입력
-7. 이후, 위쪽 버튼들 중 ... 버튼을 선택후, push to 선택
-8. 알맞은 repository를 선택
-9. Done
+### GitHub 블로그를 수정한 뒤, 변경사항을 적용시키는 방법
+- 일반적인 git 사용법과 동일하게 `push`을 해주면 됩니다.
+- 즉, terminal에서 진행해도 되고, VS Code에서 진행해도 됩니다.
+- 만약 terminal을 이용한다면, `cd`를 이용하여 cloning될 repository가 들어갈 folder의 위치로 이동하고,
+- 이후 `git add *` 및 `git commit -am "commit message"`를 이용하여 `commit`시키고, 이후 `git push`를 하여 설정된 origin으로 `push`를 진행합니다.
 
 
 ### VS Code에서 clone 된 repository 제거 방법
-- local address에 저장된 폴더를 지우면 됩니다. 
+- 일반적인 git 사용법과 동일하게, local address에 저장된 폴더를 지우면 됩니다. 
 
 
-### VS Code에서 clone 된 repository 현재 변경 상태로 sync 맞추는 방법
-- 위에서 알려준 respository 제거방법을 이용한 후, 해당 repository를 다시 clone하면 됩니다.
+### clone 된 repository를 수정된 최신 repository의 변경상태로 sync 를 맞추는 방법
+- 일반적인 git 사용법과 동일하게 `pull`을 해주면 됩니다.
+- terminal에서 `cd`으로 clone된 folder의 위치로 가서, 해당 command를 사용해도 되지만,
+- 이게 귀찮은 경우, 그냥 VS Code에서 clone된 folder가 열려있는 경우, VS Code menu에서 `Terminal -> New Terminal`을 누르게 되면, VS Code에서 clone된 해당 folder로 `cd`가 되어있는 terminal이 열리게 됩니다.
+- 그래서 여기서 바로 `git pull`을 해도 됩니다.
 
 
 ### Github 블로그에 코드를 올리는 방법
@@ -107,9 +103,11 @@
 \`\`\` <br>
 - 주의할점: code block안에 new line을 넣으려고 enter를 이용하면 code block이 적용되지 않게됩니다. (즉, code block에는 빈공간이 없어야함)
 
+
 ### 공백을 포스트에 올리는 방법
 - pre 태그를 이용하면 모든 공백을 포스트 할 수 있다.
 - ex) \<pre> ~ \</pre> <br>
+
 
 ### Github 블로그에 이미지를 올리는 방법
 [이곳](https://ahribori.com/article/5a03bcfd6c9eef13d882e29a)을 참고하면 됩니다. <br>
