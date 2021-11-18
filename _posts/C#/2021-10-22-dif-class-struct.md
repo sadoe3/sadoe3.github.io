@@ -14,6 +14,11 @@ toc_sticky: true
 date: 2021-10-22
 ---
 
+## differences in C/C++
+- C에서는 struct를 structure 만들때 사용하고, class라는 keyword가 없다.
+- C++에서는 둘다 class를 만들때 사용하며, 차이는 default access가 public이냐 private이냐의 차이만 존재한다.
+    - class가 private, struct가 public
+
 ## Similarity
 - C#에서 class와 struct는 모두 property와 method를 갖을 수 있다. 
 - 그래서 대부분에 상황에서는 둘다 같은 사용법으로 코딩을 진행해도, 크게 문제가 발생되지 않는다.
