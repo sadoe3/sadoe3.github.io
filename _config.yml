@@ -19,7 +19,7 @@ locale                   : "ko-KR"
 title                    : "개발 블로그 with Kyle"
 title_separator          : "|"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "KangIn Choi"
+name                     : "Kyle"
 description              : "An engineering blog from game developer."
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -101,7 +101,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "KangIn Choi"
+  name             : "Kyle"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Cause and Effect: the words which explain everything"
   location         : "South Korea"
