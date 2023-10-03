@@ -17,6 +17,12 @@
 - markdown syntax는 [이곳](https://simhyejin.github.io/2016/06/30/Markdown-syntax/)을 참고하시면 됩니다.
 - 다른 궁금증은 googling을 통해 해결할 수 도 있습니다.
 - README.md 파일을 만들면, github.io repository를 들어왔을 때, 해당 repository에 대한 설명에 관한 내용을, README.md 파일을 통해 보여줄 수 있다
+
+
+### VS Code에 git 연결하는 방법
+- [git 사용법](https://sadoe3.github.io/etc/chatper2/)을 통해 해당 블로그의 repository를 cloning 했다면, 이제 블로그 포스팅 같은 것들을 할때마다, 해당 수정사항을 push 해줘야 하는데, 그러기 위해선 git에 연결이 되어있어야 한다
+- 연결하는 방법 자체는 간단하다. 우선 [git 사용법](https://sadoe3.github.io/etc/chatper2/)을 이용하여 username과 email을 설정한뒤, 수정사항을 push 하게 되면 자동적으로 git에 로그인하라고 뜬다
+- 이때 로그인을 하면 git에 연결이 되어 push를 할 수 있게 된다.
  
  
 ### jekyll-theme의 색상 변경하는 방법
