@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "sunrise" # list: "air", "aqua", "contrast", "dark", 
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "개발 블로그 with Kyle"
+title                    : "개발 블로그 by Kyle"
 title_separator          : "|"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Kyle"
