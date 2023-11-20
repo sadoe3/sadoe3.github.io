@@ -5,9 +5,9 @@
 #main {
   @include clearfix;
   margin-left: auto;
-  margin-right: 0;
+  margin-right: auto;
   padding-left: 1em;
-  padding-right: 0;
+  padding-right: 1em;
   -webkit-animation: $intro-transition;
   animation: $intro-transition;
   max-width: 100%;
