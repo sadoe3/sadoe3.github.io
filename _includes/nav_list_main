@@ -19,21 +19,21 @@
                 <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
                     {% if category[0] == "c" %}
-                        <li><a href="/categories/c" class="">C ({{category[1].size}})</a></li>
+                        <li><a href="/categories/c" class="sidebar-category">C ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "cpp" %}
-                        <li><a href="/categories/cpp" class="">C++ ({{category[1].size}})</a></li>
+                        <li><a href="/categories/cpp" class="sidebar-category">C++ ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "csharp" %}
-                        <li><a href="/categories/csharp" class="">C# ({{category[1].size}})</a></li>
+                        <li><a href="/categories/csharp" class="sidebar-category">C# ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -41,21 +41,21 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "ue4-self" %}
-                        <li><a href="/categories/ue4-self" class="">UE4 through self-study ({{category[1].size}})</a></li>
+                        <li><a href="/categories/ue4-self" class="sidebar-category">UE4 through self-study ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "unity-lecture" %}
-                        <li><a href="/categories/unity-lecture" class="">Unity through lectures ({{category[1].size}})</a></li>
+                        <li><a href="/categories/unity-lecture" class="sidebar-category">Unity through lectures ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "unity-self" %}
-                        <li><a href="/categories/unity-self" class="">Unity through self-study ({{category[1].size}})</a></li>
+                        <li><a href="/categories/unity-self" class="sidebar-category">Unity through self-study ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -63,14 +63,14 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "data-structures" %}
-                        <li><a href="/categories/data-structures" class="">Data Structures ({{category[1].size}})</a></li>
+                        <li><a href="/categories/data-structures" class="sidebar-category">Data Structures ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "algorithms" %}
-                        <li><a href="/categories/algorithms" class="">Algorithms ({{category[1].size}})</a></li>
+                        <li><a href="/categories/algorithms" class="sidebar-category">Algorithms ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -78,28 +78,28 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "design-patterns" %}
-                        <li><a href="/categories/design-patterns" class="">Design Patterns ({{category[1].size}})</a></li>
+                        <li><a href="/categories/design-patterns" class="sidebar-category">Design Patterns ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "coding-practice" %}
-                        <li><a href="/categories/coding-practice" class="">Coding Practice ({{category[1].size}})</a></li>
+                        <li><a href="/categories/coding-practice" class="sidebar-category">Coding Practice ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "game-dev-knowledge" %}
-                        <li><a href="/categories/game-dev-knowledge" class="">Knowledge regarding Game Dev ({{category[1].size}})</a></li>
+                        <li><a href="/categories/game-dev-knowledge" class="sidebar-category">Knowledge regarding Game Dev ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "etc" %}
-                        <li><a href="/categories/etc" class="">etc ({{category[1].size}})</a></li>
+                        <li><a href="/categories/etc" class="sidebar-category">etc ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
