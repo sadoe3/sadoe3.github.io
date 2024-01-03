@@ -112,7 +112,7 @@ f(25);                        // 25 is rvalue, so T is int, param's type is ther
     * if `expr` is an **lvalue**, both `T` and `ParamType` are deduced to be **lvalue** references
     * if `expr` is an **rvalue**, the "normal" (i.ei., Case 1) rules are applied to
 
-## Case 3
+### Case 3
 Case 3: `ParamType` is Neither a Pointer nor a Reference
 ```c++
 template <typename T>

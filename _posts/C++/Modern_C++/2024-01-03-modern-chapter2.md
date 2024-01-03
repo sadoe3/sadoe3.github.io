@@ -22,7 +22,16 @@ date: 2024-1-3
 ## Item 5
 
 ### Prefer `auto` to explicit type declaration
-
+- `auto` is useful
+    * if you want to **force the initialization**, or
+    * if you want to write robust code that handles **type mismatches**
+        + which can lead to portability or efficiency problems
+    * if you want to ease the process of **refactoring**
+        + for instance, if a function is declared to return an `int`, but you later decide that a `long` would be better
+            - then, the calling code **automatically updates** itself the next time you compile
+        + otherwise, you'll need to find all the call sites so that you can revise them one by one 
+    * if you want to type less than what's expected
+- `auto`-typed objects are subject to the **pitfalls** described in [**Item 2**]() and [**Item 6**](https://sadoe3.github.io/cpp/modern-chapter2/#item-6)
 
 
 ## Item 6
