@@ -98,7 +98,7 @@ The Following table shows the common type aliases and operations defined in all 
 |`a.swap(b)`|swap elements in `a` with those in `b`|
 |`swap(a, b)`|equivalent to `a.swap(b)`|
 |**Size**||
-|`c.size()`|number of elements in `c` `(not valid for `std::forward_list)``|
+|`c.size()`|number of elements in `c` **(not valid for `std::forward_list`)**|
 |`c.max_size()`|maximum number of elements `c` can hold|
 |`c.empty()`|`false` if `c` has any elements, `true` otherwise|
 |**Add/Remove Elements (not valid for `std::array`)**||
