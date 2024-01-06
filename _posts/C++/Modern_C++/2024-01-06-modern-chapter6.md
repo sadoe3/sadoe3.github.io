@@ -120,14 +120,22 @@ for (auto curElement : filters) {
     * and to the **right** is the expression which initializes that object
     * the point is that we can use the **name of the data member** inside the expression
     * moreover, we can perform `std::move` on the local object inside the expression
-        + this is preferred when moving gives more efficiency than copying
+        + this is preferred when moving gives more efficiency than copying (e.g., a `std::unique_ptr`)
+- in C++11, we emulate **init caputre** via hand-written classes or `std::bind`
 
 
 ## Item 33
+
 ### Use `decItype` on auto&& parameters to `std::forward` them
-O
+In C++14, lambdas now can use `auto` in their parameter specifications
+- if you want to implement **perfect-forwarding** lmabda, write code like this:
+    ```c++
+    auto f = [](auto &&x) { return func(std::forward<decltype(x)>(x)); };
+    ```
+
 
 ## Item 34
+
 ### Prefer lambdas to `std::bind`
 In C++ only, `std::bind` may be useful for implementing move capture or for binding objects with templatized function call operators
 - however, by default, lambdas are more readable, more expensive, and may be more efficient than using `std::bind`
