@@ -204,6 +204,7 @@ To use smart pointers correctly, we msut adhere to a set of the following convec
     a = doCopy(3);
     std::cout << *a << std::endl;       // prints 3
     ```
+- if you want to move the ownership, we can perform `std::move` operation on `std::unique_ptr` objects
 - like `std::shared_ptr`, it's possible to provide custom `deleter` function for `std::unique_ptr` 
 
 ### Exceptions regarding unique_ptr
