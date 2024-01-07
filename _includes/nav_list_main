@@ -74,7 +74,6 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">For better development</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "design-patterns" %}
@@ -82,6 +81,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+        <span class="nav__sub-title">For Better Development</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "coding-practice" %}
