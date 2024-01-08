@@ -84,7 +84,6 @@ try {
         + so that the first word in the function is `try`
     * and there sould be **nothing** after the `catch` blocks (for C++)
 
-
 ### Don't Repeat Yourself
 Write code once, use it often
 - if you see multiple lines of code which do the same thing exist in various places, define a single function which contains them, and replace them with the call to that function
