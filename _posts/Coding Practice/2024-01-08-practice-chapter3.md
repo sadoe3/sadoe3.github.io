@@ -75,14 +75,15 @@ try {
 } catch(std::exception e) {
     logger.log(e.what());
 }
-// no more code
+// no more code except for possible return statement
 ```
 - when you return an **error code**, you create a problem that the caller must deal with the error immediately
     * on the other hand, if you use **exceptions**, then the error processing code can be **separated** from the main processing code and can be **simplified**
 - moreover, if the function supports the exception handling, then
     * the whole main processing code should be located inside the `try` block
         + so that the first word in the function is `try`
-    * and there sould be **nothing** after the `catch` blocks (for C++)
+    * and there sould be **nothing** after the `catch` blocks for C++(`catch/finally` blocks for Java)
+        + except for a **`return` statement** which returns default object or something like that as the return value for the `catch` blocks 
 
 ### Don't Repeat Yourself
 Write code once, use it often
