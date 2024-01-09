@@ -37,12 +37,24 @@ In general we want function call dependencies to point in the **downward** direc
 ## Indentation
 The **indendation** is necessary in order to increase the **readability** of the source file
 ```c++
+// bad
+namespace std { template <typename T> void swap(T& a, T& b) { T temp(a); a = b; b = temp; } }
 
+// clean
+namespace std {
+    template <typename T>
+    void swap(T& a, T& b) {
+        T temp(a);
+        a = b;
+        b = temp;
+    }
+}
 ```
 
 
 ## Team Project
-
+A **team** of developers should **agree** upon a single formatting style, and a single naming rule
+- so that the **final code** would have a **consistent** and smooth style
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
