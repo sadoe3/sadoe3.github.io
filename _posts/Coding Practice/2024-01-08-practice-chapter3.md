@@ -33,11 +33,11 @@ It's important to implement **a function** which achieves **one purpose**
         + **intermediate-level** of abstraction
             - the function of this level would execute code like
                 * `String pagePathName = PathParser.render(pagePath);`
-            - **intermediate-level** purpose can be achieved through achieving one or more **low-level** purposes
+            - an **intermediate-level** purpose can be achieved through achieving one or more **low-level** purposes
         + **high-level** of abstraction
             - the function of this level would execute code like
                 * `getHtml();`
-            - **high-level** purpose can be achieved through achieving one or more **intermediate-level** purposes
+            - a **high-level** purpose can be achieved through achieving one or more **intermediate-level** purposes
 - moreover, it's preferred for programmers to write functions based on the level of abstraction
     * so that we can read the program, descending one level of abstraction at a time as we read down the list of functions
     * for instance
