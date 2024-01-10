@@ -36,18 +36,37 @@ You can achieve **SRP** by following the steps below
     - this mechanism is similar to the one from the [**functions**](https://sadoe3.github.io/coding-practice/practice-chapter3/#one-function-one-purpose) where a **high-level** purpose can be achieved through achieving one or more **intermediate-level** purposes
 
 
-cohesion
-cohesion = how many data members are used by the each methods -> maximally cohesive = a class in which each variable is used by each method -> maximally cohesive is not advisable and impossible -> high cohesion is recommended -> why? -> low cohesion means that the number of data members which are used by a certain number of methods is high -> when this happens, it almost alwyas means that you should try to separate the data members and methods into two or more classes such that the new classes are move cohesive -> ultimately, classes would have a small number of data members
+## Cohesion
+
+### Maximally Cohesive Classes
+A class in which **each** variable is used by **each** method is **maximally cohesive**
+- in general it is **neither** advisable nor possible to create such **maximally cohesive** classes; on the other hand, **high cohesive** classes are **preferred**
+
+### High Cohesive Classes
+In general the **more variables** a **method** manipulates the **more cohesive** that method is to its class
+- if cohesion is **low**, it means that the **number** of data members which are **used** by **a certain number** of methods is **high** 
+    * when this happens, it almost always means that you should try to **separate** the data members and the methods into two or more classes such that the **new classes** are **move cohesive**
+- ultimately, **high cohesive** classes would have **a small number** of data members
 
 
-flexible to changes
-for most systems, change is continual. hence we need to implement a class which reduces the risk of the change
-we want to structure our systems so that we edit as little as possible when we update them with new or changed features
-in an ideal system, we incorporate new features by extending the system, not by making modifications to existing code 
-one of ways to achieve this objective is to minimize the dependencies between classes
--> exmaple: bad -> class depend upon the implementation of another class -> is at risk when those implementations change -> clean -> class depend upon the interface -> is can be done in c++ by using abstract base class(primer link) -> by minimizing coulging in this way ~ (p.150)
+## Flexibility to Changes
 
+### Change is Continual
+For most systems, **needs** will change, therefore code will **change** 
+- hence we need to implement a class which **reduces the risk** of the change
 
+### Ideal Classes
+We want to structure our systems so that we **edit as little as possible** when we **update** them with new or changed features
+- in an ideal system, we incorporate **new features** by **extending** the system, **not by making modifications** to existing code 
+
+### How to Achieve
+One of the ways to implement such **flexible** classes is to **minimize** the **dependencies** between classes
+- if a client class **depends** upon the **implementation** of another class
+    * it would be at **risk** when those implementations **change**
+- hence, we can **clean** this class by making it **depending** upon the **interface** of another class
+    * this can be done by using [**pure virtual**](https://sadoe3.github.io/cpp/primer-chapter15/#abstract-base-classes) methods in C++
+- by **minimizing coupling** in this way, our classes adhere to another class design principle known as the **Dependency Inversion Principle** (DIP)
+    * in essence, the **DIP** says that our classes should **depend** upon **abstractions**, not on concrete details
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
