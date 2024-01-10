@@ -483,7 +483,7 @@ ClassA a = {1, "haha"};     // aggregate class can be initialized with a braced 
 ```
 - 4 conditions of an aggregate class
     * all of its data members are `public`
-    * it does not defien any constructors
+    * it does not define any constructors
     * it has no in-class initializers
     * it has no base classes or `virtual` functions which are related to the concept of inheritance
 - an aggregate class may have methods
