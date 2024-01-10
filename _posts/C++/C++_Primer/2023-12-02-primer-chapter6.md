@@ -72,8 +72,7 @@ You can implement a function which takes **varing number** of arguments in 2 way
     * use this feature only if you need to interface to C code otherwise, try C++ style features
 - C++ style
     * varing number of argument of the **same** type : `initializer_list<type>` template
-    * varing number of argument of the **different** type : variadic template
-        + this concept would be covered in the later chapter
+    * varing number of argument of the **different** type : [**variadic template**](https://sadoe3.github.io/cpp/primer-chapter16/#variadic-templates)
 
 ### initializer_list\<type>
 ```c++
