@@ -46,7 +46,26 @@ It's important to implement **a function** which achieves **one purpose**
         * *in order to achieve `A-A-1`, ...*
     * the author call this *The Stepdown Rule*
 
-### Exception Handling
+### Don't Repeat Yourself
+Write code once, use it often
+- if you see multiple lines of code which do the same thing exist in various places, define a single function which contains them, and replace them with the call to that function
+    * if you do so, it would increase the **maintainability**
+        + because the change in one place would affect the whole places where it's called
+- there are various pinciples and practices which are used to eliminate the code duplications
+- it's worth noting that **code duplication** may happen because of the **improper decomposition** of the function
+
+
+## Function Parameters
+The **ideal number** of **parameters** for a function is **zero**.
+- next comes one, followed closely by two
+    * **three** arguments should be **avoided** where possible
+    * **more than three** requires very speical **justification**
+        + when a fuction seems to need more than two or three arugments, it is likely that some of those arguments ought to be **wrapped** in to a class
+            - [**aggregate classes**](https://sadoe3.github.io/cpp/primer-chapter7/#aggregate-classes) can be useful for this case
+        + or 
+
+
+## Exception Handling
 Prefer **exceptions** to returning error codes
 ```c++
 // bad
@@ -84,14 +103,6 @@ try {
         + so that the first word in the function is `try`
     * and there sould be **nothing** after the `catch` blocks for C++(`catch/finally` blocks for Java)
         + except for a **`return` statement** which returns default object or something like that as the return value for the `catch` blocks 
-
-### Don't Repeat Yourself
-Write code once, use it often
-- if you see multiple lines of code which do the same thing exist in various places, define a single function which contains them, and replace them with the call to that function
-    * if you do so, it would increase the **maintainability**
-        + because the change in one place would affect the whole places where it's called
-- there are various pinciples and practices which are used to eliminate the code duplications
-- it's worth noting that **code duplication** may happen because of the **improper decomposition** of the function
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
