@@ -62,7 +62,7 @@ The **ideal number** of **parameters** for a function is **zero**.
     * **more than three** requires very speical **justification**
         + when a fuction seems to need more than two or three arugments, it is likely that some of those arguments ought to be **wrapped** in to a class
             - [**aggregate classes**](https://sadoe3.github.io/cpp/primer-chapter7/#aggregate-classes) can be useful for this case
-        + or 
+        + or [**variable length**](https://sadoe3.github.io/cpp/primer-chapter6/#varing-parameters) of parameters would be needed for this case
 
 
 ## Exception Handling
