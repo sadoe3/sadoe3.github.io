@@ -12,15 +12,21 @@ toc_label: "목차"
 toc_sticky: false
 classes: wide
 
-date: 2024-1-6
+date: 2024-6-3
 ---
 
 # The Concurrency API
 
 > 이 포스트는 Effective Modern C++(1st Edition)를 바탕으로 작성되었습니다.
 
-## Regarding this post
-This chapter would be covered right after I make a post regarding C++'s **coroutine**
+## Concurrency Study Plan
+1. Clean Code
+    * chapter 13
+    * appendix (not mandatory)
+2. Concurrency in Action
+3. Effective Modern C++
+    * chapter 7
+4. C++17: coroutines
 
 ## Item 35
 ### Prefer task-based programming to thread-based
