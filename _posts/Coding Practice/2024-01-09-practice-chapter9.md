@@ -26,6 +26,9 @@ A production code supports various **functionalities**
 ### Unit Tests
 **Unit tests** are executed to test those **functionalites**
 - and the **unit tests** must be **clean** as well
+    * this is because tests **matter**
+    * systems that are **not testable** are **not verifiable**
+        + arguably, a system that **cannot be verified** should **never be deployed**
 
 ### Clean Tests
 - a **clean test** includes
