@@ -118,18 +118,69 @@ Date newDate = date.getDateDaysLater(5);
 - it is **not** good **enough** that it **passes** all the tests
 	* you must **know why** it passes them
 
+### G22: Make Logical Dependencies Physical
+If one class **depends** upon another, that dependency should be **physical**, not just logical
+```c++
+// bad
+class Player {
+public:
+    void reloadGun() {
+        if(gun.isFull() == false)
+            gun.reload();
+    }
+private:
+    Gun gun;
+};
 
+// clean
+class Player {
+public:
+    void reloadGun() {
+        gun.reload();            
+    }
+private:
+    Gun gun;
+};
+class B{
+public:
+    void reload() {
+        if(isFull() == false)
+            // reload
+    }
+private:
+    bool isFull() { return curAmmo == MAX_AMMO; }
+    unsigned curAmmo;
+    const unsigned MAX_AMMO;
+}
+```
+- the class which **depends** upon another class should **not** make **assumptions** (in other words, **logical dependencies**) regarding it
+    * if `A` depends upon `B`, and makes an **assumption** regarding `B`
+    * then the aussumption part should be **moved** to the **part of `B`**
+        + so that `A` handles with its **own responsibility only** (obeying **SRP**) 
 
+### G31: Hidden Temporal Couplings
+**Temporal coupling** is the required **order of executions** to achieve a certain purpose
+```c++
+// bad
+void dive(std::string reason) {
+    saturateGradient();
+    reticulateSplines();
+    diveForMoog(reason);
+}
 
-
-
-### 22(easy to use correctly + 27 + 31)
-**Not done yet**
-
-
-
-
-
+// clean
+void dive(std::string reason) {
+    Gradient gradient = saturateGradient();
+    std::vector<Spline> splines = reticulateSplines(gradient);
+    diveForMoog(splines, reason);
+}
+```
+- sometimes, the coupling is **necessary**
+    * however, you should **not hide** it
+        + it should be **exposed**
+- given the clean code from the **example above**
+    * each function produces a **result** that the **next function needs**
+        + so it's **hard** to call them **incorrectly** 
 
 ### G23: Prefer Polymorphism to `If/Else` or `Switch/Case`
 **Most** people use `switch` statements because it’s the obvious **brute force** solution, **not** because it’s the **right** solution for the situation
@@ -166,15 +217,48 @@ if(buffer.shouldCompact())
 	* when this happens, try to **eliminate** the `!(NOT operator)` and the **negative word**
 	* so that we can **increase the readability** of the code
 
+### G34: Functions Should Descent Only One Level of Abstraction
+The statements within a function should **all** be written at the **same** level of abstraction, which should be **one level below** the operation described by the name of the function
+```c++
+// bad
+class Player {
+public:
+    void getHit(const GameObject &source) {
+        currentHealth -= source.getPower();
+        if(currentHealth < 0)
+            die();
+        
+        if(currentDirection == Direction::LEFT)
+            // knock back to right
+        else
+            // knock back to left
+    }
+};
 
-
-
-### 34, 35
-**not done yet**
-
-
-
-
+// clean
+class Player {
+public:
+    void getHit(const GameObject &source) {
+        decreaseHealth(source);
+        knockBack();
+    }
+private:
+    decreaseHealth(cosnt GameObject &source) {
+        currentHealth -= source.getPower();
+        if(currentHealth < 0)
+            die();
+    }
+    knockBack() {
+        if(currentDirection == Direction::LEFT)
+            // knock back to right
+        else
+            // knock back to left
+    }
+};
+```
+- if you want to achieve a [**high-level**](https://sadoe3.github.io/coding-practice/practice-chapter3/#one-function-one-purpose) purpose, the statements within the function should be **intermediate-level**
+    * there should **not** be a statement of **low-level** within the function
+        + the **low-level** purpose should be achieved **indirectly** through the **intermediate-level** statement within the function
 
 ### G36: Avoid Transitive Navigation
 In general we do **not** want a single class to **know** much about its **collaborators**
@@ -190,7 +274,6 @@ myCollaborator.doSomething();
     * make sure that classes know **only** about their **immediate collaborators** and
         + do **not know** the navigation map of the **whole system**
 - this is sometimes called the **Law of Demeter**
-
 
 
 ## Names
