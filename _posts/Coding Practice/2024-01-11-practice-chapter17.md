@@ -291,8 +291,8 @@ pages[targetPage].print();
 ```
 
 ### N2: Choose Names at the Appropriate Level of Abstraction
-
-
+Do **not** pick **names** that communicate **implementations**
+- choose **names** that reflect the [**level of abstraction**](https://sadoe3.github.io/coding-practice/practice-chapter17/#g34-functions-should-descent-only-one-level-of-abstraction) of the class or function you are working in
 
 ### N3: Use Standard Nomenclature Where Possible
 Names are **easier** to understand if they are based on **existing convention or usage**
@@ -302,11 +302,35 @@ Names are **easier** to understand if they are based on **existing convention or
     * the **easier** it will be for readers to **know** what your code is talking about
 
 
-
 ## Tests
 
 ### T1: Insufficient Tests
-1,3~7, 9
+A test suite should **test everything** that could possibly break
+- the tests are **insufficient** so long as there are conditions that have **not been explored** by the **tests** or calculations that have **not** been **validated**
+
+### T3: Don't Skip Trivial Tests
+They are **easy to write** and their **documentary value** is **higher** than the cost to produce them
+
+### T5: Test Boundary Conditions
+Take special care to **test boundary conditions**
+- this is because we **often** get the middle of an algorithm right but **misjudge** the **boundaries**
+
+### T6: Exhaustively Test Near Bugs
+**Bugs** tend to **congregate**
+- when you find a bug in a function,
+    * it is wise to do **an exhaustive test** of that function
+    * you'll probably find that the **bug was not alone**
+
+### T7: Patterns of Failure Are Revealing
+Sometimes you can **diagnose** a problem by finding **patterns** in the way the test cases fail
+- this is another argument for making the **test cases** as **complete** as possible
+    * complete test cases, ordered in a reasonable way, expose **patterns**
+- sometimes just seeing the pattern of red and green on the test report is enough to spark the "Aha!" that leads to the solution
+
+### T9: Tests Should Be Fast
+A **slow test** is a test that **won't get run**
+- when things get tight, it's the **slow tests** that will be **dropped** from the suite
+    * hence do what you must in order to **keep your tests fast**
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
