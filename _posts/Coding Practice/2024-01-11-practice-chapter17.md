@@ -196,7 +196,25 @@ myCollaborator.doSomething();
 ## Names
 
 ### N1: Choose Descriptive Names
-1~4
+Again, the **readability** matters. You need to take the time to choose **descriptive** names wisely and keep them **relavant**
+```c++
+// bad
+int i = 3;
+arr[i].a();
+
+// clean
+constexpr unsigned targetPage = 2;
+pages[targetPage].print();
+```
+
+### N2: Choose Names at the Appropriate Level of Abstraction
+
+
+### N3: Use Standard Nomenclature Where Possible
+
+### N4: Unambiguous Names
+
+
 
 
 ## Tests
