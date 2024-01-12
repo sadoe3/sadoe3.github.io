@@ -293,10 +293,13 @@ pages[targetPage].print();
 ### N2: Choose Names at the Appropriate Level of Abstraction
 
 
+
 ### N3: Use Standard Nomenclature Where Possible
-
-### N4: Unambiguous Names
-
+Names are **easier** to understand if they are based on **existing convention or usage**
+- for instance, if you are using the *DECORATOR* **pattern**
+    * you should use **word** `Decorator` in the names of the decorating classes
+- the **more** you can use names that are overloaded with special meanings that are **relevant** to your project,
+    * the **easier** it will be for readers to **know** what your code is talking about
 
 
 
