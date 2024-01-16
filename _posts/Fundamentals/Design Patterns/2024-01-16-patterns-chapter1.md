@@ -48,7 +48,7 @@ In general, a **pattern** has 4 essential elements
         * they are critical for evaluating design alternatives and for understanding the costs and benefits of applying the pattern.
 
 
-## 1.5 Organizing the Catalog
+## Organizing the Catalog
 
 ### Organized by the Purposes
 **Patterns** can be organized by their **purposes** which reflect what they do
@@ -146,11 +146,34 @@ Here are several different approaches to finding the design pattern that's right
     * Each chapter starts off with introductory comments on the patterns and concludes with a section that compares and contrasts them.
     * These sections give you insight into the similarities and differences between patterns of like purpose.
 - Examine a cause of redesign.
-    * Look at the [**causes of redesign**]() to see if your problem involves one or more of them. Then look at the patterns that help you avoid the causes of redesign.
-• Consider what should be variable in your design. This approach is the opposite of focusing on the causes of redesign. Instead of considering what might force a change to a design, consider what you want to be able to change without redesign. The focus here is on encapsulating the concept that varies, a theme of many design patterns. Table 1.2 lists the design aspects) that design patterns let you vary independently, thereby letting you change them without redesign.
+    * Look at the [**causes of redesign**](https://sadoe3.github.io/design-patterns/patterns-chapter1/#common-causes-of-redesign) to see if your problem involves one or more of them.
+        + Then look at the patterns that help you avoid the causes of redesign.
+- Consider what should be variable in your design.
+    * This approach is the opposite of focusing on the causes of redesign.
+    * Instead of considering what might force a change to a design, consider what you want to be able to change without redesign.
+    * The focus here is on encapsulating the concept that varies, a theme of many design patterns.
 
 
-## 1.8 p29
+## How to Use a Design Pattern
+Once you've picked a design pattern, try this step-by-step approach to applying a design pattern effectively:
+1. Read the pattern once through for an **overview**
+    * Pay particular attention to the Applicability and Consequences sections to ensure the pattern is right for your problem.
+2. Go back and study the **Structure**, **Participants**, and **Collaborations** sections
+    * Make sure you understand the classes and objects in the pattern and how they relate to one another.
+3. Look at the **Sample Code** section to see a concrete example of the pattern in code
+    * Studying the code helps you learn how to implement the pattern.
+4. Choose **names for pattern participants** that are meaningful in the application context
+    * The names for participants in design patterns are usually too abstract to appear directly in an application. Nevertheless, it's useful to incorporate the participant name into the name that appears in the application. That helps make the pattern more explicit in the implementation.
+    * For example, if you use the Strategy pattern for a text compositing algorithm, then you might have classes SimpleLayoutStrategy or TeXLayoutStrategy.
+5. Define the **classes**
+    * Declare their interfaces, establish their inheritance relationships, and define the instance variables that represent data and object references. Identify existing classes in your application that the pattern will affect, and modify them accordingly.
+6. Define application-specific **names for operations** in the pattern
+    * Here again, the names generally depend on the application. Use the responsibilities and collaborations associated with each operation as a guide. Also, be consistent in your naming conventions.
+    * For example, you might use the "Create-" prefix consistently to denote a factory method.
+7. **Implement** the operations to carry out the **responsibilities** and collaborations in the pattern
+    * The Implementation section offers hints to guide you in the implementation. The examples in the Sample Code section can help as well.
+- These are just guidelines to get you started.
+    * Over time you'll develop your own way of working with design patterns.
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
