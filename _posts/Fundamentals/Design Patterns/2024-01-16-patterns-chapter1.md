@@ -141,10 +141,7 @@ Here are several different approaches to finding the design pattern that's right
 - Scan **Intent** sections
     * Read through each pattern's intent to find one or more that sound relevant to your problem.
 - Study how patterns interrelate
-- Study patterns of like purpose.
-    * The catalog has three chapters, one for creational patterns, another for structural patterns, and a third for behavioral patterns.
-    * Each chapter starts off with introductory comments on the patterns and concludes with a section that compares and contrasts them.
-    * These sections give you insight into the similarities and differences between patterns of like purpose.
+    * Read through each pattern's **Related Patterns** part to see how they interrelate
 - Examine a cause of redesign.
     * Look at the [**causes of redesign**](https://sadoe3.github.io/design-patterns/patterns-chapter1/#common-causes-of-redesign) to see if your problem involves one or more of them.
         + Then look at the patterns that help you avoid the causes of redesign.
