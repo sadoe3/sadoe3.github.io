@@ -5,7 +5,7 @@ categories:
     - design-patterns
 
 tags:
-    - [Design Patterns, OOP, Builder]
+    - [Design Patterns, OOP, Creational Pattern, Builder]
 
 toc: true
 toc_label: "목차"
@@ -15,7 +15,7 @@ classes: wide
 date: 2024-1-18
 ---
 
-# Builder
+# Creational Pattern
 
 > 이 포스트는 Design Patterns (1st Edition)를 바탕으로 작성되었습니다.
 
