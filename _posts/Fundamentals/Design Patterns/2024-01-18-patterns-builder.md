@@ -54,7 +54,8 @@ Suppose that you want to implement an editor for the game world which should be 
     * constructs and assembles parts of the product by implementing the Builder interface.
     * defines and keeps track of the representation it creates.
 - **Product** (`Monster`)
-    * represents the complex object under construction. ConcreteBuilder builds the product's internal representation and defines the process by which it's assembled.
+    * represents the complex object under construction.
+        + ConcreteBuilder builds the product's internal representation and defines the process by which it's assembled.
     * includes classes that define the constituent parts, including interfaces for assembling the parts into the final result.
     * has only one physical type although there can be various logical types (e.g., `BossMonster`, `WeakMonster`) 
 
@@ -125,26 +126,35 @@ delete boss;
 ```
 
 ### Implementation
-Typically there's an abstract `Builder` class that defines an operation for each component that a director may ask it to create. The operations do nothing by default.
-A `ConcreteBuilder` class overrides operations for components it's interested in creating.
+- Typically there's an abstract `Builder` class that defines an operation for each component that a director may ask it to create.
+    * The operations do nothing by default.
+    * A `ConcreteBuilder` class overrides operations for components it's interested in creating.
 - Here are other implementation issues to consider:
 1. *Assembly and construction interface*
-    * Builders construct their products in step-by-step fashion. Therefore the `Builder` class interface must be general enough to allow the construction of products for all kinds of concrete builders.
+    * Builders construct their products in step-by-step fashion.
+        + Therefore the `Builder` class interface must be general enough to allow the construction of products for all kinds of concrete builders.
     * But sometimes you might need access to parts of the product constructed earlier.
         + In that case, the builder would return child nodes to the director, which then would pass them back to the builder to build the parent nodes.
 2. *Empty methods as default in Builder*
-    * In C++, the build methods are **intentionally not declared pure virtual member functions**. They're defined as empty methods instead, letting clients override only the operations they're interested in.
+    * In C++, the build methods are **intentionally not declared pure virtual member functions**.
+        + They're defined as empty methods instead, letting clients override only the operations they're interested in.
 
 
 ### Related Patterns
-- **Abstract Factory** is similar to Builder in that it too may construct complex objects. The primary difference is that the Builder pattern focuses on constructing a complex object step by step. Abstract Factory's emphasis is on families of product objects (either simple or complex). Builder returns the product as a final step, but as far as the Abstract Factory pattern is concerned, the product gets returned immediately.
+- **Abstract Factory** is similar to Builder in that it too may construct complex objects.
+    * The primary difference is that the Builder pattern focuses on constructing a complex object step by step.
+        + Abstract Factory's emphasis is on families of product objects (either simple or complex).
+        + Builder returns the product as a final step, but as far as the Abstract Factory pattern is concerned, the product gets returned immediately.
 - A **Composite** is what the builder often builds.
 
 
 ## Consequences
 Here are key **consequences** of the Builder pattern:
 1. *It lets you vary a product's internal representation*
-    * The Builder object provides the director with an abstract interface for constructing the product. The interface lets the builder **hide** the representation and **internal structure** of the product. It also hides **how** the product gets **assembled**. Because the product is constructed through an abstract interface, all you have to do to **change** the product's **internal representation** is define **a new kind of builder**.
+    * The Builder object provides the director with an abstract interface for constructing the product.
+    * The interface lets the builder **hide** the representation and **internal structure** of the product.
+    * It also hides **how** the product gets **assembled**.
+        + Because the product is constructed through an abstract interface, all you have to do to **change** the product's **internal representation** is define **a new kind of builder**.
 2. *It isolates code for construction and representation*
     * Clients needn't know anything about the classes that define the product's internal structure
         + such classes don't appear in Builder's interface.
