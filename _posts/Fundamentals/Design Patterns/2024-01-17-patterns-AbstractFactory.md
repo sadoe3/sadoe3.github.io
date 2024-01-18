@@ -101,10 +101,10 @@ class DarkWidgetFactory : public WidgetFactory {
 public:
 	DarkWidgetFactory();		// defined somewhere
 
-	virtual Button* makeButton() const {
+	Button* makeButton() const override {
 		return new DarkButton();
 	}
-	virtual ScrollBar* makeScrollBar() const {
+	ScrollBar* makeScrollBar() const override {
 		return new DarkScrollBar();
 	}
 };
@@ -121,10 +121,10 @@ class LightWidgetFactory : public WidgetFactory {
 public:
 	LightWidgetFactory();		// defined somewhere
 
-	virtual Button* makeButton() const {
+	Button* makeButton() const override {
 		return new LightButton();
 	}
-	virtual ScrollBar* makeScrollBar() const {
+	ScrollBar* makeScrollBar() const override {
 		return new LightScrollBar();
 	}
 };
