@@ -52,7 +52,7 @@ Suppose that you want to implement the dark mode and light mode (**multiple stan
     * Thus clients stay independent of the prevailing look and feel.
 - There is a concrete subclass of `WidgetFactory` for each mode.
     * Each subclass implements the operations to create the appropriate widget for the mode.
-        + For example, the `CreateScrollBar()` operation on the `DarkWidgetfactory` instantiates and returns a Dark scroll bar, while the corresponding operation on the `LightWidgetFactory` returns a Light scroll bar.
+        + For example, the `createScrollBar()` operation on the `DarkWidgetfactory` instantiates and returns a Dark scroll bar, while the corresponding operation on the `LightWidgetFactory` returns a Light scroll bar.
 - Clients create widgets solely through the `WidgetFactory` interface and have no knowledge of the classes that implement widgets for a particular mode.
     * In other words, clients only have to commit to an interface defined by an abstract class, not a particular concrete class.
 - A `WidgetFactory` also enforces dependencies between the concrete widget classes.

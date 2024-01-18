@@ -26,29 +26,36 @@ Builder
 ## Problem
 
 ### Intent
-Separate the construction of a complex object from its representation so that the same construction process can create different representations.
+Separate the construction of a complex object from its representation so that the **same construction process** can create **different representations**.
 
 ### Applicability
 Use the Builder pattern when
-- the algorithm for creating a complex object should be independent of the parts that make up the object and how they're assembled.
-- the construction process must allow different representations for the object that s constructed.
+- the **algorithm** for creating a complex object should be **independent** of the parts that make up the object and how they're assembled.
+- the construction process must allow **different representations** for the object that s constructed.
 
 
 ## Solution
 
 ### Motivation
+Suppose that you want to implement an editor for the game world which should be able to build various monsters.
+- the **problem** is that the number of possible creation is open-ended
+    * hence it should be easy to add a new monster without modifying the editor
+- a **solution** is to configure the `WorldEditor` class with a `MonsterBuilder` object that **builds** (creates) a monster for that world
+    * note that, however, `MonsterBuilder` class doesn't create the monster itself;
+        + the main purpose is just to define an interface for creating monsters
+    * the derived classes from `MonsterBuilder` do the actual work
 
 ### Participants
-- **Builder** (`TextConverter`)
+- **Director** (`WorldEditor`)
+    * constructs an object using the Builder interface.
+- **Builder** (`MonsterBuilder`)
     * specifies an abstract interface for creating parts of a Product object.
-- **ConcreteBuilder** (`ASClIConverter`, `TeXConverter`, `TextWidgetConverter`)
+- **ConcreteBuilder** (`BossMonsterBuilder`, `WeakMonsterBuilder`)
     * constructs and assembles parts of the product by implementing the Builder interface.
     * defines and keeps track of the representation it creates.
-    * provides an interface for retrieving the product (e.g., `GetASCIlText`,
-`GetTextWidget`).
-- **Director** (`RTFReader`)
-    * constructs an object using the Builder interface.
-- **Product** (`ASCIlText`, `TeXText`, `TextWidget`)
+    * provides an interface for retrieving the product (e.g., `getBossMonster`,
+`getWeakMonster`).
+- **Product** (`BossMonster`, `WeakMonster`)
     * represents the complex object under construction. ConcreteBuilder builds the product's internal representation and defines the process by which it's assembled.
     * includes classes that define the constituent parts, including interfaces for assembling the parts into the final result.
 
