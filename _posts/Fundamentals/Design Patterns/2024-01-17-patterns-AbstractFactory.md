@@ -68,7 +68,7 @@ Suppose that you want to implement the dark mode and light mode (**multiple stan
 - **ConcreteProduct** (`LightButton`, `DarkScrollBar`)
     * defines a product object to be created by the corresponding concrete factory.
     * implements the AbstractProduct interface.
-- **Client**
+- **Client** (`Application`)
     * uses only interfaces declared by AbstractFactory and AbstractProduct classes.
 
 ### Sample Code
@@ -130,8 +130,20 @@ public:
 };
 
 
+class Application {
+public:
+	void render(const WidgetFactory& factory) {
+		Button *newButton = factory.makeButton();
+		// render button properly
+		ScrollBar* newScrollBar= factory.makeScrollBar();
+		// render scroll bar properly
+	}
+	// other members
+};
+
 
 // some codes
+Application application;
 DarkWidgetFactory darkFactory;
 application.render(darkFactory);    // render as Dark Theme
 ```
