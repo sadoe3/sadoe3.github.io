@@ -341,7 +341,7 @@ There are many issues to consider when implementing the Composite pattern:
     * Composites may use a variety of data structures to store their children, including linked lists, trees, arrays, and hash tables.
     * The choice of data structure depends (as always) on efficiency.
     * In fact, it isn't even necessary to use a general-purpose data structure at all. 
-        + Sometimes composites have a variable for each child, although this requires each subclass of Composite to implement its own management interface.\
+        + Sometimes composites have a variable for each child, although this requires each subclass of Composite to implement its own management interface.
 
 ### Related Patterns
 - Often the component-parent link is used for a **Chain of Responsibility**.
