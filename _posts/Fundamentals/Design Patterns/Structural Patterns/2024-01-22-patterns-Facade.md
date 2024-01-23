@@ -221,8 +221,11 @@ The Facade pattern offers the following benefits:
     * Facades help layer a system and the dependencies between objects.
         + They can eliminate complex or circular dependencies.
         + This can be an important consequence when the client and the subsystem are implemented independently.
-Reducing compilation dependencies is vital in large software systems. You want to save time by minimizing recompilation when subsystem classes change.
-Reducing compilation dependencies with facades can limit the recompilation needed for a small change in an important subsystem. A façade can also simplify porting systems to other platforms, because it's less likely that building one subsystem requires building all others.
-3. It doesn't prevent applications from using subsystem classes if they need to. Thus you can choose between ease of use and generality.
+    * Reducing compilation dependencies is vital in large software systems.
+        + You want to save time by minimizing recompilation when subsystem classes change.
+    * A facade can also simplify porting systems to other platforms,
+        + because it's less likely that building one subsystem requires building all others.
+3. It doesn't prevent applications from using subsystem classes if they need to.
+    * Thus you can choose between ease of use and generality.
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
