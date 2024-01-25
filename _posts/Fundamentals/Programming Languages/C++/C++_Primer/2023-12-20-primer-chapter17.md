@@ -126,7 +126,7 @@ The following table shows which classes support a certain input sequence type
     |`r.flags()`|returns the flags set for `r`|
     ||*Note: Constructors and assignment operations mahy throw expcetions of type `std::regex_error`*|
     ||**Flags Specified When a `std::regex` Is Defined**|
-    |``|**Defined in `std::regex` and `std::regex_constants::syntax_option_type`**|
+    ||**Defined in `std::regex` and `std::regex_constants::syntax_option_type`**|
     |`icase`|ignore case during the match|
     |`nosub`|don't store subexpression matches|
     |`optimize`|favor speed of execution over speed of construction|
@@ -319,7 +319,7 @@ The random-number engines are function-object classes that define a call operato
     ||Distribution Operations|
     |:---|:---|
     |`Dist d`|default consturctor; makes `d` ready to use|
-    |``|other constructors depend on the type of `Dist`; and the distruction consturctors are `explicit`|
+    ||other constructors depend on the type of `Dist`; and the distruction consturctors are `explicit`|
     |`d(e)`|successive calls with the same `e` produce a sequence of random numbers according to the distribution type of `d`; `e` is a random-number engine object|
     |`d.min()`|return the smallest number `d(e)` will generate|
     |`d.max()`|return the largest number `d(e)` will generate|
