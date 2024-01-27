@@ -12,7 +12,7 @@ toc_label: "목차"
 toc_sticky: false
 classes: wide
 
-date: 2024-1-23
+date: 2024-1-22
 ---
 
 # Structural Pattern
