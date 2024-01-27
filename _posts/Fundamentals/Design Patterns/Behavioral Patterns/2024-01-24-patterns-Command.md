@@ -29,19 +29,19 @@ Action, Transaction
 ## Problem
 
 ### Intent
-Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
+Encapsulate a **request** as an **object**, thereby letting you **parameterize** clients with different requests, queue or log requests, and support **undoable** operations.
 
 ### Applicability
 Use the **Command** pattern when you want to
-- parameterize objects by an action to perform.
+- **parameterize** objects by an **action** to perform.
     * You can express such parameterization in a procedural language with a callback function
         + that is, a function that's registered somewhere to be called at a later point.
     * Commands are an object-oriented replacement for callbacks.
-- specify, queue, and execute requests at different times.
-    * A Command object can have a lifetime independent of the original request.
+- specify, **queue**, and execute **requests** at different times.
+    * A Command object can have a **lifetime independent** of the original request.
     * If the receiver of a request can be represented in an address space-independent way
         + then you can transfer a command object for the request to a different process and fulfill the request there.
-- support undo
+- support **undo**
     * The Command's Execute operation can store state for reversing its effects in the command itself.
     * The Command interface must have an added Unexecute operation that reverses the effects of a previous call to Execute.
     * Executed commands are stored in a history list.
