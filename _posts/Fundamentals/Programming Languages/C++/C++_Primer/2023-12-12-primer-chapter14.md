@@ -174,12 +174,12 @@ private:
 
 ### Overloading Prefix Increment and Decrement Operators
 ```c++
-Data& Data::Operator++() {
+Data& Data::operator++() {
     check(curIndex);        // reset to 0 if curIndex is already at the last element
     ++curIndex;
     return *this;
 }
-Data& Data::Operator--() {
+Data& Data::operator--() {
     --curIndex;
     check(curIndex);        // reset to 0 if curIndex is past the first element 
     return *this;
@@ -192,12 +192,12 @@ Data& Data::Operator--() {
 
 ### Overloading Postfix Increment and Decrement Operators
 ```c++
-Data Data::Operator++(int) {       // unused int paramter
+Data Data::operator++(int) {       // unused int paramter
     Data old = *this;
     ++(*this);
     return old;
 }
-Data Data::Operator--(int) {       // unused int paramter
+Data Data::operator--(int) {       // unused int paramter
     Data old = *this;
     --(*this);
     return old;
