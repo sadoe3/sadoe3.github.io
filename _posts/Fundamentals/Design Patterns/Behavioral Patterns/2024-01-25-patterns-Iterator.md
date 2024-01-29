@@ -56,7 +56,7 @@ Suppose that ~
 - **Concrete Aggregate**
     * implements the Iterator creation interface to return an instance of the proper Concretelterator.
 
-### Sample Code
+### Sample Code 
 ```c++
 
 ```
