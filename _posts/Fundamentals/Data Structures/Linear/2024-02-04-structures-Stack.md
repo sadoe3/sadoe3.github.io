@@ -36,7 +36,7 @@ The core concept of stacks is that the last element added to the stack is the fi
 - removes the **last element**
 
 ### get()
-- returns the **element**
+- returns the **last element**
 
 
 ## Implementation
