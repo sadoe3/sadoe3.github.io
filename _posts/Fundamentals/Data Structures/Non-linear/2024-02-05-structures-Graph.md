@@ -103,8 +103,8 @@ BFS is implemented through the [**queue**](https://sadoe3.github.io/data-structu
     * if there isn't
         + dequeue current `v`, and set the first vertex of the queue to be `v`
 3. repeat step 2 until the number of queue becomes `0`
-- ![BDF_1](/images/DataStructures/BDF_1.pdf){: width="50%" height="50%"}
-- ![BDF_2](/images/DataStructures/BDF_2.pdf){: width="50%" height="50%"}
+- ![BFS_1](/images/DataStructures/BFS_1.pdf){: width="50%" height="50%"}
+- ![BFS_2](/images/DataStructures/BFS_2.pdf){: width="50%" height="50%"}
 
 
 ### **Depth First Search**
@@ -116,6 +116,8 @@ DFS is implemented through the [**stack**](https://sadoe3.github.io/data-structu
     * if there isn't
         + set the last vertex of the stack to be `v`, and remove it from the stack
 3. repeat step 2 until the number of stack becomes `0`
+- ![DFS_1](/images/DataStructures/DFS_1.pdf){: width="50%" height="50%"}
+- ![DFS_2](/images/DataStructures/DFS_2.pdf){: width="50%" height="50%"}
 
 
 ## Implementation
