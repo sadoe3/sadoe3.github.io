@@ -103,8 +103,8 @@ BFS is implemented through the [**queue**](https://sadoe3.github.io/data-structu
     * if there isn't
         + dequeue current `v`, and set the first vertex of the queue to be `v`
 3. repeat step 2 until the number of queue becomes `0`
-![BDF_1](/images/DataStructures/BDF_1.pdf){: width="50%" height="50%"}
-![BDF_2](/images/DataStructures/BDF_2.pdf){: width="50%" height="50%"}
+- ![BDF_1](/images/DataStructures/BDF_1.pdf){: width="50%" height="50%"}
+- ![BDF_2](/images/DataStructures/BDF_2.pdf){: width="50%" height="50%"}
 
 
 ### **Depth First Search**
@@ -125,12 +125,14 @@ Graph can be implemented in 2 ways
     * suppose that you have a cyclic graph where
         + `A` is connected to `B`, `B` is connected to `C`, `C` is connected to `D`, and `D` is connected to `A`
     * then, we can create a table like this
+
         ||`A`|`B`|`C`|`D`|
         |:---:|:---:|:---:|:---:|:---:|
         |`A`|0|1|0|1|
         |`B`|1|0|1|0|
         |`C`|0|1|0|1|
         |`D`|1|0|1|0|
+
     * if there's an edge between two vertices
         + then it's `1`
         + otherwise, it's `0`
