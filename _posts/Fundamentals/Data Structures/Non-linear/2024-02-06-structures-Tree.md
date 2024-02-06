@@ -1,11 +1,11 @@
 ---
-title: "Data Structures : Spanning Tree"
+title: "Data Structures : Tree"
 
 categories:
     - data-structures
 
 tags:
-    - [Data Structures, C++, Non-linear Data Structures, Spanning Tree]
+    - [Data Structures, C++, Non-linear Data Structures, Tree]
 
 toc: true
 toc_label: "목차"
@@ -15,12 +15,12 @@ classes: wide
 date: 2024-02-06
 ---
 
-# Spanning Tree
+# Tree
 
 > 이 포스트는 C로 배우는 쉬운 자료구조를 바탕으로 작성되었습니다.
 
 ## Concept
-Spanning Trees are typical examples of **non-linear** data structures
+Trees are typical examples of **non-linear** data structures
 
 ### temp
 temp
