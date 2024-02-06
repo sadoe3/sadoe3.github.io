@@ -23,7 +23,7 @@ date: 2024-02-05
 Graphs are typical examples of **non-linear** data structures
 
 ### Network
-You can think of a graph as a network which consists of various elements.
+You can think of a **graph** as a **network** which consists of various elements.
 - each element is regarded as a **vertex**
 - and a vertex is connected to another vertex through the **edge**
 
