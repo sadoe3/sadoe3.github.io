@@ -12,7 +12,7 @@ toc_label: "목차"
 toc_sticky: false
 classes: wide
 
-date: 2024-02-07
+date: 2024-02-08
 ---
 
 # Heap
