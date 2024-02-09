@@ -75,14 +75,255 @@ Heaps can be implemented with the data structure that supports the **random acce
         + so that the index of the parent node `=` index / 2
         + and the indices of its child nodes `=` index * 2, (index * 2) + 1
 
+### Collection
+```c++
+template <typename Type>
+struct Collection {
+	Collection() : elements(nullptr), count(1), size(4) {
+		elements = new Type[size];
+	}
+	~Collection() {
+		delete[] elements;
+	}
+
+	void pushBack(const Type& data);
+	Type popBack() {
+		if (count > 1) {
+			count--;
+			return elements[count];
+		}
+		else
+			throw std::exception("trying to delete empty collection");
+	}
+	Type* getPointerToRootNode() {
+		if (count > 1)
+			return &elements[1];
+		else
+			return nullptr;
+	}
+
+	Type* elements;
+	unsigned count;
+	unsigned size;
+};
+```
+```c++
+template <typename Type>
+void Collection<Type>::pushBack(const Type& data) {
+	elements[count] = data;
+	count++;
+
+	if (count == size) {
+		size *= 2;
+		Type* newElements = new Type[size];
+		for (unsigned currentCount = 0; currentCount < count; currentCount++)
+			newElements[currentCount] = elements[currentCount];
+		delete[] elements;
+		elements = newElements;
+	}
+}
+```
+
 ### Min Heap
 ```c++
+template <typename Type>
+class MinHeap {
+public:
+	MinHeap() : collection() { }
 
+	void add(const Type& inputData);
+	void remove();
+	Type* getRootNode() {
+		return collection.getPointerToRootNode();
+	}
+
+private:
+	Collection<Type> collection;
+};
+```
+```c++
+template <typename Type>
+void MinHeap<Type>::add(const Type& inputData) {
+	collection.pushBack(inputData);
+	Type* elements = collection.elements;
+	unsigned currentIndex = collection.count - 1;
+	Type cachedData;
+
+	while (currentIndex != 1) {
+		if (elements[currentIndex / 2] > elements[currentIndex]) {
+			cachedData = elements[currentIndex / 2];
+			elements[currentIndex / 2] = elements[currentIndex];
+			elements[currentIndex] = cachedData;
+
+			currentIndex /= 2;
+		}
+		else
+			break;
+	}
+}
+```
+```c++
+template <typename Type>
+void MinHeap<Type>::remove() {
+	if (collection.count > 1) {
+		Type* elements = collection.elements;
+		Type cachedData = elements[1];
+		unsigned currentIndex = collection.count - 1;
+		elements[1] = elements[currentIndex];
+		elements[currentIndex] = cachedData;
+
+		collection.popBack();
+		currentIndex = 1;
+		while (currentIndex < collection.count) {
+			if (elements[currentIndex * 2] < elements[currentIndex * 2 + 1]) {
+				if (elements[currentIndex] > elements[currentIndex * 2]) {
+					cachedData = elements[currentIndex];
+					elements[currentIndex] = elements[currentIndex * 2];
+					elements[currentIndex * 2] = cachedData;
+
+					currentIndex *= 2;
+				}
+				else
+					break;
+			}
+			else {
+				if (elements[currentIndex] > elements[currentIndex * 2 + 1]) {
+					cachedData = elements[currentIndex];
+					elements[currentIndex] = elements[currentIndex * 2 + 1];
+					elements[currentIndex * 2 + 1] = cachedData;
+
+					currentIndex = currentIndex * 2 + 1;
+				}
+				else
+					break;
+			}
+		}
+	}
+}
+```
+```c++
+MinHeap<int> heap;
+
+if (heap.getRootNode() == nullptr)
+    std::cout << "null checking works" << std::endl;
+
+heap.add(1);
+heap.add(2);
+heap.add(3);
+heap.add(-5);
+heap.add(-2);
+
+heap.remove();
+
+std::cout << *(heap.getRootNode()) << std::endl;
+
+
+/*
+print result
+null checking works
+-2
+*/
 ```
 
 ### Max Heap
 ```c++
+template <typename Type>
+class MaxHeap {
+public:
+	MaxHeap() : collection() { }
 
+	void add(const Type& inputData);
+	void remove();
+	Type* getRootNode() {
+		return collection.getPointerToRootNode();
+	}
+
+private:
+	Collection<Type> collection;
+};
+```
+```c++
+template <typename Type>
+void MaxHeap<Type>::add(const Type& inputData) {
+	collection.pushBack(inputData);
+	Type* elements = collection.elements;
+	unsigned currentIndex = collection.count - 1;
+	Type cachedData;
+
+	while (currentIndex != 1) {
+		if (elements[currentIndex / 2] < elements[currentIndex]) {
+			cachedData = elements[currentIndex / 2];
+			elements[currentIndex / 2] = elements[currentIndex];
+			elements[currentIndex] = cachedData;
+
+			currentIndex /= 2;
+		}
+		else
+			break;
+	}
+}
+```
+```c++
+template <typename Type>
+void MaxHeap<Type>::remove() {
+	if (collection.count > 1) {
+		Type* elements = collection.elements;
+		Type cachedData = elements[1];
+		unsigned currentIndex = collection.count - 1;
+		elements[1] = elements[currentIndex];
+		elements[currentIndex] = cachedData;
+
+		collection.popBack();
+		currentIndex = 1;
+		while (currentIndex < collection.count) {
+			if (elements[currentIndex * 2] > elements[currentIndex * 2 + 1]) {
+				if (elements[currentIndex] < elements[currentIndex * 2]) {
+					cachedData = elements[currentIndex];
+					elements[currentIndex] = elements[currentIndex * 2];
+					elements[currentIndex * 2] = cachedData;
+
+					currentIndex *= 2;
+				}
+				else
+					break;
+			}
+			else {
+				if (elements[currentIndex] < elements[currentIndex * 2 + 1]) {
+					cachedData = elements[currentIndex];
+					elements[currentIndex] = elements[currentIndex * 2 + 1];
+					elements[currentIndex * 2 + 1] = cachedData;
+
+					currentIndex = currentIndex * 2 + 1;
+				}
+				else
+					break;
+			}
+		}
+	}
+}
+```
+```c++
+MaxHeap<int> heap;
+
+if (heap.getRootNode() == nullptr)
+    std::cout << "null checking works" << std::endl;
+
+heap.add(1);
+heap.add(2);
+heap.add(3);
+heap.add(-5);
+heap.add(-2);
+
+heap.remove();
+
+std::cout << *(heap.getRootNode()) << std::endl;
+
+
+/*
+print result
+null checking works
+2
+*/
 ```
 
 
