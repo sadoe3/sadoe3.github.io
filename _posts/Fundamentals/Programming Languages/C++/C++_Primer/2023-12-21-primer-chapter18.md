@@ -21,7 +21,7 @@ date: 2023-12-21
 
 ## Exception Handling
 **Exception handling** allows us to handle problems that arise at run time
-- because we've covered the basics of the exception handling in the [previous chatper](https://sadoe3.github.io/cpp/chapter5/), this chapter covers the more detailed information regarding it
+- because we've covered the basics of the exception handling in the [previous chatper](https://sadoe3.github.io/cpp/primer-chapter5/#try-catch-blocks), this chapter covers the more detailed information regarding it
 
 ### Throwing an Exception
 The process to search for the proper `catch` clause is known as **stack unwinding**
