@@ -77,7 +77,25 @@ void Vector<Type>::sortInsertion() {
 
 ### Client
 ```c++
+Vector<int> collection;
+collection.pushBack(1);
+collection.pushBack(3);
+collection.pushBack(-1);
+collection.pushBack(-5);
+collection.pushBack(10);
+collection.pushBack(7);
+collection.pushBack(-10);
 
+printCollection(collection);
+
+collection.sortInsertion();
+printCollection(collection);
+
+/*
+print result
+1 3 -1 -5 10 7 -10
+-10 -5 -1 1 3 7 10
+*/
 ```
 
 
