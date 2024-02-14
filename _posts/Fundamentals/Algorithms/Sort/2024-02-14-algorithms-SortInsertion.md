@@ -31,7 +31,7 @@ This algorithm requires the **iteration** to be done
 1. select the first element in the **unsorted** subset
 2. **insert** it into the **sorted** subset in a proper way
     * you can choose the order of sort in this step
-3. repeat this iteration unless the **number** of elements in the **unsorted** subset is `0`
+3. repeat this iteration until the **number** of elements in the **unsorted** subset becomes `0`
 
 
 ## Time Complexity
