@@ -26,7 +26,7 @@ The algorithm for the **heap sort** is based on the [**heap**](https://sadoe3.gi
 - if you decide to use **max heap**
     * then you can sort the collection in a **descending** order
 - if you decide to use **min heap**
-    * then you can sort the collection in a **ascending** order
+    * then you can sort the collection in an **ascending** order
 
 
 ## Time Complexity
