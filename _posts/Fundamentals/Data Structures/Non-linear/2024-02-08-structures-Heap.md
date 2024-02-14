@@ -273,40 +273,48 @@ void MaxHeap<Type>::add(const Type& inputData) {
 ```c++
 template <typename Type>
 void MaxHeap<Type>::remove() {
-	if (collection.count > 1) {
-		Type* elements = collection.elements;
-		Type cachedData = elements[1];
-		unsigned currentIndex = collection.count - 1;
-		elements[1] = elements[currentIndex];
-		elements[currentIndex] = cachedData;
+    if (collection.count > 1) {
+        Type* elements = collection.elements;
+        Type cachedData = elements[1];
+        unsigned currentIndex = collection.count - 1;
+        elements[1] = elements[currentIndex];
+        elements[currentIndex] = cachedData;
 
-		collection.popBack();
-		currentIndex = 1;
-		while (currentIndex < collection.count) {
-			if (elements[currentIndex * 2] > elements[currentIndex * 2 + 1]) {
-				if (elements[currentIndex] < elements[currentIndex * 2]) {
-					cachedData = elements[currentIndex];
-					elements[currentIndex] = elements[currentIndex * 2];
-					elements[currentIndex * 2] = cachedData;
+        collection.popBack();
+        currentIndex = 1;
+        while (currentIndex < collection.count) {
+            if (elements[currentIndex * 2] > elements[currentIndex * 2 + 1]) {
+                if (currentIndex * 2 < collection.count && elements[currentIndex] < elements[currentIndex * 2]) {
+                    cachedData = elements[currentIndex];
+                    elements[currentIndex] = elements[currentIndex * 2];
+                    elements[currentIndex * 2] = cachedData;
 
-					currentIndex *= 2;
-				}
-				else
-					break;
-			}
-			else {
-				if (elements[currentIndex] < elements[currentIndex * 2 + 1]) {
-					cachedData = elements[currentIndex];
-					elements[currentIndex] = elements[currentIndex * 2 + 1];
-					elements[currentIndex * 2 + 1] = cachedData;
+                    currentIndex *= 2;
+                }
+                else
+                    break;
+            }
+            else {
+                if (currentIndex * 2 + 1 < collection.count && elements[currentIndex] < elements[currentIndex * 2 + 1]) {
+                    cachedData = elements[currentIndex];
+                    elements[currentIndex] = elements[currentIndex * 2 + 1];
+                    elements[currentIndex * 2 + 1] = cachedData;
 
-					currentIndex = currentIndex * 2 + 1;
-				}
-				else
-					break;
-			}
-		}
-	}
+                    currentIndex = currentIndex * 2 + 1;
+                }
+                else
+                    break;
+            }
+        }
+
+        if (collection.count == 3) {
+            if (elements[1] < elements[2]) {
+                cachedData = elements[1];
+                elements[1] = elements[2];
+                elements[2] = cachedData;
+            }
+        }
+    }
 }
 ```
 ```c++
