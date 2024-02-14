@@ -54,7 +54,7 @@ public:
 };
 ```
 
-### sortBubble()
+### Bubble Sort
 ```c++
 template <typename Type>
 void Vector<Type>::sortBubble() {
