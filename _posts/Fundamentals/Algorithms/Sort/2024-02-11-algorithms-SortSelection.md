@@ -52,7 +52,7 @@ public:
         delete[] elements;
     }
 
-    void pushBack(const Type& newElement);
+    void pushBack(const Type &);
 
     Type popBack() {
         if(count > 0) {
@@ -76,7 +76,7 @@ private:
     unsigned count;
 };
 template <typename Type>
-void Vector<Type>::pushBack(const Type& newElement) {
+void Vector<Type>::pushBack(const Type &newElement) {
     elements[count] = newElement;
     count++;
 
@@ -94,7 +94,7 @@ void Vector<Type>::pushBack(const Type& newElement) {
 ### Collection Printer
 ```c++
 template <typename Type>
-void printCollection(Vector<Type>& targetCollection) {
+void printCollection(Vector<Type> &targetCollection) {
     unsigned currentIndex = 0;
 
     while(true) {
