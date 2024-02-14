@@ -38,7 +38,7 @@ This function sets the **interval** and calls `sortInterval()` based the calcula
 
 ### `sortInterval()` Function
 This function takes the collection of elements, the initial index of the sorted subset, the number of elements, and the interval as the parameters
-1. do the iteration unless the number of elements in unsorted subset is `0`
+1. do the iteration until the number of elements in unsorted subset becomes `0`
     1. select first element in unsorted subset by using the initial index of the sorted subset
     2. **insert** it into the sorted subset in a proper order
         + you can choose the order of sort in this step
