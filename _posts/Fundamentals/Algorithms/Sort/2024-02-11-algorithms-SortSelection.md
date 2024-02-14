@@ -85,7 +85,7 @@ void Vector<Type>::pushBack(const Type& newElement) {
         Type* newCollection = new Type[size];
         for(unsigned currentIndex = 0; currentIndex < count; currentIndex++)
             newCollection[currentIndex] = elements[currentIndex];
-        delete elements;
+        delete[] elements;
         elements = newCollection;
     }
 }
