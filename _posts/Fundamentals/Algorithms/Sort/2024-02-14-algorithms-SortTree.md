@@ -20,7 +20,11 @@ date: 2024-02-14
 > 이 포스트는 C로 배우는 쉬운 자료구조를 바탕으로 작성되었습니다.
 
 ## Concept
+The algorithm for the **tree sort** is based on the [**binary search tree**](https://sadoe3.github.io/data-structures/structures-BinarySearchTree/) data structure
 
+### Order
+If you traverse the binary search tree through **inorder** way
+- you can sort the collection in 
 
 
 ## Time Complexity
