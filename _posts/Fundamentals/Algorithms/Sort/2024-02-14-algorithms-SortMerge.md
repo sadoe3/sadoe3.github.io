@@ -47,19 +47,97 @@ Given the performance of the algorithm, there's **no actual division** for the s
 template <typename Type>
 class Vector {
 public:
-	void sortInsertion();
+    void reset() {
+        count = 0;
+    }
+    void doSortMerge();
 // same definition
 };
 ```
 
+### Merge Function
+```c++
+template <typename Type>
+void merge(Type elements[], Vector<Type> &temporaryCollection, const unsigned &firstIndex, const unsigned &middleIndex, const unsigned &lastIndex) {
+    unsigned leftIndex = firstIndex, rightIndex = (middleIndex + 1);
+
+    temporaryCollection.reset();
+    unsigned countTemporaryCollection = 0;
+    while ((leftIndex <= middleIndex) && (rightIndex <= lastIndex)) {
+        if (elements[leftIndex] <= elements[rightIndex]) {
+            temporaryCollection.pushBack(elements[leftIndex]);
+            leftIndex++;
+        }
+        else {
+            temporaryCollection.pushBack(elements[rightIndex]);
+            rightIndex++;
+        }
+        countTemporaryCollection++;
+    }
+    if (leftIndex <= middleIndex) {
+        for (; leftIndex <= middleIndex; leftIndex++) {
+            temporaryCollection.pushBack(elements[leftIndex]);
+            countTemporaryCollection++;
+        }
+    }
+    else {
+        for (; rightIndex <= lastIndex; rightIndex++) {
+            temporaryCollection.pushBack(elements[rightIndex]);
+            countTemporaryCollection++;
+        }
+    }
+
+    for (unsigned currentIndex = firstIndex, currentCount = 0; currentCount < countTemporaryCollection; currentIndex++, currentCount++)
+        elements[currentIndex] = temporaryCollection.get(currentCount);
+}
+```
+
 ### Merge Sort
 ```c++
+template <typename Type>
+void sortMerge(Type elements[], Vector<Type> &temporaryCollection, const unsigned &firstIndex, const unsigned &lastIndex) {
+    if (firstIndex < lastIndex) {
+        unsigned middleIndex = (firstIndex + lastIndex) / 2;
 
+        sortMerge(elements, temporaryCollection, firstIndex, middleIndex);
+        sortMerge(elements, temporaryCollection, middleIndex + 1, lastIndex);
+        merge(elements, temporaryCollection, firstIndex, middleIndex, lastIndex);
+    }
+}
+```
+
+### Vector Again
+```c++
+template <typename Type>
+void Vector<Type>::doSortMerge() {
+    if (count > 1) {
+        Vector<Type> temporaryCollection;
+        sortMerge(elements, temporaryCollection, 0, count - 1);
+    }
+}
 ```
 
 ### Client
 ```c++
+Vector<int> collection;
+collection.pushBack(1);
+collection.pushBack(3);
+collection.pushBack(-1);
+collection.pushBack(-5);
+collection.pushBack(10);
+collection.pushBack(7);
+collection.pushBack(-10);
 
+printCollection(collection);
+
+collection.doSortMerge();
+printCollection(collection);
+
+/*
+print result
+1 3 -1 -5 10 7 -10
+-10 -5 -1 1 3 7 10
+*/
 ```
 
 
