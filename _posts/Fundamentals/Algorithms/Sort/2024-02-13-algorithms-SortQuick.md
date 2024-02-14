@@ -98,7 +98,7 @@ void Vector<Type>::doQuickSort() {
 ### Partition
 ```c++
 template <typename Type>
-unsigned partition(Type elements[], unsigned firstIndex, unsigned lastIndex) {
+unsigned partition(Type elements[], const unsigned &firstIndex, const unsigned &lastIndex) {
     unsigned pivot = (firstIndex + lastIndex) / 2;
     unsigned leftIndex = firstIndex, rightIndex = lastIndex;
     Type cachedElement;
@@ -155,7 +155,7 @@ unsigned partition(Type elements[], unsigned firstIndex, unsigned lastIndex) {
 ### Quick Sort
 ```c++
 template <typename Type>
-void sortQuick(Type elements[], unsigned firstIndex, unsigned lastIndex) {
+void sortQuick(Type elements[], const unsigned &firstIndex, const unsigned &lastIndex) {
     if (firstIndex < lastIndex) {
         unsigned pivot = partition(elements, firstIndex, lastIndex);
         sortQuick(elements, firstIndex, (pivot - 1));
