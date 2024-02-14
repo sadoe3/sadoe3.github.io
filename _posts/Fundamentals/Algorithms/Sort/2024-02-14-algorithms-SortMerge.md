@@ -24,14 +24,23 @@ The algorithm for the **merge sort** uses **multiple subsets**
 
 ### Merge Sort
 The algorithm follows the steps below
-1. do the iteration until the number of 
+1. **divide** the current collection of elements into **2 subsets**
+    * repeat this process until the **number** of all subsets' element is `one`
+2. **merge** two subsets into the one in a proper order
+    * you can choose the order of sort in this step
+    * repeat this process until the **all subsets** are merged into the **one set**
+3. done
 
 
 ## Time Complexity
-`O(n)`
+`O(nlogn)`
 
 
 ## Implementation
+Given the performance of the algorithm, there's **no actual division** for the subsets
+- `merge()` function merges two **conceptual** subsets into the one
+    * this function may require the temporary collection to contain the sorted result
+- this algorithm is **easily understandable** when we think of the concept of [**stack**](https://sadoe3.github.io/data-structures/structures-Stack/)
 
 ### Vector
 ```c++
