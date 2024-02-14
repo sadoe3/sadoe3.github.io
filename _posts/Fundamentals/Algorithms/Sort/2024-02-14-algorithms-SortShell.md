@@ -39,33 +39,98 @@ This function sets the **interval** and calls `sortInterval()` based the calcula
 ### `sortInterval()` Function
 This function takes the collection of elements, the initial index of the sorted subset, the number of elements, and the interval as the parameters
 1. do the iteration unless the number of elements in unsorted subset is `0`
-
+    1. select first element in unsorted subset by using the initial index of the sorted subset
+    2. **insert** it into the sorted subset in a proper order
+        + you can choose the order of sort in this step
+    3. move to the next element with the size of the **interval**
+2. done
 
 
 ## Time Complexity
 - Average: `O(n^1.5)`
 - Worst: `O(n^2)`
 
+
 ## Implementation
+Because it's based on the insertion sort, there are 2 prerequisites for the implementation of this algorithm in view of the performance
+- there's **no actual insertion**
+    * there is only swapping
+- **two** subsets does **not exist**
+    * there is only one collection of elements 
 
 ### Vector
 ```c++
 template <typename Type>
 class Vector {
 public:
-	void sortInsertion();
+    void doSortShell();
 // same definition
 };
 ```
 
+### Interval Sort
+```c++
+template <typename Type>
+void sortInterval(Type elements[], const int &initialIndexSorted, const int &numberOfElements, const int &interval) {
+    Type cachedElement;
+
+    for (int indexUnsorted = initialIndexSorted + interval, indexSorted; indexUnsorted < numberOfElements; indexUnsorted += interval) {
+        cachedElement = elements[indexUnsorted];
+        indexSorted = (indexUnsorted - interval);
+
+        while ((indexSorted >= initialIndexSorted) && (elements[indexSorted] >= cachedElement)) {
+            elements[indexSorted + interval] = elements[indexSorted];
+            indexSorted -= interval;
+        }
+        elements[indexSorted + interval] = cachedElement;  // conceptual insertion
+    }
+}
+```
+
 ### Shell Sort
 ```c++
+template <typename Type>
+void sortShell(Type elements[], const int &numberOfElements) {
+    unsigned interval = numberOfElements;
+    while (interval > 1) {
+        interval /= 2;
 
+        for (unsigned initialIndexSorted = 0; initialIndexSorted < interval; initialIndexSorted++)
+            sortInterval(elements, initialIndexSorted, numberOfElements, interval);
+    }
+}
+
+```
+
+### Vector Again
+```c++
+template <typename Type>
+void Vector<Type>::doSortShell() {
+    sortShell(elements, count);
+}
 ```
 
 ### Client
 ```c++
+Vector<int> collection;
+collection.pushBack(1);
+collection.pushBack(3);
+collection.pushBack(-1);
+collection.pushBack(-5);
+collection.pushBack(10);
+collection.pushBack(7);
+collection.pushBack(-10);
 
+printCollection(collection);
+
+collection.doSortShell();
+printCollection(collection);
+
+/*
+print result
+1 3 -1 -5 10 7 -10
+-10 -5 -1 1 3 7 10
+*/
 ```
 
 
