@@ -27,7 +27,7 @@ The algorithm for the **quick sort** requires 2 functions
     * which uses recursion
 
 ### `partition()` Function
-This function takes the collection, first index, and last index as arguments
+This function takes the collection, first index, and last index as parameters
 1. it sets the current `pivot` index based on the given first and last index
     * `pivot = (firstIndex + lastIndex) / 2`
 2. it sets the `leftIndex` and `rightIndex` based on the given first and last index
@@ -61,10 +61,10 @@ This function takes the collection, first index, and last index as arguments
                 - and, `return (rightIndex + 1)`
 
 ### `quickSort()` Function
-This function takes the collection, first index, and last index as arguments too
+This function takes the collection, first index, and last index as parameters too
 1. it checks whether `firstIndex < lastIndex` or not
     + if that condition is `false`, then the recursion is done
-2. othwerwise, this function gets new `pivot` by calling `partition()` function with the given arguments
+2. othwerwise, this function gets new `pivot` by calling `partition()` function with the given parameters
 3. then, it calls itself with the same collection but different indices twice
     + `quickSort(elements, firstIndex, (pivot-1))`
     + `quickSort(elements, (pivot+1), lastIndex)`
