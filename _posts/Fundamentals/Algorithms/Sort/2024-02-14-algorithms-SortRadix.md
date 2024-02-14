@@ -51,17 +51,42 @@ This post uses `std::string` to get the `n`th digit from the value
 template <typename Type>
 class Vector {
 public:
-	void sortInsertion();
+    Vector& operator=(const Vector&);
+    void sortRadix(const unsigned &base);
 // same definition
 };
+```
+```c++
+template <typename Type>
+Vector<Type>& Vector<Type>::operator=(const Vector<Type>& rhs) {
+    size = rhs.size;
+    count = rhs.count;
+
+    delete[] elements;
+    elements = new Type[size];
+    for (unsigned currentCount = 0; currentCount < count; currentCount++)
+        elements[currentCount] = rhs.elements[currentCount];
+
+    return *this;
+}
 ```
 
 ### Maximum Digit
 ```c++
 #include <cmath>
 // some codes
-unsigned getMaximumNumberOfDigit(Type elements[], const int& numberOfElements, const int& base) {
 
+// this function assumes that element's type is integral
+template <typename Type>
+unsigned getMaximumNumberOfDigit(Type elements[], const unsigned& numberOfElements, const int& base) {
+    unsigned maxIndex = 0;
+    for (unsigned currentIndex = 0; currentIndex < numberOfElements; currentIndex++) {
+        if (elements[maxIndex] < elements[currentIndex])
+            maxIndex = currentIndex;
+    }
+
+    return (floor(log10(elements[maxIndex])) + 1);
+}
 ```
 
 ### Radix Sort
@@ -69,11 +94,99 @@ unsigned getMaximumNumberOfDigit(Type elements[], const int& numberOfElements, c
 #include <string>
 // some codes
 
+// this function handles the collection which contains negative values or (positive values or 0) only
+template <typename Type>
+void sortRadixHalfCollection(Type elements[], Vector<Vector<Type>>& buckets, const unsigned& numberOfElements, const unsigned &base) {
+    unsigned maxDigit = getMaximumNumberOfDigit(elements, numberOfElements, base);
+    Vector<unsigned> countBuckets;
+    for (unsigned currentCount = 0; currentCount < base; currentCount++)
+        countBuckets.pushBack(0);
+
+    for (int currentDigit = 1, stringIndex; currentDigit <= maxDigit; currentDigit++) {
+        for (unsigned currentIndex = 0, bucketIndex; currentIndex < numberOfElements; currentIndex++) {
+            stringIndex = (std::to_string(elements[currentIndex]).size() - currentDigit);
+
+            if (stringIndex < 0) {
+                buckets.get(0).pushBack(elements[currentIndex]);
+                countBuckets.get(0) += 1;
+            }
+            else {
+                bucketIndex = (std::to_string(elements[currentIndex]).at(stringIndex) - '0');
+
+                buckets.get(bucketIndex).pushBack(elements[currentIndex]);
+                countBuckets.get(bucketIndex) += 1;
+            }
+        }
+
+        for (unsigned currentBucketIndex = 0, currentCollectionIndex = 0, currentIndex, endIndex; currentCollectionIndex < numberOfElements; currentBucketIndex++) {
+            Vector<Type>& currentBucket = buckets.get(currentBucketIndex);
+            for (currentIndex = 0, endIndex = countBuckets.get(currentBucketIndex); currentIndex < endIndex; currentIndex++, currentCollectionIndex++)
+                elements[currentCollectionIndex] = currentBucket.get(currentIndex);
+        }
+
+        for (unsigned currentBucketIndex = 0; currentBucketIndex < base; currentBucketIndex++) {
+            buckets.get(currentBucketIndex).reset();
+            countBuckets.get(currentBucketIndex) = 0;
+        }
+    }
+}
+```
+```c++
+template <typename Type>
+void Vector<Type>::sortRadix(const unsigned& base) {
+    if (count < 2)
+        return;
+
+    Vector<Vector<Type>> buckets;
+    for (unsigned currentBase = 0; currentBase < base; currentBase++)
+        buckets.pushBack(Vector<Type>());
+
+ 
+    Vector<Type> collectionNegative, collectionPositive;
+    unsigned countCollectionNegative = 0, countCollectionPositive = 0;
+    for (unsigned currentIndex = 0; currentIndex < count; currentIndex++) {
+        if (elements[currentIndex] < 0) {
+            collectionNegative.pushBack(elements[currentIndex] * (-1));
+            countCollectionNegative++;
+        }
+        else {
+            collectionPositive.pushBack(elements[currentIndex]);
+            countCollectionPositive++;
+        }
+    }
+
+    sortRadixHalfCollection(collectionNegative.elements, buckets, countCollectionNegative, base);
+    sortRadixHalfCollection(collectionPositive.elements, buckets, countCollectionPositive, base);
+
+    unsigned currentIndex = 0;
+    for (int currentIndexNegative = countCollectionNegative - 1; currentIndexNegative > -1; currentIndexNegative--, currentIndex++)
+        elements[currentIndex] = (collectionNegative.get(currentIndexNegative) * (-1));
+    for (unsigned currentIndexPositive = 0; currentIndexPositive < countCollectionPositive; currentIndexPositive++, currentIndex++)
+        elements[currentIndex] = collectionPositive.get(currentIndexPositive);
+}
 ```
 
 ### Client
 ```c++
+Vector<int> collection;
+collection.pushBack(1);
+collection.pushBack(3);
+collection.pushBack(-1);
+collection.pushBack(-5);
+collection.pushBack(10);
+collection.pushBack(7);
+collection.pushBack(-10);
 
+printCollection(collection);
+
+collection.sortRadix(10);
+printCollection(collection);
+
+/*
+print result
+1 3 -1 -5 10 7 -10
+-10 -5 -1 1 3 7 10
+*/
 ```
 
 
