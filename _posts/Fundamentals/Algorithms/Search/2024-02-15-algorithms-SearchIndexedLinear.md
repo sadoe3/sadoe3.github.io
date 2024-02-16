@@ -115,10 +115,10 @@ int Vector<Type>::searchIndexedLinear(const Type& targetValue, const unsigned &i
 ### Search Result Printer
 ```c++
 template <typename Type>
-void printSearchResult(Vector<Type> &collection, const Type& key, const unsigned &interval) {
-    auto searchKey = key;
-    auto searchResult = collection.searchIndexedLinear(searchKey, interval);
-    std::cout << "search for " << searchKey << " : ";
+void printSearchResult(Vector<Type> &collection, const Type &key, const unsigned &interval) {
+    std::cout << "search for " << key << " : ";
+
+    auto searchResult = collection.searchIndexedLinear(key, interval);
     if (searchResult == -1)
         std::cout << "failed" << std::endl;
     else {

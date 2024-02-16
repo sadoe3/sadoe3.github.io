@@ -66,7 +66,7 @@ template <typename Type>
 void printSearchResult(Vector<Type> &collection, const Type &key) {
     std::cout << "search for " << key << " : ";
 
-    auto searchResult = collection.searchLinear(searchKey);
+    auto searchResult = collection.searchLinear(key);
     if (searchResult == -1)
         std::cout << "failed" << std::endl;
     else {
