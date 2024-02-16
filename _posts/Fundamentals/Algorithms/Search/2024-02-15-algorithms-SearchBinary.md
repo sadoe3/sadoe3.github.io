@@ -94,11 +94,10 @@ int Vector<Type>::searchBinary(const Type& targetValue) {
 ### Search Result Printer
 ```c++
 template <typename Type>
-void printSearchResult(Vector<Type> &collection, const Type& key) {
-    auto searchKey = key;
-    auto searchResult = collection.searchBinary(searchKey);
+void printSearchResult(Vector<Type> &collection, const Type &key) {
+    std::cout << "search for " << key << " : ";
 
-    std::cout << "search for " << searchKey << " : ";
+    auto searchResult = collection.searchBinary(searchKey);
     if (searchResult == -1)
         std::cout << "failed" << std::endl;
     else {
