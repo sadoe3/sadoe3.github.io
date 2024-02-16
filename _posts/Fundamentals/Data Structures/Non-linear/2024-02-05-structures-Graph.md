@@ -103,8 +103,9 @@ BFS is implemented through the [**queue**](https://sadoe3.github.io/data-structu
     * if there isn't
         + dequeue current `v`, and set the first vertex of the queue to be `v`
 3. repeat step 2 until the number of queue becomes `0`
-- ![BFS_1.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166666/BFS_1.pdf){: width="50%" height="50%"}
-- ![BFS_2.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166683/BFS_2.pdf){: width="50%" height="50%"}
+- images for better understanding
+	* ![BFS_1.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166666/BFS_1.pdf)
+	* ![BFS_2.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166683/BFS_2.pdf)
 
 ### **Depth First Search**
 DFS is implemented through the [**stack**](https://sadoe3.github.io/data-structures/structures-Stack/)
@@ -115,8 +116,9 @@ DFS is implemented through the [**stack**](https://sadoe3.github.io/data-structu
     * if there isn't
         + set the last vertex of the stack to be `v`, and remove it from the stack
 3. repeat step 2 until the number of stack becomes `0`
-- ![DFS_1.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166645/DFS_1.pdf){: width="50%" height="50%"}
-- ![DFS_2.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166662/DFS_2.pdf){: width="50%" height="50%"}
+- images for better understanding
+	* ![DFS_1.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166645/DFS_1.pdf)
+	* ![DFS_2.pdf](https://github.com/sadoe3/sadoe3.github.io/files/14166662/DFS_2.pdf)
 
 
 ## Implementation
