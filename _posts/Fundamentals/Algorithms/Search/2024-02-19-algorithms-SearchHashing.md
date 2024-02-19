@@ -73,7 +73,7 @@ In hashing, **overflow** means a situation where **multiple elements** are being
 ### Hash Function
 ```c++
 // this function assumes that the type of the given key is unsigned
-unsigned getHashValue(const unsigned &key, const unsigned &sizeOfHashTable) {
+constexpr unsigned getHashValue(const unsigned &key, const unsigned &sizeOfHashTable) {
     return (key % sizeOfHashTable);
 }
 ```
@@ -150,20 +150,11 @@ LinkedList* SinglyLinkedList::remove(const int &targetKey, bool &isRemoved) {
 ```c++
 constexpr int sizeOfHashTable = 30; // this can be any value
 
-SinglyLinkedList<Element>* hashTableChaining[sizeOfHashTable];
-for(unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket++)
-	hashTableChaining[currentBucket] = new SinglyLinkedList<Element>();
+SinglyLinkedList* hashTableChaining[sizeOfHashTable];
+for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket++)
+    hashTableChaining[currentBucket] = new SinglyLinkedList(Element{ 0 });
 
-Element hashTableLinearProbing[sizeOfHashTable] = { Element() }; // every slot is initialized with the default element
-//
-//
-//
-//
-// need to check whether the initialization works properly or not
-///
-//
-//
-//
+Element hashTableLinearProbing[sizeOfHashTable] = { Element{ 0 } }; // every slot is initialized with the default element
 ```
 
 ### Insertion
@@ -196,7 +187,7 @@ Element* searchElementChaining(SinglyLinkedList<Element>* hashTable[], const int
 ```c++
 Element* searchElementLinearProbing(Element hashTable[], const int &key, const unsigned &sizeOfHashTable) {
     int hashValue = getHashValue(key, sizeOfHashTable);
-    while(hashValue] != defaultElement && hashValue < sizeOfHashTable)
+    while(hashValue != defaultElement && hashValue < sizeOfHashTable)
         hashValue++;
     
     if(hashValue < sizeOfHashTable)
