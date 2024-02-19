@@ -318,6 +318,7 @@ void printSearchResultLinearProbing(Element hashTable[], const int &key, const u
 ### Client
 ```c++
 constexpr int sizeOfHashTable = 30; // this can be any value
+int keyToSearch = 7;
 
 SinglyLinkedList* hashTableChaining[sizeOfHashTable];
 for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket++)
@@ -325,9 +326,9 @@ for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket+
 
 initializedHashTableChaining(hashTableChaining, sizeOfHashTable);
 std::cout << "Chaining" << std::endl;
-printSearchResultChaining(hashTableChaining, 7, sizeOfHashTable);
-removeElementChaining(hashTableChaining, 7, sizeOfHashTable);
-printSearchResultChaining(hashTableChaining, 7, sizeOfHashTable);
+printSearchResultChaining(hashTableChaining, keyToSearch, sizeOfHashTable);
+removeElementChaining(hashTableChaining, keyToSearch, sizeOfHashTable);
+printSearchResultChaining(hashTableChaining, keyToSearch, sizeOfHashTable);
 
 for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket++)
     delete hashTableChaining[currentBucket];
@@ -336,13 +337,13 @@ for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket+
 std::cout << "\n\n" << std::endl;
 
 
-Element hashTableLinearProbing[sizeOfHashTable] = { Element{ 0 } }; // every slot is initialized with the default element
+Element hashTableLinearProbing[sizeOfHashTable] = { Element() }; // every slot is initialized with the default element
 
 initializedHashTableLinearProbing(hashTableLinearProbing, sizeOfHashTable);
 std::cout << "Linear Probing" << std::endl;
-printSearchResultLinearProbing(hashTableLinearProbing, 7, sizeOfHashTable);
-removeElementLinearProbing(hashTableLinearProbing, 7, sizeOfHashTable);
-printSearchResultLinearProbing(hashTableLinearProbing, 7, sizeOfHashTable);
+printSearchResultLinearProbing(hashTableLinearProbing, keyToSearch, sizeOfHashTable);
+removeElementLinearProbing(hashTableLinearProbing, keyToSearch, sizeOfHashTable);
+printSearchResultLinearProbing(hashTableLinearProbing, keyToSearch, sizeOfHashTable);
 
 
 /*
