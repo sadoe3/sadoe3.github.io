@@ -81,68 +81,89 @@ constexpr unsigned getHashValue(const unsigned &key, const unsigned &sizeOfHashT
 ### Linked List
 ```c++
 struct Element {
-	// key should be a unique value	
-	int key;
+    // key should be a unique value	
+    // key cannot be 0; because it's the default value
+    int key = 0;
 };
 ```
 ```c++
 // this code is based on the previous post regarding the linked list
 class LinkedList {
 public:
-	virtual ~LinkedList() = default;
+    virtual ~LinkedList() = default;
 
-	virtual void add(const int&) = 0;
-	virtual LinkedList* remove(const int&) = 0;
-	virtual LinkedList* get(const int&) = 0;
+    virtual void add(const Element&) = 0;
+    virtual LinkedList* remove(const int&, bool&) = 0;
+    virtual LinkedList* get(const int&) = 0;
+
+    // this method exists for the test purpose only
+    void printInfo() {
+        std::cout << element.key;
+    }
 protected:
-	LinkedList(const Element &inputElement) : element(inputElement) { }
-	Element element;
+    LinkedList(const Element& inputElement) : element(inputElement) { }
+    Element element;
 };
 ```
 ```c++
-class SinglyLinkedList : LinkedList {
-	LinkedList* get(const int& targetKey) override {
-		if (element.key == targetKey)
-			return this;
-		else {
-			if (nextNode == nullptr)
-				return nullptr;
-			else
-				return nextNode->get(targetKey);
-		}
-	}
-}
+class SinglyLinkedList : public LinkedList {
+public:
+    SinglyLinkedList(const Element& inputElement) : LinkedList(inputElement), nextNode(nullptr) { }
+    ~SinglyLinkedList() {
+        delete nextNode;
+    }
+
+    void add(const Element& inputElement) override {
+        SinglyLinkedList* newNode = new SinglyLinkedList(inputElement);
+        if (nextNode != nullptr)
+            newNode->nextNode = nextNode;
+        nextNode = newNode;
+    }
+    LinkedList* remove(const int&, bool&) override;
+    LinkedList* get(const int& targetKey) override {
+        if (element.key == targetKey)
+            return this;
+        else {
+            if (nextNode == nullptr)
+                return nullptr;
+            else
+                return nextNode->get(targetKey);
+        }
+    }
+private:
+    SinglyLinkedList* nextNode;
+};
 ```
 ```c++
-LinkedList* SinglyLinkedList::remove(const int &targetKey, bool &isRemoved) {
-	if (nextNode == nullptr) {
-		if (data == targetData) {
-			delete this;
+LinkedList* SinglyLinkedList::remove(const int& targetKey, bool& isRemoved) {
+    if (nextNode == nullptr) {
+        if (element.key == targetKey) {
+            delete this;
             isRemoved = true;
-			return nullptr;
-		}
-		else
-			return this;
-	}
-	else {
-		if (data == targetData) {
-			auto cachedNode = nextNode;
-			delete this;
+            return nullptr;
+        }
+        else
+            return this;
+    }
+    else {
+        if (element.key == targetKey) {
+            auto cachedNode = nextNode;
+            delete this;
             isRemoved = true;
-			return cachedNode;
-		}
-		else if (nextNode->data == targetData) {
-			SinglyLinkedList* savedLinkField = nextNode->nextNode;
-			delete nextNode;
+            return cachedNode;
+        }
+        else if (nextNode->element.key == targetKey) {
+            SinglyLinkedList* savedLinkField = nextNode->nextNode;
+            delete nextNode;
             isRemoved = true;
-			nextNode = savedLinkField;
-			return this;
-		}
-		else {
-			nextNode->remove(targetData);
-			return this;
-		}
-	}
+            nextNode = savedLinkField;
+            return this;
+        }
+        else {
+            nextNode->remove(targetKey, isRemoved);
+            return this;
+        }
+    }
 }
 ```
 
@@ -152,24 +173,29 @@ constexpr int sizeOfHashTable = 30; // this can be any value
 
 SinglyLinkedList* hashTableChaining[sizeOfHashTable];
 for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket++)
-    hashTableChaining[currentBucket] = new SinglyLinkedList(Element{ 0 });
+    hashTableChaining[currentBucket] = new SinglyLinkedList(Element());
 
 Element hashTableLinearProbing[sizeOfHashTable] = { Element{ 0 } }; // every slot is initialized with the default element
 ```
 
 ### Insertion
 ```c++
-void insertElementChaining(DoubleLinkedList<Element>* hashTable[], const Element &element, const unsigned &hashValue) {
-    hashTable[hashValue]->addNode(element);
+void insertElementChaining(SinglyLinkedList* hashTable[], const Element& element, const unsigned& sizeOfHashTable) {
+    // prevent the client from inserting the default value
+    if (element.key == 0)
+        return;
+
+    hashTable[getHashValue(element.key, sizeOfHashTable)]->add(element);
 }
 ```
 ```c++
-bool insertElementLinearProbing(Element hashTable[], const Element &element, const unsigned &hashValue, const unsigned &sizeOfHashTable) {
+bool insertElementLinearProbing(Element hashTable[], const Element& element, const unsigned& sizeOfHashTable) {
     Element defaultElement;
-    while(hashTable[hashValue] != defaultElement && hashValue < sizeOfHashTable)
+    unsigned hashValue = getHashValue(element.key, sizeOfHashTable);
+    while (hashTable[hashValue].key != defaultElement.key && hashValue < sizeOfHashTable)
         hashValue++;
 
-    if(hashValue < sizeOfHashTable) {
+    if (hashValue < sizeOfHashTable) {
         hashTable[hashValue] = element;
         return true;
     }
@@ -180,17 +206,25 @@ bool insertElementLinearProbing(Element hashTable[], const Element &element, con
 
 ### Search
 ```c++
-Element* searchElementChaining(SinglyLinkedList<Element>* hashTable[], const int &key, const unsigned &hashValue) {
-    return hashTable[hashValue]->get(key);
+LinkedList* searchElementChaining(SinglyLinkedList* hashTable[], const int& key, const unsigned& sizeOfHashTable) {
+    // prevent the client from searching for the default value
+    if (key == 0)
+        return nullptr;
+
+    return hashTable[getHashValue(key, sizeOfHashTable)]->get(key);
 }
 ```
 ```c++
-Element* searchElementLinearProbing(Element hashTable[], const int &key, const unsigned &sizeOfHashTable) {
-    int hashValue = getHashValue(key, sizeOfHashTable);
-    while(hashValue != defaultElement && hashValue < sizeOfHashTable)
-        hashValue++;
+Element* searchElementLinearProbing(Element hashTable[], const int& key, const unsigned& sizeOfHashTable) {
+    // prevent the client from searching for the default value
+    if (key == 0)
+        return nullptr;
     
-    if(hashValue < sizeOfHashTable)
+    unsigned hashValue = getHashValue(key, sizeOfHashTable);
+    while (hashTable[hashValue].key != key && hashValue < sizeOfHashTable)
+        hashValue++;
+
+    if (hashValue < sizeOfHashTable)
         return &(hashTable[hashValue]);
     else
         return nullptr;
@@ -199,28 +233,33 @@ Element* searchElementLinearProbing(Element hashTable[], const int &key, const u
 
 ### Removal
 ```c++
-bool removeElementChaining(SinglyLinkedList<Element>* hashTable[], const int &key, const unsigned &hashValue) {
+bool removeElementChaining(SinglyLinkedList* hashTable[], const int& key, const unsigned& sizeOfHashTable) {
+    unsigned hashValue = getHashValue(key, sizeOfHashTable);
     auto searchResult = hashTable[hashValue]->get(key);
 
-    if(searchResult == nullptr)
+    if (searchResult == nullptr)
         return false;
     else {
-		bool isRemoved = false;
-		hashTable[hashValue] = hashTable[hashValue]->remove(key, isRemoved);
-		if(hashTable[hashValue] == nullptr)
-			hashTable[hashValue] = new SinglyLinkedList<Element>();
-		return isRemoved;
-	}
+        // prevent the client from removing default value
+        if (key == 0)
+            return false;
+
+        bool isRemoved = false;
+        hashTable[hashValue]->remove(key, isRemoved);
+        if (hashTable[hashValue] == nullptr)
+            hashTable[hashValue] = new SinglyLinkedList(Element());
+        return isRemoved;
+    }
 }
 ```
 ```c++
-bool removeElementLinearProbing(Element hashTable[], const int &key, const unsigned &sizeOfHashTable) {
-    int hashValue = getHashValue(key, sizeOfHashTable);
-    while(hashValue] != defaultElement && hashValue < sizeOfHashTable)
+bool removeElementLinearProbing(Element hashTable[], const int& key, const unsigned& sizeOfHashTable) {
+    Element defaultElement;
+    unsigned hashValue = getHashValue(key, sizeOfHashTable);
+    while (hashTable[hashValue].key != key && hashValue < sizeOfHashTable)
         hashValue++;
-    
-    if(hashValue < sizeOfHashTable) {
-        Element defaultElement;
+
+    if (hashValue < sizeOfHashTable) {
         hashTable[hashValue] = defaultElement;
 
         return true;
@@ -230,14 +269,96 @@ bool removeElementLinearProbing(Element hashTable[], const int &key, const unsig
 }
 ```
 
-### Client
+### Initialization of Hash Tables
 ```c++
-// initialized hash table
-// remove and reinsert another element
+void initializedHashTableChaining(SinglyLinkedList* hashTable[], const int& sizeOfHashTable) {
+    int currentKey = 7;
+    for (unsigned currentCount = 1; currentCount < 40; ++currentCount, currentKey = 7 * currentCount)
+        insertElementChaining(hashTable, Element{ currentKey }, sizeOfHashTable);
+}
 ```
 ```c++
-// try to search for certain element especially for the reinserted element
-// print the search result
+void initializedHashTableLinearProbing(Element hashTable[], const int& sizeOfHashTable) {
+    int currentKey = 7;
+    for (unsigned currentCount = 1; currentCount < 40; ++currentCount, currentKey = 7 * currentCount)
+        insertElementLinearProbing(hashTable, Element{ currentKey }, sizeOfHashTable);
+}
+```
+
+### Result Printer
+```c++
+void printSearchResultChaining(SinglyLinkedList* hashTable[], const int &key, const unsigned &sizeOfHashTable) {
+    auto searchResult = searchElementChaining(hashTable, key, sizeOfHashTable);
+
+    std::cout << "search for " << key << " : ";
+    if (searchResult == nullptr)
+        std::cout << "failed" << std::endl;
+    else {
+        std::cout << "succeeded(address : " << searchResult << ")" << std::endl;
+        std::cout << "key of the resulting element : ";
+        searchResult->printInfo();
+        std::cout << std::endl;
+    }
+}
+```
+```c++
+void printSearchResultLinearProbing(Element hashTable[], const int &key, const unsigned &sizeOfHashTable) {
+    auto searchResult = searchElementLinearProbing(hashTable, key, sizeOfHashTable);
+
+    std::cout << "search for " << key << " : ";
+    if (searchResult == nullptr)
+        std::cout << "failed" << std::endl;
+    else {
+        std::cout << "succeeded(address : " << searchResult << ")" << std::endl;
+        std::cout << "key of the resulting element : " << searchResult->key << std::endl;
+    }
+}
+```
+
+### Client
+```c++
+constexpr int sizeOfHashTable = 30; // this can be any value
+
+SinglyLinkedList* hashTableChaining[sizeOfHashTable];
+for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket++)
+    hashTableChaining[currentBucket] = new SinglyLinkedList(Element());
+
+initializedHashTableChaining(hashTableChaining, sizeOfHashTable);
+std::cout << "Chaining" << std::endl;
+printSearchResultChaining(hashTableChaining, 7, sizeOfHashTable);
+removeElementChaining(hashTableChaining, 7, sizeOfHashTable);
+printSearchResultChaining(hashTableChaining, 7, sizeOfHashTable);
+
+for (unsigned currentBucket = 0; currentBucket < sizeOfHashTable; currentBucket++)
+    delete hashTableChaining[currentBucket];
+
+
+std::cout << "\n\n" << std::endl;
+
+
+Element hashTableLinearProbing[sizeOfHashTable] = { Element{ 0 } }; // every slot is initialized with the default element
+
+initializedHashTableLinearProbing(hashTableLinearProbing, sizeOfHashTable);
+std::cout << "Linear Probing" << std::endl;
+printSearchResultLinearProbing(hashTableLinearProbing, 7, sizeOfHashTable);
+removeElementLinearProbing(hashTableLinearProbing, 7, sizeOfHashTable);
+printSearchResultLinearProbing(hashTableLinearProbing, 7, sizeOfHashTable);
+
+
+/*
+print result
+Chaining
+search for 7 : succeeded(address : 015B1AA8)
+key of the resulting element : 7
+search for 7 : failed
+
+
+
+Linear Probing
+search for 7 : succeeded(address : 0137FC84)
+key of the resulting element : 7
+search for 7 : failed
+*/
 ```
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
