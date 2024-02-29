@@ -163,6 +163,7 @@ void MinHeap<Type>::add(const Type& inputData) {
 }
 ```
 ```c++
+template <typename Type>
 void MinHeap<Type>::remove() {
     if (collection.count > 1) {
         Type* elements = collection.elements;
