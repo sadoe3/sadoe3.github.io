@@ -155,8 +155,10 @@ void Vector<Type>::sortRadix(const unsigned& base) {
         }
     }
 
-    sortRadixHalfCollection(collectionNegative.elements, buckets, countCollectionNegative, base);
-    sortRadixHalfCollection(collectionPositive.elements, buckets, countCollectionPositive, base);
+    if(countCollectionNegative > 0)
+        sortRadixHalfCollection(collectionNegative.elements, buckets, countCollectionNegative, base);
+    if (countCollectionPositive > 0)
+        sortRadixHalfCollection(collectionPositive.elements, buckets, countCollectionPositive, base);
 
     unsigned currentIndex = 0;
     for (int currentIndexNegative = countCollectionNegative - 1; currentIndexNegative > -1; currentIndexNegative--, currentIndex++)
