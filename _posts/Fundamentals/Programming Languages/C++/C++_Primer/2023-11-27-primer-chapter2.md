@@ -177,7 +177,7 @@ Identifier is a name of an object, a function, or a class.
 - basically, most words can be used as identifiers except for some words which is used by the language (such as keywords)
     * but it's better to obey naming convetions, such as :
         + variable = camelCase
-        + function = pascalCase
+        + function = camelCase
         + class = PascalCase
         + constant = SCREAMING_SNAKE_CASE
     * try to use them **consistently** no matter which naming convetion you choose
@@ -244,7 +244,7 @@ int *p = &i;
         ```
     * they have the equivalent meaning, but using `nullptr` is preferred
 - we can define the reference which refers to a pointer
-    * int* &r = p;
+    * `int* &r = p;`
 - you can define a pointer which points to an array
     ```c++
     int arr[10] = {};
@@ -271,35 +271,6 @@ const int SIZE = 512;
 - compilers generally convert `const` objects to literal values
 - if you want to use `const` objects in multiple files
     * you must provide `extern` keyword to both of its definition and declaration 
-
-### reference with const
-Constant reference is just another name of a reference which refer to a constant object
-```c++
-const int VALUE = 3;
-// normal(non-constant) reference
-int & nRef = VALUE; // error
-// constant referecne (reference to a constant object)
-const int & cRef = VALUE // ok
-```
-- it's not possible for normal reference to be bound to `const` object
-    * only, it can be bound to only non`const` object
-- constant reference can be bound to every type 
-    * `int value = 3;`
-    * `double dVal = 3.14;`
-    * `const int & r1 = value;` 
-        + bound to non-constant
-        + although the object which the reference refers to is non`const`, `r1` **regards** the target as `const` object,
-            - hence it's not possible to change the value of the target through `r1`
-    * `const int & r2 = 41;`
-        + bound to literal
-    * `const int & r3 = r1 * 2;`
-        + bound to result of an expression
-    * `const int & r4 = dVal;`
-        + bound to different type
-        + when it comes to `r4`, it's not bound to `dval` but the following codes are executed by compiler
-            - `const int temp = dVal; const int & r4 = temp;`
-            - the name `temp` is what I named arbitrarily, the actual name is not significant
-            - the point is that `r4` is bound to the **temporary unnamed object** not the existing object when this circumstance happens
 
 ### pointer with const
 Pointers can be used in 2 ways with `const` qualifier
@@ -342,6 +313,35 @@ const int * pCon = &target;
     * there's no top-level const for references
         + because reference is itself a constant
 
+### reference with const
+Constant reference is just another name of a reference which refer to a constant object
+```c++
+const int VALUE = 3;
+// normal(non-constant) reference
+int & nRef = VALUE; // error
+// constant referecne (reference to a constant object)
+const int & cRef = VALUE // ok
+```
+- it's not possible for normal reference to be bound to `const` object
+    * only, it can be bound to only non`const` object
+- constant reference can be bound to every type 
+    * `int value = 3;`
+    * `double dVal = 3.14;`
+    * `const int & r1 = value;` 
+        + bound to non-constant
+        + although the object which the reference refers to is non`const`, `r1` **regards** the target as `const` object,
+            - hence it's not possible to change the value of the target through `r1`
+    * `const int & r2 = 41;`
+        + bound to literal
+    * `const int & r3 = r1 * 2;`
+        + bound to result of an expression
+    * `const int & r4 = dVal;`
+        + bound to different type
+        + when it comes to `r4`, it's not bound to `dval` but the following codes are executed by compiler
+            - `const int temp = dVal; const int & r4 = temp;`
+            - the name `temp` is what I named arbitrarily, the actual name is not significant
+            - the point is that `r4` is bound to the **temporary unnamed object** not the existing object when this circumstance happens
+
 ### constexpr
 Constant expression is an expression with 2 features
 ```c++
@@ -376,7 +376,7 @@ typedef newint A, *B;   // int = newint = A;  int* = B;
 // special case for typedef
 typedef char* pString;
 const pString cStr;     // same as char * const cStr; not const char *;
-const pString * cStr;   // same as char*const * cStr;
+const pString * cStr;   // same as char * const * cStr;
 
 
 // using : modern C++ style
@@ -402,7 +402,7 @@ auto sz = 0, pi = 3.14; // error
     + `int a = 3; auto & b = a;`
 
 ### decltype
-when you use decltype type specifier, you can set the type of an object as the return type of the given expression of decltype type specifier
+when you use `decltype` type specifier, you can set the type of an object as the return type of the given expression of `decltype` type specifier
 ```c++
 decltype(f()) a;    // f() is not called, but a has whatever type f returns
 decltype(1+2.3) b;  // same as double b;
@@ -416,10 +416,10 @@ decltype((i)) a = i;        // same as int & a = i;
 decltype(i) b = i;          // same as int a = i;
 decltype(*p) c = i          // same as int & c = i; 
 ```
-- unlike auto, decltype handles top-level const and references
-- if you use double parentheses for an object as an expression, decltype always deduce the type as the reference of the given object
+- unlike `auto`, `decltype` handles top-level const and references
+- if you use double parentheses for an object as an expression, `decltype` always deduce the type as the reference of the given object
 - however, without double parentheses, delctype gives reference only if the given object is a reference
-- decltype returns a reference type for expressions that yields objects that can stand on the left-hand side of the assignment operation
+- `decltype` returns a reference type for expressions that yields objects that can stand on the left-hand side of the assignment operation
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
