@@ -29,7 +29,7 @@ date: 2023-12-2
 - varing parameters - p 220
 - return list-intialzation - p226
 - trailing return type and decltype as return type - p229
-- overloaed functions - p230
+- overloaded functions - p230
 - default argument - p236
 - inline and constexpr - p238
 - function matching - p242
@@ -38,6 +38,10 @@ date: 2023-12-2
 ## Argument Passing
 - Passed by value and Passed by reference
 - Varing Parameters
+
+### Difference between parameter and argument
+- A **parameter** is a term from the perspective of the **function's definition** (or the writer of that function)
+- Whereas, a **argument** is a term from the perspective of the **caller** of that funciton
 
 ### Passed by value and Passed by reference
 C and C++ have difference concepts regarding passing an argument as passed by value or passed by reference
@@ -59,7 +63,7 @@ C and C++ have difference concepts regarding passing an argument as passed by va
     ```
 - you can set the parameter as a refence to an array
     ```c++
-    int func(int (&rArr)[10]) {
+    void func(int (&rArr)[10]) {
         std::cout << rArr[2] << std::endl;
     }
     ```
@@ -129,15 +133,21 @@ decltype(odd) * arrPtr(int i) {     // returns a pointer to an array of 3 int el
 
 ### Default Arguments
 It's possible to set the default value to the parameter in C++ like C but in a differnt way
-```c++
-int functionName(int, int = 3, int = 6);
-
-int functionName(int, int, int = 3);  // error; you can't change the default value
-int functionName(int = 1, int, int);  // ok; you can add default arguments
-```
-- you can set the default value by using = operator to the parameter
+- you can set the default value by using `= operator` to the parameter
+    * in C, you need to use way harder method to implement default argument
 - like C, you must put the parameters with default values to the last part of the parameter list
+    ```c++
+    int functionNameA(int, int = 3, int = 6);    // ok
+    int functionNameB(int, int = 1, int);        // error
+    ```
 - you can add more default arguments but cannot change the default value
+    ```c++
+    int functionName(int, int = 3, int = 6);
+
+    // trying to redeclare the existing function
+    int functionName(int, int, int = 3);  // error; you can't change the default value
+    int functionName(int = 1, int, int);  // ok; you can add default arguments
+    ```
 - objects can be used as the default value of the parameters
     ```c++
     char c = 'k';
@@ -152,7 +162,11 @@ int functionName(int = 1, int, int);  // ok; you can add default arguments
     ```
 
 ### inline Functions
-If simple operation is used in many places, making it as a function is a good idea, and making such function as an `inline` is also a good idea to increse the performance
+- If simple operation is used in many places, making it as a function is a good idea
+    * because it increases that **readability** of the code
+    * but frequent funciton call may reduce the **performance loss**
+- and making such function as an `inline` is also a good idea
+    * because it can **fix** that performance loss problem
 ```c++
 inline const std::string & shorterString(const std::string &s1, const std::string &s2) {
     return s1.size() <= s2.size() ? s1 : s2;
@@ -170,9 +184,9 @@ constexpr size_t scale(size_t count) { return count*getNumber(); }      // scale
 ```
 - placing `constexpr` before the return type defines the function as a `constexpr` function
 - however, there are 2 conditions to be satisfied in order to make the function as a `constexpr` function
-    * return type, and paramter types must be a **literal type**
+    * return type, and parameter types must be a **literal type**
         + if the argument is given at run time, this doesn't satisfy this condition
-    * function bojdy must contain only **one** `return` statement
+    * function body must contain only **one** `return` statement
 - if the function satisfies the conditions, then the compiler would replace the function call to its **resulting value**
     - hence `constexpr` functions are implicitly `inline` functions
 - it's usually a good idea to put `inline` and `constexpr` functions in the header file
@@ -214,7 +228,7 @@ print(begin(j), end(j));        // call print(const int*, const int*)
     * best match : there's only one appropriate function
     * no match : compilation error when there's no proper fucntion available
     * ambiguous call : compilation error when there are more than one functions which can be a proper one
-    * ambiguous call happens when there are functions which takes the same number of arguments and the types are different from the call but can be converted
+        + ambiguous call happens when there are functions which takes the same number of arguments and the types are different from the call but can be **converted**
 - the process consists of the 3 phases
     1. find **candidate** functions
         * candidate functions have the same name and are visible from the caller
@@ -228,6 +242,6 @@ print(begin(j), end(j));        // call print(const int*, const int*)
         int functionName(int, int);
         int functionName(double, double);        
         ... // some codes
-        function(3.14, 3);      // ambiguous call
+        function(3, 3.14);      // ambiguous call
         // because int functionName(int, int) is better in terms of the first argument, but int functionName(double, double) is better in terms of the second argument 
         ```
