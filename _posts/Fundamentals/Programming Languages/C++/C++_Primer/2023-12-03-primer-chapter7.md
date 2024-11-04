@@ -99,7 +99,9 @@ b.memberFunction(); // 9 is returned
     * it makes `this` as the constant pointer to a constant
     * so that you can't change the value of the data member through this member function unless they are `mutable`
 - it's possible to overload member functions based on the `const`
-    * because **const member functions** are called only from the **const object**
+    * note that the **non-const object** can call both of **const member functions** and **non-const member functions**
+        + because implicit conversion from non-const to const is valid
+    * whereas, the **const object** can call **const member functions** only
 
 ### Order of compilation
 When compiler compiles the class, it compiles the declarations of members first, and then, it compiles the functions bodies of the member functions only after the entire class has been seen
@@ -150,8 +152,9 @@ There are 3 types of the specialized member functions
 
 ### Synthesized Member Functions
 When you don't implement the specialized member functions, compiler creates them instead
+- they are called as **synthesized member functions**
 - constructor
-    * if you don't declare any constructors, compiler creates the **default constructor** also called as **synthesized member function**
+    * if you don't declare any constructors, compiler creates the **default constructor**
     * **default constructor** initializes the data members as follows
         + if there is an in-class initializer, use it to initialize the member
         + otherwise, default-initialize the member
@@ -212,32 +215,40 @@ class ClassName() {
     int a;
 }
 ... // some codes
-ClassName a();                    // function declaration
+ClassName a();                    // note that this is not an object creation but a function declaration
+
 ClassName a;                      // object is created by the default contructor
 ClassName a = ClassName();        // object is created by the default contructor
 ```
 - however, there's one more type of default constructor
     * if all parameters of the contructor have their default value, then this constructor is also considered as a default contructor
-- also, you need to be aware that calling a default contructor doesn't need any parentheses when you direct-initialize it
+- also, you need to be aware that calling a default contructor doesn't need any **parentheses** when you direct-initialize it
+    * if you do so, then it is a **function declaration**
 
 ### Delegating Constructor
 A **delegating constructor** is a contructor which uses another constructor from its **own** class to perfrom its initialization
 ```c++
-class ClassName() {
-    ClassName(int inputValue, int inputAge) : value(inputValue), age(inputAge) {}   // delegated-to contructor
-    ClassName() : ClassName(3, 8) {}                // delegating constructor
-
-    int value;
-    int age;
-}
+class MyClass {
+    public:
+        MyClass() : MyClass(3) {                    // delegating constructor
+            std::cout << "1 " << value << " ";
+        }
+        MyClass(int input) : value(input) {         // delegated-to contructor
+            std::cout << "2 " << value << " ";
+        }
+    private:
+        int value;
+};
+// print result: 2 3 1 3
 ```
 - the contructor initializer list of the delegating constructor takes **only one entry** which is the contructor call
     * you can choose which constructor to call by giving different parameters
 - the order of the execution is like this:
-    1. constructor initializer list of the delegated-to constructor
-    2. function body of the delegated-to constructor
+    1. delgating constructor calls the delgated-to constructor
+    2. constructor initializer list of the delegated-to constructor is executed
+    3. function body of the delegated-to constructor is executed
         * it's usually empty
-    3. function body of the delegating constructor
+    4. function body of the delegating constructor
 
 ### Implicit Class Type Converions
 A **converting constructor** is a contructor which takes only one parameter of the different type of class
@@ -245,29 +256,31 @@ A **converting constructor** is a contructor which takes only one parameter of t
 struct ClassA() {
     ClassA(std::string inputName) : name(inputName) {}
     std::string name;
-}
+};
 struct ClassB() {
     explicit ClassB(std::string inputName) : name(inputName) {}         // prevent implicit type conversion
     std::string name;
-}
-void func(ClassA a) {
+};
+
+void funcA(ClassA a) {
     std::cout << a.name;
-}
+};
 void funcB(ClassB a) {
     std::cout << a.name;
-}
+};
 ...     // some codes
-func(std::string("kyle"));          // ok; the temporary object is created by calling the converting constructor; this object would be discarded after the end of func()
-func("kyle");                       // error; can't execute multiple implicit type conversion
-funcB(std::string("kyle"))          // error; you need to call the constructor explicitly
-funcB(ClassB(std::string("kyle")))          // error; you need to call the constructor explicitly
+funcA("kyle");                              // error; can't execute multiple implicit type conversion
+funcA(std::string("kyle"));                 // ok; the temporary object is created by calling the converting constructor; this object would be discarded after the end of func()
+
+funcB(std::string("kyle"));                 // error; you need to call the constructor explicitly
+funcB(ClassB(std::string("kyle")));         // ok;
 ```
 - when you pass the object of the different to the position where a certain type is expected, it's legal if there's a converting constructor between those 2 types
     * then, the implicit type conversion happens
     * however, note that it's impossible to execute multiple implicit type conversions
         + in this example : `c-style string` -> `std::string` -> `ClassA`
         + in order to achieve multiple type converions, you need to perform explicit type conversions so that there's only one conversion left which can be done in implicit way
-- if you want to prevent the use of a constructor in a context that requires an implicit conversion, you can achieve this by delcaraing the converting constructor as `explicit`
+- if you want to prevent the use of a constructor in a context that requires an implicit conversion, you can achieve this by delcaring the converting constructor as `explicit`
     - the **explicit converting constructor** is called only if it's called explicitly
 
 ## Access Specifiers
@@ -278,8 +291,8 @@ There are 3 types of **access specifiers** which control the access level of the
 - `protected`
     * it's related to the concept of **inheritance**, hence it would be covered in the later chapter
 - `private`
-    * members defined after a `private` specifier are accessible to the member functions of the class but are **not** accessible to codes that uses the class
-    * hence, the `private` sections **incapsulate(hide)** the implementation
+    * members defined after a `private` specifier are accessible to the member functions of the class but are **not** accessible to the code that uses the class
+    * hence, the `private` sections **encapsulate(hide)** the implementation
 
 ### How to specify the access level
 ```c++
@@ -301,7 +314,7 @@ a.age;                      // error; impossible to access private member
 - if there's no access specifier provided inside the class defintion, then the **default access level** is used to specify the access level of the members
     * `class` has the `private` as its **default access level**
     * `struct` has the `public` as its **default access level**
-    * this is the only difference between `class` and `struct` in C++
+        + this is the **only difference** between `class` and `struct` in C++
 
 ### Non-member Class-Related Functions
 - in some cases, you need to implement functions which handle the class, but is not part of the class
@@ -486,11 +499,14 @@ ClassA a = {1, "haha"};     // aggregate class can be initialized with a braced 
     * it does not define any constructors
     * it has no in-class initializers
     * it has no base classes or `virtual` functions which are related to the concept of inheritance
+- if it statifies the conditions above
+    * you can initilaize each data member of it by using **list initialiation**
 - an aggregate class may have methods
-- like an array, if the list of intializers has fewer elements, the trailing members are value-initialized
+- like an array, if the list of intializers has fewer elements, the trailing members are **value-initialized**
 - like any constructors, the order of initializers must be same as the order of the data members
 
 ### Literal Classes
+If you want to use a certain class in the **constant expression**, you can do so by making it as a **literal class**
 ```c++
 class Debug {
 public:
@@ -543,7 +559,19 @@ a.calculateMoney();
 ```
 - if the member is declared as `static`, it exists **outside** any object of the class
     * there's only **one** static member in the program, and all objects share it
-        + for data members, objects don't contain data associated with `static` data members
+        + for data members, objects **don't contain** data associated with `static` data members
+        ```c++
+        struct ClassA {
+            public:
+                int a;
+                static constexpr int b = 3;
+        };
+        ... // some codes
+        ClassA b;
+	    std::cout << sizeof(b) << " " << b.b << std::endl;
+        // print result: 4 3
+        ```
+        + but note that it's possible for thme to use `static` data member
         + for member functions, `static` member functions are not bound to any object
             - therefore, `static` member functions don't have a `this` pointer in either of explicit way and implicit way
             - you can't access to the normal members of the class inside the `static` method
