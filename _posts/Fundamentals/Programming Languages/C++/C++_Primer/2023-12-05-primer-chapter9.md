@@ -23,7 +23,7 @@ date: 2023-12-5
 A Container holds a **collection** of objects of a specified type
 
 ### Sequential Container Types
-The **Sequential Containers** are the containers which support the **sequential access**
+The **Sequential Containers** are the containers which are related to [**linear data structures**](https://sadoe3.github.io/data-structures/structures-chapter1/#sequential-arrangement)
 
 ||Sequential Container Types|
 |:---:|:---|
@@ -37,12 +37,12 @@ The **Sequential Containers** are the containers which support the **sequential 
 - in order to use the container, you need to **include** the header of which name is the name of the type itself
     * for `std::array`, include `<array>`
 - With the exception of `array`, which is a fixed-size container, the containers provide efficient, flexible memory management
-- `std::string` and `std::vector` hold their elements in **contiguous** memory
-    * therefore, it's fast to comptue the adress of an element from its **index**
-    * however, adding or removing elemetns in the middle of one of these containers takes time
+-  `std::vector` and `std::string` hold their elements in **contiguous** memory
+    * therefore, it's fast to compute the address of an element from its **index**
+    * however, adding or removing elements in the middle of one of these containers takes more time than the others
         + all the element after the one inserted or removed have to be moved to maintain **contiguity**
         + moreover, adding an element can sometimes require that additional storage be **allocated**, then, every element must be moved into the new storage
-- `std::list` and `std::forward_list` containers are designed to make it fast to add or remove an element **anywhere** in the container
+-  `std::forward_list` and `std::list` containers are designed to make it fast to add or remove an element **anywhere** in the container
     * in exchange, these types do **not** support **random access**
         + we can access the element only through **sequential access**
     * moreover, the memory overhead for these containers is often **substantial**, when compared to `std:::vector`, `std::deque`, and `std::array`
@@ -139,7 +139,7 @@ Basically, iterator is like a pointer which points to the element of the contain
     * you can get the iterators by calling `.begin()` and `.end()` methods
 - the **reverse** iterator is an iterator that goes **backward** through a container
     * for instance, `++` on a reverse iterator yields the previous element
-- if write access it not needed, use `const` version of iterators
+- if write access is not needed, use `const` version of iterators
 
 ### Initialization of Containers
 
@@ -183,9 +183,9 @@ Basically, iterator is like a pointer which points to the element of the contain
             ```
 - the `.assign()` methods are available from only the **sequential** containers except `std::array`
     * it does the assignment operation with the object created by the given parameters
-- the `swap()` opeartion **doesn't copy, delete, or insert** any elements and is guaranteed to be executed at constant time
-    * the elements themselves are not swapped; internal data strucrues are swapped
-            + however, `std::array` does exchange the elements, hence, swapping two `std::array`s requires time proportinal to the number of elements in the `std::array`
+- the `swap()` operation **doesn't copy, delete, or insert** any elements and is guaranteed to be executed at constant time
+    * the elements themselves are not swapped; internal data structures are swapped
+            + however, `std::array` does exchange the elements, hence, swapping two `std::array`s requires time proportional to the number of elements in the `std::array`
     * which means, it's usually **much faster** than copying(assigning) elements from `c2` to `c1` 
 - as a matter of habit, it's best to use the **nonmember** version of `std::swap()`
 
@@ -203,9 +203,9 @@ There are operations specific to the **sequential** containers
 |`c.emplace_back(args)`|end of `c`. returns `void`.|
 |`c.push_front(t)`|Creates an element with value `t` or constructed from `args` on the|
 |`c.emplace_front(args)`|front of `c`. returns `void`.|
-|`c.insert(p,t)`|Creates an element with value `t` or constructed from `args` before|
+|`c.insert(p, t)`|Creates an element with value `t` or constructed from `args` before|
 |`c.emplace(p, args)`|the element denoted by iterator `p`. returns an iterator referring to the element that was added.|
-|`c.insert (p,n, t)`|Inserts `n` elements with value `t` before the element denoted by iterator `p`. returns an iterator to the first element inserted; if `n` is zero, returns `p`.|
+|`c.insert (p, n, t)`|Inserts `n` elements with value `t` before the element denoted by iterator `p`. returns an iterator to the first element inserted; if `n` is zero, returns `p`.|
 |`c.insert(p, b, e)`|Inserts the elements from the range denoted by iterators `b` and `e` before the element denoted by iterator `p`. `b` and `e` may not refer to elements in `c`. returns an iterator to the first element inserted; if the range is empty, returns `p`.|
 |`c.insert(p, il)`|`il` is a braced list of element values. inserts the given values before the element denoted by the iterator `p`. returns an iterator to the first inserted element; if the list is empty returns `p`.|
 
