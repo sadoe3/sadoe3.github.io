@@ -149,7 +149,7 @@ Each stream has an associated **file mode** that represents how the file may be 
 - the modes that we can specify have the following restrictions
     * `out` may be set **only** for an `ofstream` of `fstream` object
     * `in` may be set **only** for an `ifstream` of `fstream` object 
-    * `trunc` my be set **only** when `out` is also specified
+    * `trunc` may be set **only** when `out` is also specified
     * `app` mode may be specified 
     * by default, 
         + we can specify multiple file modes by using `|(bitwise OR operator)`
