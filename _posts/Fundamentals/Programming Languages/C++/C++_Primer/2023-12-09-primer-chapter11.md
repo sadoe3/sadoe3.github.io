@@ -75,25 +75,15 @@ We can construct the associative container in various ways
     std::map<std::string, std::string> authors = { {"Joyce", "James"}, {"Kyle", "Charles"} };   // similar to initialize multi-dimensional array
     ```
 - construction with the predicate
-    * you can override the `<` operator so that the ordering is based on the custom operation
-    * you need to pass the type of the predicate as the last template argument
+    * you need to pass the type of the predicate which does the `<` operation as the last template argument
         ```c++
-        // there are two ways to implement this
-        
         // using pointer to function
         bool compIsbn(const BookData & lhs, const BookData & rhs) {
             return lhs.isbn() < rhs.isbn();
         }
         std::multiset<BookData, decltype(compIsbn) *> bookstore(comIsbn);
-
-        // using comparison struct
-        struct CompIsbn {
-            bool operator()(const Point& lhs, const Point& rhs) const {
-                return lhs.x < rhs.x;
-            }
-        };
-        std::multiset<BookData, CompIsbn> bookstore;
         ```
+    * as you can see, the type should be the pointer to function
     * the custom operation must define a **strict weak ordering** over the key type
         + two keys cannot both be "less than" each other; if `k1` is "less than" `k2`, then `k2` must never be "less than" `k1`
         + if `k1` is "less than" `k2` an `k2` is "less than `k3`, then `k1` must be "less than" `k3`
@@ -216,7 +206,7 @@ Aside from operations that manage the **hashing**, the unordered containers prov
     |`c.load_factor()`|returns average number of elements per bucket. the resulting type is `float`.|
     |`c.max_load_factor()`|returns average bucket size that `c` tries to maintain. `c` adds buckets to keep `load_factor <= max_load_factor`. the resulting type is `float`.|
     |`c.rehash(n)`|reorganizes storage so that `bucket_count >= n` and and `bucket_count > size/max_load_factor`.|
-    |`c.reserve(n)`|reorganize so that `c` can hold `n` elements without a `rehash`.|
+    |`c.reserve(n)`|reorganizes so that `c` can hold `n` elements without a `rehash`.|
 
 ### Customizing Hash Function and Equality Operator
 Like the ordered container, it's possible to override the `==` operator and **hash function**
