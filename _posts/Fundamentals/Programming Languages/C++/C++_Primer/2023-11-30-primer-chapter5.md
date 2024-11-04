@@ -35,7 +35,7 @@ for( delcaration : expression ) {
 } 
 ```
 - `expression` : a sequence(collection) which contains elements of same type at the **continued** memories
-    * such as, braced initializer, array, objec which has begin and end method which return the iterators are the collections
+    * such as, braced initializer, array, object which has begin and end method which return the iterators are the collections
 - `declaration` : an object which handles the element of the give collection
     * there must be a conversion between the type of a variable and the oen of the sequence
         + hence, just using **auto** type might be useful choice
@@ -64,7 +64,7 @@ Excpetion handling would be covered in the later chapter, but for now some basic
 The following codes is the example of throwing `runtime_error` exception
 ```c++
 #include <stdexcept>            // must be included to use runtime_error class
-...                             // soem codes
+...                             // some codes
 throw std::runtime_error("error information");
 ```
 - there are 4 headers which define the standard exception classes
@@ -76,7 +76,7 @@ throw std::runtime_error("error information");
         + this header defines the `bad_alloc` class which would be covered in the later chapter
     *  `<type_info>`
         + this header defiens the `bad_cast` class  which would be covered in the later chapter
-- the following is the standard exception classes defiend in `<stdexcept>` heaer file
+- the following is the standard exception classes defiend in `<stdexcept>` header file
 
 |Class Name|Explanation|
 |:---:|:---|
@@ -113,7 +113,7 @@ try{
     ... // soem codes which handles the exception
 }
 
-// example of basid use
+// example of basic use
 #include <stdexcept>
 
 try{
@@ -139,7 +139,7 @@ try {
     * this would be covered in the later chapter for sure
 - once one of the `catch` clauses is executed, the **control flow** continues to execute the statement following the last `catch` clause of the `try` block
 - the search for the handler **reverses** the call chain like **recursion**
-    * if there no handler for current excpetion, then the library function called `terminate` is called
+    * if there no handler for current exception, then the library function called `terminate` is called
 
 ### Exception Safety
 When an exception is raised, control flow stops executing current statement and jumps to the `catch` clause in order to search for the proper handler
