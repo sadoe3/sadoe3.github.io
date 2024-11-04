@@ -58,8 +58,8 @@ The C++ library incorporates the C library for facilities defined specifically f
 #include <ctype.h>
 #include <cctype>
 ```
-- the c++ version of these headers are named cname - they remoe the .h suffix and preced the name with the letter c
-- in particular, the names defined in the cname headers are defined inside the std namespace, whereas those dfined in the .h versions are not
+- the c++ version of these headers are named cname - they remove the .h suffix and preced the name with the letter c
+- in particular, the names defined in the cname headers are defined inside the std namespace, whereas those defined in the .h versions are not
 
 ### STL and sequential container
 In this chapter, string and vector which are sequential container of STL are covered in order to know how to use them in basic way
@@ -100,11 +100,11 @@ std::string s4(n, 'c');     // s4 is initialized with n copies of character 'c'
 |`s.empty()`|Returns true if s is empty; otherwise returns false.|
 |`s.size()`|Returns the number of characters in s.|
 |`s[n]`|Returns a reference to the char at position in n in s; positions start at 0.|
-|`s1 + s2`|Returns a string that is the concatenatio of s1 and s2.|
+|`s1 + s2`|Returns a string that is the concatenation of s1 and s2.|
 |`s1 = s2`|Replaces characters in s1 with a copy of s2.|
 |`s1 == s2`|Returns true if s1 and s2 contain the same characters. Equality is case-sensitive.|
 |`s1 != s2`|Opposite case of ==|
-|`<, <=, >, >=`|Comparison are case-sensitive and use **dictioary ordering**|
+|`<, <=, >, >=`|Comparison are case-sensitive and use **dictionary ordering**|
 
 ```c++
 string s1, s2;
@@ -170,6 +170,8 @@ There are 3 ways to do so
         + the result of using an index outside this range is **undefined**
         + subscripting an empty string is also **undefined**
         + hence, when you use subscript operators, check whether the index is valid
+    * therefore, it's a good choice to use `.at()` method which acts same as what `[] operator` does but it throws an exception if it takes invalid index
+        + which means it can increase the robustness of your code
 - iterators
     * you can access the element of containers in STL by using their iterators
     * but they would be covered in the later chapter
@@ -195,10 +197,10 @@ std::vector<std::string> sVec(10);            // sVec is initialized with 10 obj
 std::vector<std::string> sVec = 10;           // error; only direct initialization works
 ```
 - templates would be covered in the later chapter, hence knowing the basic use of vector is enough for this chapter
-- in oder to use vector class template, you need to include \<vector> header file
+- in oder to use vector class template, you need to include `<vector>` header file
 - because vector class template is defined in std namespace, you need to specify std:: to using vector class template
-- the porcess thatthe compiler uses to create classes or functiosn from templates is called **instantiation**
-    * when you want to instantiate the class from the vector class template, you need to specifiy the type for the collection to contain by using <>
+- the process that the compiler uses to create classes or functions from templates is called **instantiation**
+    * when you want to instantiate the class from the vector class template, you need to specifiy the type for the collection to contain by using `<>`
     * we can define vectors to hold objects of most any type
 - if vector is created by default initialization, it becomes an empty collection
 - because vector is a sequential container, the intialization is similar to string
@@ -249,6 +251,7 @@ There are 3 ways like string
     * subscripting the object at the position outside valid range would return the **undefined** value
         + it does **not** add new element at that position
         + hence, you need to check the position before indexing
+        + or use `.at()` method
 - iterators
 
 
@@ -333,6 +336,7 @@ for(auto & i : scores) {
 }
 
 auto ia2(scores);               // ia2 is unsigned int * object because the name of array is the constant pointer to the first element of an array
+                                // also note that the reason why const doesn't exist is because auto ignores the top-level constness
 
 std::string name = "kyle";
 const char * str = name.c_str();    // c_str() method returns a c-style character string (array of characters and null terminated)
@@ -342,7 +346,7 @@ std::vector<int> iVec(std::begin(int_arr), std::end(int_arr));      // you can i
                                                                     // from the first element to the last one; you can manipulate the starting and ending point
 ```
 - you can use range for statement with arrays
-- note that c_str() method returns pointer to constant character because std::string class doesn't want the array to change its value
+- note that `c_str()` method returns pointer to constant character because `std::string` class doesn't want the array to change its value
 - there are begin and end functions in a std namespace which work in a same way as as their method type does
     * `std::begin(int_arr)` returns the constexpr unsigned int * which points to the first element of int_arr
 
