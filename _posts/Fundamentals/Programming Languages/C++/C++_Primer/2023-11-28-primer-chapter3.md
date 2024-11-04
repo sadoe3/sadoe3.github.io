@@ -22,7 +22,7 @@ date: 2023-11-28
 ## Namespace using Declaration
 
 ### using Declaration
-In order to use a name inside a certain namespace, you should type like this : `namespace::name` <br>
+In order to use a name inside a certain namespace, you should type like this : `namespace::\name` <br>
 but with **using** declaration, you can skip ' namespace:: ' part 
 ```c++
 #include <iostream>
