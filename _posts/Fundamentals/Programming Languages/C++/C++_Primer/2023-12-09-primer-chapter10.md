@@ -99,7 +99,7 @@ Some algorithms rearrange the order of elements within a container, like `std::s
             words.erase(it, words.end());
         }
         ```
-- the point is that the library algorithms operate on iterators, nto containers
+- the point is that the library algorithms operate on iterators, not containers
     * therefore, an algorithm **cannot** (**directly**) add or remove elements
 
 ## Customizing Operations
@@ -134,7 +134,7 @@ A lambda expression can be thought of as an **unnamed**, **inline** function
     * `[capture list] (parameter list) -> return type { function body }`
     * where `[capture list]` is an (often empty) list of **local variables** defined in the enclosing function
     * `(parameter list) -> return type { function body }` are the same as in any ordinary funciton
-    * unlike a function, lambdas may be defined **inside** a function
+    * unlike a function, lambdas may be defined where **parameter** is expected
     * we can **omit** either or both of the `parameter list` and `return type` but must **include** the `capture list` and `function body`
         + the `return type` is **inferred** from the type of the expression that is returned
         + if it doesn't return anything, the `return type` is `void`
@@ -163,10 +163,13 @@ std::sort(words.begin(), words.end(), [] (const std::string & lhs, const std::st
         + `mutable` lambda may not omit the parameter list
         ```c++
         int a = 3;
-        auto f = [a] () mutable {return ++a;}
+        auto f = [a] () mutable {return ++a;};
         a = 0;
-        auto j = f();       // j = 4
+        auto j = f();       
+        std::cout << a << " " << j;
+        // result: 0 4
         ```
+        + note that although lambda function makes its local copied object be modified, the actual object (`a` outside lambda) doesn't reflect it, because they are diffent objects
         + whether a variable captured by refernce can be changed depends only on whether that reference refers to a `const` or non`const` type
     * by default, if a `function body` contains any statements other than a `return`, that lambda is assumed to return `void` even if it returns a value
         + hence, you must explicitly include `return type` if the `function body` contains any statements other than a `return`
@@ -290,7 +293,7 @@ alg(beg, end, beg2, end2, other args);
 - when you pass a predicate, you can use the `overloaded` version or the `_if` version
     * the reason why there are 2 ways to do the same thing is because the `_if` version and normal version takes the **same** number arguments
     * hence, to avoid any possible ambiguities, the library provides separate named versions for these algorithms
-- if you don't want to change the original sequnce, try the `_copy` version of it
+- if you don't want to change the original sequence, try the `_copy` version of it
 
 
 ## Container-Specific Algorithms
