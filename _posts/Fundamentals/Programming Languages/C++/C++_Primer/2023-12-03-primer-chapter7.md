@@ -571,7 +571,7 @@ a.calculateMoney();
 	    std::cout << sizeof(b) << " " << b.b << std::endl;
         // print result: 4 3
         ```
-        + but note that it's possible for thme to use `static` data member
+        + but note that it's possible for objects to access `static` data member in the same way as they do so for normal data member
         + for member functions, `static` member functions are not bound to any object
             - therefore, `static` member functions don't have a `this` pointer in either of explicit way and implicit way
             - you can't access to the normal members of the class inside the `static` method
@@ -583,7 +583,7 @@ a.calculateMoney();
 - generally, `static` data members are initialized through `static` methods, however, it's possible to use in-class initializer to initialize `static` data members if the following conditions are satisfied
     * the `static` data member must be `const (integral type)` or `constexpr (literal type)`
     * the initializer must be a constant expression
-- there are 2 speical uses of `static` data members unlike normal data members
+- there are 2 special uses of `static` data members unlike normal data members
     * `static` data members can have incomplete types
         + in particular, they can have the same type as the class type of which it is a member
         ```c++
