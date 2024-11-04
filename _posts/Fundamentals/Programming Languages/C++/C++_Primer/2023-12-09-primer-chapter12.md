@@ -89,7 +89,7 @@ We can think of a `std::shared_ptr` as if it has an associated counter, usually 
 |`shared_ptr<T> p(u)`|assumes ownership from the `std::unique_ptr` `u`; makes `u` null.|
 |`shared_ptr<T> p(q, d)`|assumes ownership for the object to which the built-in pointer `q` points. `q` must be convertible to `T*`. `p` will use the callable object `d` in place of `delete` to free `q`.|
 |`shared_ptr<T> p(p2, d)`|`p` is a copy of the `std::shared_ptr` `p2` except that `p` uses the callable object `d` in place of `delete`.|
-|`p = q`|`p` and `g` are `std::shared_ptr`s holding pointers that can be converted to one another. Decrements `p`'s reference count and increments `g`'s count; deletes `p`'s existing memory if `p`'s count goes to `0`.|
+|`p = q`|`p` and `q` are `std::shared_ptr`s holding pointers that can be converted to one another. Decrements `p`'s reference count and increments `q`'s count; deletes `p`'s existing memory if `p`'s count goes to `0`.|
 |`p.use_count()`|returns the number of objects sharing with `p`; may be a slow operation, intended primarily for debugging purposes.| 
 |`p.unique()`|returns `true` if `p.use_count()` is `1`; `false` otherwise.| 
 |`p.reset()`|if `p` is the only `std::shared_ptr` pointing at its object, `reset` frees|
@@ -112,9 +112,9 @@ auto p2 = new auto{a,b,c};              // error; must use parentheses for this 
 
 const Type *ptr = new const Type(args);         // const object can be allocated;
                                                 // must be initialized
-Type * p1 = new (std::nothrow) Type;            // hanlding memory exhaustion
+Type * p1 = new (std::nothrow) Type;            // handling memory exhaustion
 ```
-- by default, if `new` is unable to allocate the request storage, it throws an exceptionf of type `std::bad_alloc`
+- by default, if `new` is unable to allocate the request storage, it throws an exception of type `std::bad_alloc`
     * if you want to prevent `new` from throwing an exception, try to use **placement new** which lets us pass additional arguments to `new`
     * if you pass `std::nothrow` to `new`, `new` will return a `nullptr` if the allocation failed
 
@@ -169,7 +169,7 @@ void f() {
 - by default, ordinary pointers don't support this
 
 ### Conventions of Smart Pointers
-To use smart pointers correctly, we msut adhere to a set of the following convections
+To use smart pointers correctly, we msut adhere to a set of the following conventions
 - don't use the same built-in pointer value to initialize (or reset) more than one smart pointer
 - don't `delete` the pointer returned from `.get()`
 - don't use `.get()` to initialize or reset another smart pointer
@@ -180,7 +180,7 @@ To use smart pointers correctly, we msut adhere to a set of the following convec
 
 ||Operations Specific to `std::unique_ptr`|
 |:---:|:---|
-|`make_unique<T>(args)`|returns a `std::unique_ptr` pointing to a dynamically allocated object of type `T`. use `args` to initialize that object|
+|`make_unique<T>(args)`|returns a `std::unique_ptr` pointing to a dynamically allocated object of type `T`. use `args` to initialize that object.|
 |`unique_ptr<T> p`|null `std::unique_ptr`s that can point to objects of type `T`. `p` will use `delete` to free its pointer|
 |`unique_ptr<T> p(q)`|`p` manages the object to which the built-in pointer `q` points|
 |`unique_ptr<T, D> p`|null `std::unique_ptr`s that can point to objects of type `T`. `p` will use a callable object of type `D` to free its pointer|
@@ -191,7 +191,7 @@ To use smart pointers correctly, we msut adhere to a set of the following convec
 |`p.reset(nullptr)`|equivalent to `p.reset()`|
 |`p.reset(q)`|if the built-in pointer `q` is supplied, makes `p` point to that object. otherwise makes `p` null.|
 
-- by default, we **cannot** perform **copy construction** from the existing `std::unique_ptr` or **assign** the existing `std::unique_ptr` to another one
+- by default, we **cannot** perform **copy construction** from the existing `std::unique_ptr` nor **assign** the existing `std::unique_ptr` to another one
     * there is one exception to this rule
     * we can copy or assign a `std::unique_ptr` that is about to be destroyed
     * the most common example is when we return `std::unique_ptr`from a function
@@ -238,7 +238,7 @@ A `std::weak_ptr` is a smart pointer which does not control the lifetime of the 
 |`w.lock()`|if `w.expired()` is `true`, returns a null `std::shared_ptr`; otherwise returns a `std::shared_ptr` to the object to which `w` points.|
 
 
-## Dynmaic Array
+## Dynamic Array
 Like C, it's possible to allocate many objects at once in C++
 - there are 2 ways to implement it
     * using `new []` and `delete []`
@@ -260,7 +260,7 @@ Type *ptr = new Type[0];            // ok; but ptr can't be dereferenced
 // basic syntax of delete []
 delete [] ptr;                      // brackets are necessary when deallocating dynamic array 
 ```
-- although it's common to refer to memory allocated by `new T[]` as a **dynamic aaray**, this usage is somewhat **misleading**
+- although it's common to refer to memory allocated by `new T[]` as a **dynamic array**, this usage is somewhat **misleading**
     * because it returns the type of the **element**, not the array type
     * hence, we can't call `std::begin` or `std::end` on a dynamic array
     * which means, we can't use a range `for` to iterate element in a (so-called) dynamic array
