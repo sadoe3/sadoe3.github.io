@@ -30,7 +30,7 @@ The algorithm for the **shell sort** is based on the [**insertion sort**](https:
 ### `sortShell()` Function
 This function sets the **interval** and calls `sortInterval()` based the calculated **interval**
 1. `interval` = number of elements
-2. do the iteration until `interval > 1`
+2. do the iteration while `interval > 1`
     1. `interval /= 2`
     2. do the iteration (syntax: `for(unsigned initialIndexSorted = 0; initialIndexSorted < interval; initialIndexSorted++)`)
         1. call `sortInterval()` with the proper arguments 
