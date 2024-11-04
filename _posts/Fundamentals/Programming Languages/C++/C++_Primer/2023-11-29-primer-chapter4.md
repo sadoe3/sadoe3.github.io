@@ -38,7 +38,7 @@ Every expressions in C++ is either an **rvalue** or an **lvalue**
     * some lvalues, such as const objects, may not be the left-hand operand of an assignment operation
     * roughly speaking, when we use an object as an **lvalue**, we use the object's identity(its location in **memory**)
     * when we use an object as an **rvalue**, we use the objects' value (its **contents**)
-- Operators may work in a different way based on which value given (lvaleus or rvalues)
+- Operators may work in a different way based on which value given (lvalues or rvalues)
 - the important point is that
     * when lvalue is expected, you can use **only** lvalues
     * but when rvalue is expected, you can use **both** of lvalues and rvalues
@@ -75,7 +75,7 @@ If you want to **forcely** convert an object to another type, you can use the **
     * C style
         - same concepts applied
         ```c++
-        type (expr);     // function-style cast notation
+        type(expr);     // function-style cast notation
         (type) expr;     // C-language-style cast notation
         ```
     * C++ style
