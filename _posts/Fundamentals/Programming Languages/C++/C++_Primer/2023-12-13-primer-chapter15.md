@@ -412,9 +412,13 @@ class Base {
 
 ### Defining Copy Controls
 When you define **copy-control** members, make sure that the base part is handled
-- the copy/move constructors should call its direct class's corresponding constructor before initializing their part
-    + `Derived(const Derived & rhs) : Base(rhs), memberA(rhs.memberA);`
-    + `Derived(Derived && rhs) : Base(std::move(rhs)), memberA(rhs.memberA);`
+- the copy/move `constructors` should call its direct class's corresponding constructor before initializing their part
+    * `Derived(const Derived & rhs) : Base(rhs), memberA(rhs.memberA);`
+    * `Derived(Derived && rhs) : Base(std::move(rhs)), memberA(rhs.memberA);`
+    * if you **forget** to call its base version
+        + the `default constructor` of base class is automatically **called**
+- when it comes to the copy/move `assignment operators`, if you **forget** to call its base version
+    * the base part is **not assigned** automatically
 - the copy/move assignment operators should handle the base part as well
     ```c++
     Derived& Derived::operator=(const Derived &rhs) {
