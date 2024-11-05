@@ -77,7 +77,7 @@ Type object = Type(paramA, paramB, ...);        // copy initialization
     * there's no right-hand operand for **direct initialization**
 
 ### Overloaded Operators
-**Overloaded operators** are member functions that have the name `operator` followed by the `symbol` for the operator being defined
+**Overloaded operators** are functions (it can be either a member function or a non-member function) that have the name `operator` followed by the `symbol` for the operator being defined
 ```c++
 class ClassName {
 public:
@@ -113,7 +113,7 @@ public:
 ```
 - the following shows when object is destroyed
     * objects are destoryed when they go out of scope
-    * members of an object are destroyed when the object of which they are a part is destroyed
+    * members of an object are destroyed when the object they belong to is destroyed
     * elements in a container - whether a library container or an array - are destroyed when the container is destroyed
     * dynamically allocated objects are destroyed when the `delete` operator is applied to a pointer to the object
     * temporary objects are destroyed at the end of the full expression in which the temporary was created
@@ -145,7 +145,7 @@ public:
     ~ClassName() = default;
 }; 
 ```  
-- as we've covered before using `=default` make the compiler create the default version of some speical methods
+- as we've covered before using `=default` make the compiler create the default version of some special methods
     * note that it's not true that every method has their own default version
 - if you don't want the default version, you can prevent it from being created by the compiler by using `=delete`
     * unlike `=default`, we can specify `=delete` on any function
@@ -174,9 +174,9 @@ ClassName& ClassName::operator=(const ClassName &rhs) {
     return *this;
 }
 ```
-- `assignment operators` must work correctly if an object is assigned to **itself**
+- `assignment operator`s must work correctly if an object is assigned to **itself**
     * hence, it's usually a good pattern to copy the right-hand operand before destroying the left-hand operand
-- most `assignment operators` share work with the deestructor and copy constructor
+- most `assignment operator`s share work with the destructor and copy constructor
 
 
 ## Swap
@@ -237,8 +237,8 @@ int&& b = std::move(a);     // rvalue reference
 ### Move Constructors
 Like the `copy constructor`, the `move constructor` has an initial parameter as a reference that is an `rvalue` reference and can have addtional parameters with default values
 ```c++
-ClassName::ClassName(ClassName &&s) noexcept : dataA(s.dataA), dataB(s.dataB) {
-    s.dataA = s.dataB = nullptr;
+ClassName::ClassName(ClassName &&rhs) noexcept : dataA(rhs.dataA), dataB(rhs.dataB) {
+    rhs.dataA = rhs.dataB = nullptr;
 }
 ```
 - once the resources are moved, the `move constructor` must ensure that the original object has no relationships bewteen the moved ones
@@ -254,10 +254,10 @@ The `move-assignment operataor` is defined in the similar way to how the `move c
 ClassName& ClassName::ClassName(ClassName &&rhs) noexcept {
     if(this != &rhs) {                      // guard self-assignment
         free();                             // free the existing dynmaic memory first because it's ensured that self-assignment can't enter this code block
-        dataA = s.dataA;
-        dataB = s.dataB;
+        dataA = rhs.dataA;
+        dataB = rhs.dataB;
     
-        s.dataA = s.dataB = nullptr;        // reset as move constructor
+        rhs.dataA = rhs.dataB = nullptr;        // reset as move constructor
     }
     return *this;
 }
@@ -270,7 +270,7 @@ ClassName& ClassName::ClassName(ClassName &&rhs) noexcept {
     * it should handle the self-assignment 
 
 ### Synthesized Move Operations
-The compiler synthesizes the `move constructor` and `move-assignment operator` only if a class does not define **any** of its own copy-control members and only all the non`static` data members can be moved-constructed and moved-assigned, respectively 
+The compiler synthesizes the `move constructor` and `move-assignment operator` only if a class does not define **any** of its own copy-control members and if all the non`static` data members can be moved-constructed and moved-assigned, respectively 
 - unlike move operations, copy operations are always synthesized if they don't declare them
 - when a class doesn't have a move operations, the correspoding copy operation is used in place of move through normal function matching
 - unlike the copy operations, a move operation is never **implicitly** defined as a `deleted` function
@@ -280,6 +280,38 @@ The compiler synthesizes the `move constructor` and `move-assignment operator` o
  
 ### Move Iterators
 You can create a **move iterators** by calling `std::make_move_iterator()` function with the normal iterator as an argument
+```c++
+struct Point {
+	Point(const int& rhs) : x(rhs) {}
+	Point(Point&& rhs) noexcept : x(rhs.x) {
+		std::cout << x  << " is moved..\n";
+		rhs.x = -1;
+	}
+	int x;
+};
+... // some codes
+std::vector<Point> a;
+a.reserve(3);
+a.push_back(0);
+a.push_back(1);
+a.push_back(2);
+std::cout << std::endl;
+
+std::vector<Point> b;
+b.reserve(3);
+for (auto it = std::make_move_iterator(a.begin()), end = std::make_move_iterator(a.end()); it != end; it++)
+    b.push_back(*it);
+/*
+print result
+0 is moved..
+1 is moved..
+2 is moved..
+
+0 is moved..
+1 is moved..
+2 is moved..
+*/
+```
 - **move iterators** have the same operations as the normal one with one exception
     * if you dereference it, it returns `rvalue` reference 
 
