@@ -129,7 +129,7 @@ An object or expression is **callable** when if we can apply the `()call operato
     * **lambda expressions**
 
 ### Lambda Expressions
-A lambda expression can be thought of as an **unnamed**, **inline** function
+A lambda expression can be thought of as an **unnamed**, **inline** function [**object**](https://sadoe3.github.io/cpp/primer-chapter14/#lambdas-are-function-objects)
 - a lambda expression has the form :
     * `[capture list] (parameter list) -> return type { function body }`
     * where `[capture list]` is an (often empty) list of **local variables** defined in the enclosing function
