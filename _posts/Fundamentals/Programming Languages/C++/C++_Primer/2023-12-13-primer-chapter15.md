@@ -100,10 +100,31 @@ Any non`static` method, other than constructor, may be `virtual`
 ### protected Access Specifier
 the `protected` access specifier gives access level between `public` and `private`
 - it's like `public` : because its `friend` or **derived class** can use its `protected` members
-    * note that friendship is not inherited
-    * friends of the base class have no spical access to its derived class
-    * and friends of the derived class have no spical access to its base class
 - it's like `private` : because the normal user cannot access to its `protected` members 
+
+### Friendship
+It's worth noting that friends of the base class **can** access the **base part** of the derived class
+```c++
+class Base {
+	friend void func(Base& a);
+public:
+	Base(const int & rhs) : value(rhs) {}
+private:
+	int value;
+};
+class Derived : public Base {
+public:
+	Derived(const int & rhs) : Base(rhs) {}
+};
+void func(Base& a) {
+	std::cout << a.value << std::endl;
+}
+...// some codes
+Derived a(3);
+func(a);
+// print result: 3
+```
+- but it's also worth notnig that it's **not** possible to access the derived part
 
 ### Constructors of the Derived Class
 You can think that a derived class has two parts : base part and derived part
@@ -146,10 +167,12 @@ You can think that a derived class has two parts : base part and derived part
 Base classes ordinarily should define a `virtual` destructor even if they do no work
 - because the destructor of the derived class is called only if the destructor of base class is `virtual` if you call `delete` operator to the compound type to the base class which points or refers to the object of the derived class
 - the order of destruction is same as usual (reverse of construction)
-    1. the object of the derived class call's its destructor to be destroyed
-    2. it executes its function body and its implicit destruction phase happens to destroy the members of its part
-    3. then, it calls its **direct** base class's destructor
-    4. this iteration keeps going until it reaches the root of the hierarchy
+    1. base class's destructor calls its **direct** derived class's destructor
+        - if the derived class has also its derived class, then this call chain keeps going just like construction
+    2. the function body of the destructor of the derived class is executed
+    3. the derived part is destroyed
+    4. then, it calls its **direct** base class's destructor
+    5. this iteration keeps going until it reaches the root of the hierarchy
 
 ### Respecting the Base-Class Interface
 Although it may be possible for the derived class to access to the implementation part of the base class, it should use the interface part of the base class only
