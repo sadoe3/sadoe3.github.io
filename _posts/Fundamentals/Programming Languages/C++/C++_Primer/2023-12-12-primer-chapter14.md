@@ -25,7 +25,7 @@ date: 2023-12-12
 The basic concept of **overloaded operators** is covered in the [previous chapter](https://sadoe3.github.io/cpp/chapter13/)
 - except for the overloaded `function-call opeartor `, an overloaded operator may not have default arguments
 - if an operator function is a **member function**, the left-hand operand is bound to the implicit `this` pointer
-    * in this case, the member operator functions have one less (explicit) prameter than the number of operands
+    * in this case, the member operator functions have one less (explicit) parameter than the number of operands
 - an operator function must either be a member of a class or have at least one parameter of class type
     * this restriction means that we **cannot change** the meaning of an operator for the `built-in` types
 - we can overload most, but not all, of the operators
@@ -77,7 +77,7 @@ std::ostream& operator<<(std::ostream &os, const Data &data) {
     return os;
 }
 ```
-- ordinarily, the first parameters of an output operator is a reference to a non`const` `ostream` object
+- ordinarily, the first parameter of an output operator is a reference to a non`const` `ostream` object
     * it's `reference` because we cannot copy an `ostream` object
     * `ostream` object is non`const` because writing to the stream changes its state
 - the second parameter ordinarily should be a reference to `const` of the class type we want to print
@@ -159,7 +159,7 @@ This is covered in the [previous chapter](https://sadoe3.github.io/cpp/chapter13
 class Data {
 public:
     std::string& operator[](const std::size_t &n) { return elements[n]; }
-    std::string& operator[](const std::size_t &n) const { return elements[n]; }
+    const std::string& operator[](const std::size_t &n) const { return elements[n]; }
 private:
     std::string *elements;
 }
@@ -192,12 +192,12 @@ Data& Data::operator--() {
 
 ### Overloading Postfix Increment and Decrement Operators
 ```c++
-Data Data::operator++(int) {       // unused int paramter
+Data Data::operator++(int) {       // unused int parameter
     Data old = *this;
     ++(*this);
     return old;
 }
-Data Data::operator--(int) {       // unused int paramter
+Data Data::operator--(int) {       // unused int parameter
     Data old = *this;
     --(*this);
     return old;
@@ -272,7 +272,7 @@ ClassA a;
 std::cout << a(-3) << std::endl;        // prints 3
 ```
 - the function-call operator must be a member function
-- call operator takes empty parameter, instead, it has a another parameter list which follows the usual parameter list
+- call operator takes empty parameter, instead, it has another parameter list which follows the usual parameter list
     * if the another parameter list is different, there can be multiple overloaded call operators in the same class
 - the `return type` and `additional paramemter list` is defined in the same way as we define normal function
 - objects of classes that define a call operator are referred to as **function object** because they act like a function
@@ -391,7 +391,7 @@ std::cout << result << std::endl;        // prints 10
 - a **conversion operator** must be a **member function**, may **not** specify a **return type**, must have an **empty parameter**, and usually should be `const`
     * although it doesn't specify the `return type`, each conversion function must return a value of its corresponding type
         + if the function returns the type which is different from the type before empty `parameter list`, an error occurs
-    * if there is no single one-to-one mapping between the current class type and the another type, it's better not to define the oncversion operator
+    * if there is no single one-to-one mapping between the current class type and the another type, it's better not to define the conversion operator
         * instead, the class ought to define one or more ordinary members to extract the information in these various forms
 
 ### explicit Conversion Operators
