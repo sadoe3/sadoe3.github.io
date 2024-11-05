@@ -169,7 +169,7 @@ Base classes ordinarily should define a `virtual` destructor even if they do no 
 - the order of destruction is same as usual (reverse of construction)
     1. base class's destructor calls its **direct** derived class's destructor
         - if the derived class has also its derived class, then this call chain keeps going just like construction
-    2. the function body of the destructor of the derived class is executed
+    2. the function body of the destructor of the derived class is executed  
     3. the derived part is destroyed
     4. then, it calls its **direct** base class's destructor
     5. this iteration keeps going until it reaches the root of the hierarchy
@@ -352,21 +352,22 @@ protected:
 - aside from overriding inherited virtual functions, a derived class usually should not reuse names defined in its base class
 
 ### Virtual Functions and Scope
-If a certain method of the base class is **not** `virtual`, we **cannot** override and overload it from the derived class
-```c++
-class Base {
-public:
-    void f() { std::cout << "Base" << std::endl; }
-};
-class Derived : public Base {
-public:
-    void f(int a) { std::cout << a << std::endl; }  // tries to overload, but hides the base version actually
-};
-... // some codes
-Derived a;
-a.f();  // error;
-a.f(1); // ok; 
-```
+The keyword `virtual` is related to only **overriding** which means that it doesn't have any relationship with **overloading**
+- it's worth noting that it is **not** possible for derived class to **overload** the method of its base class
+    ```c++
+    class Base {
+    public:
+        void f() { std::cout << "Base" << std::endl; }
+    };
+    class Derived : public Base {
+    public:
+        void f(int a) { std::cout << a << std::endl; }  // tries to overload, but hides the base version actually
+    };
+    ... // some codes
+    Derived a;
+    a.f();  // error;
+    a.f(1); // ok; 
+    ```
 - if you try to overload it, the derived version just **hides** the base version 
 
 
