@@ -418,7 +418,7 @@ When you define **copy-control** members, make sure that the base part is handle
     * if you **forget** to call its base version
         + the `default constructor` of base class is automatically **called**
 - when it comes to the copy/move `assignment operators`, if you **forget** to call its base version
-    * the base part is **not assigned** automatically
+    * the base part will **not be assigned** because the corresponding operator of base class is **not called** automatically
 - the copy/move assignment operators should handle the base part as well
     ```c++
     Derived& Derived::operator=(const Derived &rhs) {
