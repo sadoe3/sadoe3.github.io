@@ -474,9 +474,11 @@ template <typename T> std::string getString(T *t){
 }
 ...         // some codes
 std::string s("hi");
-std::cout << getString(s) << std::endl;     // getString(T *) is selected; because it's more specialized template 
+const std::string *sp = &s;
+std::cout << getString(sp) << std::endl;     // getString(T *) is selected; because it's more specialized template 
 ```
 - when there are several overloaded templates that provide an **equally** good match for a call, the most **specialized** version is preferred
+    * a function template which uses `reference` to take its paramenter is regarded as more **general**
 
 ### Nontemplate and Template Overloads
 The following example shows the case that the ordinary function and function template are viable and both provide an equally good match:
@@ -493,7 +495,8 @@ template <typename T> std::string getString(const T &t){
 std::string s("hi");
 std::cout << getString(s) << std::endl;     // getString(const std::string &) is selected; because it's nontemplate
 ```
-- when a nontemplate function provides an equally good match for a call as a function template, the nontemplate version is preferred
+- when a nontemplate function provides an equally good match for a call as a function template, the **nontemplate** version is **preferred**
+    * because C++ regards nontemplate version as more specialized one
 - declare every function in an overloaded set before you define any of the functions
     * that way you don't have to worry whether the compiler will instantiate a call before it sees the function you intended to call 
 
@@ -512,6 +515,7 @@ void f(Args ... args) {
 - the varing parameters are known as a **parameter pack**
     * there are 2 kinds of parameter packs
         + a **template parameter pack** represents zero or more template parameters
+            - but it's worth noting that although same types are given, the size of the template parameter pack keeps increasing
         + and a **function parameter pack** represents zero or more function parameters
 - we use an ellipsis (`...`) to indicate that a template or function parameter represents a pack
     * in a template parameter list
@@ -607,6 +611,13 @@ template <class T> struct remove_reference<T&> {
 template <class T> struct remove_reference<T&&> {
     typedef T type;
 };
+
+// original
+template <typename T, typename U>
+class MyClass { ; };
+// Partial specialization where the second type is int
+template <typename T>
+class MyClass<T, int> { ; };
 
 
 
