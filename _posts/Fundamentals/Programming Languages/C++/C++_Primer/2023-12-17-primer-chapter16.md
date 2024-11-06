@@ -255,21 +255,25 @@ class TemplateClass {
 ### Controlling Instantiations
 When two or more separately compiled source files use the same template with the same template arguments, there is an instantiation of that template in **each** of those files
 - in large systems, the overhead of this case can become significant
-    * hence, in order to avoid this overhead, we use an **explicit instantiation** lie this:
+    * hence, in order to avoid this overhead, we use an **explicit instantiation** like this:
     ```c++
+    // in a header file
+    template <typename T>
+    class ClassName {
+        ; // template definition
+    }
     // in a certain file
-    template delcaration            // instantiation definition
+    template class ClassName<std::string>;          // instantiation definition; instantiate ClassName based on the given type std::string; instantiate all members in ClassName<std::string>
     // in the other files
-    extern template declaration     // instantiation declaration
+    extern template class ClassName<std::string>;   // instantiation declaration
     ``` 
-    * where `declaration` is a class or function declaration in which all the template parameters are replaced by the template arguments
-        + like: `extern template class ClassName<std::string>;`
     * when the compiler sees an `extern` template declaration, it will not generate code for that instantiation in that file
         + there may be several `extern` declaration for a given instantiation
             - the `extern` keyword declaration must appear before any code that uses that instantiation
         + but, there must be exactly **one** definition for that instantiation
-            - unlike ordinary class template, the compiler instantiates **all** the members of that class 
+            - unlike ordinary class template, the compiler instantiates **all** the members of that class although some of them may not be used
             - an instantiation definition can be used only for types that can be used with every member function of a class template
+    * when you build the application, you must **link** the **object file** of the certain which handles the definition and other object files which declare only
 
 
 ## Template Argument Deduction
@@ -374,21 +378,22 @@ auto func(T beg, T end) -> typename std::remove_reference<decltype(*beg)>::type 
     ```
 - **reference collapsing**
     * there are 2 exceptions to normal binding rules which are related to how `std::move` operates
-        1. when we pass an **lvalue** to a function parameter that is an rvalue reference to a template type parameter (e.g, **`T`&&**)
+        1. when we pass an **lvalue** to a function parameter that is an rvalue reference to a template type parameter (e.g, **`T&&`**)
             * then, the compiler deduces the template type parameter as the argument's lvalue reference type
             * example: `f(3) -> T = int` but `f(i) -> t = int&`
             * with this exception, we can **indirectly** define **a reference to a reference**
                 + by default, we can't do so (directly)
         2. if we indirectly create a reference to a reference, then those references **collapse**
             * for a given type `X` :
-            * `X`& &, `X`& &&, and `X`&& & all collapse to type `X`&
-            * `X`&& && (rvalue reference to rvalue reference) collapes to `X`&& (rvalue reference)
+            * `X& &`, `X&& &`, and `X& &&` (rvalue reference to lvalue reference) all collapse to type `X&`
+                + conceptually, you can think of the former part (`X&`) as the referenced part, and the later one (`&&`) as the referencing part
+            * `X&& &&` (rvalue reference to rvalue reference) collapes to `X&&` (rvalue reference)
             * reference collapsing applies only when a reference to a reference is created indirectly, such as in a type alias or a template parameter
     * hence, we can say that the function template which takes an rvalue parameter
         + can take the rvalue
-            - in this case, the final type of the parameter is `T`&&
+            - in this case, the final type of the parameter is `T&&`
         + also, can take the lvalue
-            - in this case, the final type of the parameter is `T`& although it's defined as `T`&& in the template definition
+            - in this case, the final type of the parameter is `T&` although it's defined as `T&&` in the template definition
     * therefore, rvalue reference parameters are used in one of two contexts
         + the template is **forwarding** its arguments
         + or, the template is overloaded
@@ -407,28 +412,48 @@ auto func(T beg, T end) -> typename std::remove_reference<decltype(*beg)>::type 
     ```
     * it's worth noting that we can explicitly cast an lvalue to an rvalue reference using `static_cast`
 - forwarding
-    * if you want to **forward** the argument while preserving its `const`ness and lvalue/rvalueness to another function, you can do so by using `std::forward` which is defined in the `<utility>` header
+    * if you want to **forward** the argument while preserving its `lvalue/rvalue`ness and `const`ness to another function, you can do so by using `std::forward` which is defined in the `<utility>` header
     ```c++
-    template <typename F, typename T1, typename T2>
-    void flip(F f, T1&& t1, T2&& t2) {
-        f(std::forward<T2>(t2), std::forward<T1>(t1));
+    void process(int&& x) {
+        std::cout << "Processing rvalue: " << x << std::endl;
     }
-    void f(int&& i, int& j) {
-        std::cout << i << " " << j << std::endl;
+    void process(int& x) {
+        std::cout << "Processing lvalue: " << x << std::endl;
     }
-    ...     // some codes
-    int i = 3;
-    flip(f, i, 12);     // ok
+    template <typename T>
+    void forwarder(T&& arg) {
+        process(std::forward<T>(arg));  // Forwarding with std::forward
+    }
+    ... // some codes
+    int a = 10;
+    forwarder(a);            // Calls process(int& x) — forwards as lvalue
+    forwarder(20);           // Calls process(int&& x) — forwards as rvalue
     ```
-    * note that although we define `t2` as `T`&& (rvalue reference), it's lvalue because it's a function parameter which, like any other variable, is an lvalue expression
-        +  hence, if you want to pass the rvalue reference to another function after reference collapsing, you must call `std::forward` to convert it as rvalue
-    * unlike `std::move`, `std::forward` must be called with an explicit template argument
-    * as with `std::move`, it's a good idea not to provide a `using` declaration for `std::forward`
-- `std::move` and `std::forward`
-    * when to use `std::move`
-        + if you want to pass the argument as an **rvalue** reference **regardless** of whether it's a lvalue or rvalue
-    * when to use `std::forward`
-        + if you want to pass the argument as an lvalue **or** an rvalue based on the result of the reference collapsing 
+    ```c++
+    // same code but without std::forward
+    template <typename T>
+    void forwarder(T&& arg) {
+        process(arg);       
+    }
+    ... // some codes
+    int a = 10;
+    forwarder(a);            // Calls process(int& x)
+    forwarder(20);           // Calls process(int& x)
+    ```
+    * note that if you don't use `std::forward()` the lvalue version is always called
+        + this is because when you pass `20`, `arg` would be `rvalue` reference
+        + but the point is that although `arg` is `rvalue` reference, it is **lvalue** inside forwarder
+            - this is because the `rvalue` reference has its **own name** and **memroy address**
+            - and this is why it is treated as `lvalue` when it's passed to another function although it is a `rvalue` reference
+- C++ treats arguments passed to functions as `lvalue`s by **default**, regardless of whether the argument is an lvalue reference or an rvalue reference.
+    * Therefore, in order to pass the argument as an `rvalue`, you should use
+        + `std::move`
+            - if you want to pass the argument as an **rvalue** reference **regardless** of whether it's a lvalue or rvalue
+        + or `std::forward`
+            - if you want to pass the argument as an lvalue **or** an rvalue based on its **original** value category
+            - this is called **perfect forwarding**
+- unlike `std::move`, `std::forward` must be called with an **explicit** template argument
+- as with `std::move`, it's a good idea not to provide a `using` declaration for `std::forward`
 
 
 ## Overloading and Templates
