@@ -21,7 +21,7 @@ date: 2023-12-20
 
 ## The tuple Type
 A `std::tuple` is a template that is similar to a `std::pair`
-- like `std::pair`, it can have members whose types vary from one `tuple` type to another
+- like `std::pair`, it can hold elements of varying types, and these types can differ from one tuple to another
 - unlike `std::pair`, it can have any number of members
 - a `std::tuple` is most useful when we want to combine some data into a single object but do not want to bother to define a data structure to represent those data 
 - it's defined in the `<tuple>` header
@@ -330,7 +330,7 @@ The random-number engines are function-object classes that define a call operato
 ### Things to Consider
 - a given random-number generator always produces the same sequence of numbers
     * a function with a **local** random-number generator should make that generator (both the engine and distribution objects) `static`
-    * otherwise, the function will generate the identical seuqnce on each call
+    * otherwise, the function will generate the identical sequence on each call
 - because engines return the same sequence of numbers
     * it's essential that we declare engines **outside** of loops
     * otherwise, we'd create a new engine on each iteration and generate the same values on each iteration
