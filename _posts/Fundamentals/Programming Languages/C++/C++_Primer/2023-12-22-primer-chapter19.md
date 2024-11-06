@@ -487,69 +487,69 @@ ival = 3;
 
 ### union with Members of Class Type
 - If the member of the union type is **class** type, then you need to call its **constructor** and **destructor** when it's being assigned or other member is being assigned
-```c++
-class MyClass {
-public:
-    MyClass(const int& rhs) : value(rhs) {
-        std::cout << value << " is used to construct" << std::endl;
+    ```c++
+    class MyClass {
+    public:
+        MyClass(const int& rhs) : value(rhs) {
+            std::cout << value << " is used to construct" << std::endl;
+        }
+        ~MyClass() {
+            std::cout << "destructor is called" << std::endl;
+        }
+
+    private:
+        int value;
+    };
+    union Data {
+        Data() : a(1) {}
+        ~Data() {}
+
+        int a;
+        double b;
+        MyClass c;
+    };
+    enum class DataType { A, B, C };
+
+
+    class FinalClass {
+    public:
+        FinalClass() : dataType(DataType::A) {}
+
+        void changeData(DataType, double);
+    private:
+        DataType dataType;
+        Data data;
+    };
+    void FinalClass::changeData(DataType inputType, double inputValue) {
+        if (dataType == inputType)
+            return;
+
+        if (dataType == DataType::C)
+            data.c.~MyClass();
+
+        if (inputType == DataType::C)
+            new(&(data.c)) MyClass(inputValue);
+        else {
+            if (inputType == DataType::A)
+                data.a = inputValue;
+            else
+                data.b = inputValue;
+        }
+        dataType = inputType;
     }
-    ~MyClass() {
-        std::cout << "destructor is called" << std::endl;
-    }
+    ...// some codes
+    FinalClass a;
 
-private:
-    int value;
-};
-union Data {
-    Data() : a(1) {}
-    ~Data() {}
-
-    int a;
-    double b;
-    MyClass c;
-};
-enum class DataType { A, B, C };
-
-
-class FinalClass {
-public:
-    FinalClass() : dataType(DataType::A) {}
-
-    void changeData(DataType, double);
-private:
-    DataType dataType;
-    Data data;
-};
-void FinalClass::changeData(DataType inputType, double inputValue) {
-    if (dataType == inputType)
-        return;
-
-    if (dataType == DataType::C)
-        data.c.~MyClass();
-
-    if (inputType == DataType::C)
-        new(&(data.c)) MyClass(inputValue);
-    else {
-        if (inputType == DataType::A)
-            data.a = inputValue;
-        else
-            data.b = inputValue;
-    }
-    dataType = inputType;
-}
-...// some codes
-FinalClass a;
-
-a.changeData(DataType::A, 1);
-a.changeData(DataType::B, 2);
-a.changeData(DataType::C, 3);
-a.changeData(DataType::A, 4);
-/* 
-print result: 
-3 is used to construct
-destructor is called
-*/
-```
+    a.changeData(DataType::A, 1);
+    a.changeData(DataType::B, 2);
+    a.changeData(DataType::C, 3);
+    a.changeData(DataType::A, 4);
+    /* 
+    print result: 
+    3 is used to construct
+    destructor is called
+    */
+    ```
 - Because of this complexity, when a `union` takes the member which is a **class** type, it usually defined as a member of **another class** so that the class can keep track of the member of the `union` which is being currently used
 - that class usually has the **separate** data member of `enum` type as a **discriminant**
     * when you assign new value to one of the `union`'s member
