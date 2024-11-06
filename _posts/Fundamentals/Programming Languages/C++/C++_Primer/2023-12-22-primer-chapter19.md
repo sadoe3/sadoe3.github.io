@@ -577,7 +577,7 @@ public:
 - the type of the bit-field members must be integral or enumeration type
     * ordinary, `unsigned` types are the best options
 - you can specify the number of bits by placing `:` after the member followed by the number of bits
-- the bit-field members aree accessed in the same way as the other members of a class
+- the bit-field members area accessed in the same way as the other members of a class
     * moreover, they supports the built-in bit-wise operations for sure
 
 ### volatile Qualifier
@@ -589,7 +589,7 @@ volatile int display_register;
 - in the same way that a class may define `const` member function, it can also define member functions as `volatile`
     * only `volatile` member functions  may be called on `volatile` objects
 - programs that use `volatile` usually must be changed when they are moved to new machines or compilers
-- in most ways, `volatile` keyword is used in musch the same way as the `const` qualifier
+- in most ways, `volatile` keyword is used in the same way as the `const` qualifier
     * however, there's one important difference
     * the synthesized copy/move and assignment operators cannot be used to initialize or assign from a `volatile` object
         + if a class wants to allow `volatile` objects to be copied, moved, or assigned
@@ -646,7 +646,7 @@ A linkage directive can have one of two forms
     * the C language doesn't support function overloading, so a C linkage directive can be specified for only one function in a set of overloaded functions
 
 ### Preprocessor Support for Linking to C
-To allow the same source file to be complied under either C or C++, the preprocessor defiens __cplusplus(two underscores) when we compile C++
+To allow the same source file to be complied under either C or C++, the preprocessor defines __cplusplus(two underscores) when we compile C++
 ```c++
 #ifdef __cplusplus
 extern "C"
