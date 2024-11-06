@@ -222,14 +222,16 @@ C++ has 2 kinds of enumerations
     Color a = Color::BLUE;       // ok;
     ```
     * the **unscoped** enumerations may have the **empty** name
-- by default, enumerator values start at 0 and each enumerator has a value 1 greater than the preceding one 
-- enumerators are `const`
-    * and, if they are initialized, their initializers must be **constant expressions**
-    * consequently, each enumerator is itself a **constant expression**
+- the **difference** between them
+    * you can think of the enumeartors in **scoped** enumeration reside inside the namespace of the enumeration
+        + which means that they are **hidden** from the global scope
+    * whereas, the enumerators in **unscoped** enumeration reside inside **global** scope
+        + which menas that it is possible for them to be accessed anywhere inside the program
+        + this is why it is possible to use enumerators of **unscoped** enumeration **implicitly** (which means without using `::` operator)
 - note that you **cannot redefine** the enumerators in the same scope
     ```c++
     enum Color { RED, GREEN, BLUE = 3 };
-    enum RGB { RED, GREEN, BLUE = 3 };              // error; redefine enumerators
+    enum RGB { RED, GREEN, BLUE = 3 };              // error; redefine enumerators; because they are inside same scope (global)
     enum class ScopedRGB { RED, GREEN, BLUE = 3 };  // ok; enumerators are hidden
 
     constexpr Color eyes = BLUE;                      // ok;
@@ -240,6 +242,10 @@ C++ has 2 kinds of enumerations
     * also note that although two different enumerations have enumerator which contains the same name, the two enumerators are different because the two enumerations are different types
         + same rule is applied to the built-in types (espeically for `int`) as well
         + although the enumerator has the same value as the `int` literal, they are different
+- by default, enumerator values start at 0 and each enumerator has a value 1 greater than the preceding one 
+- enumerators are `const`
+    * and, if they are initialized, their initializers must be **constant expressions**
+    * consequently, each enumerator is itself a **constant expression**
 - although each `enum` defines a unique type, it is represented by one of the built-in integral types
     * and, we may specify that type by following the `enum` name with a colon and the name of the type we want to use
     ```c++
