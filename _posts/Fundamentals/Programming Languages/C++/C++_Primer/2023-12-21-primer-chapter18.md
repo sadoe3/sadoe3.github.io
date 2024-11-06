@@ -51,7 +51,7 @@ The **exception declaration** in a `catch` clause looks like a function paramete
         catch (...) {
             std::cout << "bb" << std::endl;
         }
-        // pritns bb
+        // prints bb
         // because rethrowing leaves current try-catch block
     ```
     * note that when you **rethrow** the exception, expression is not provided
@@ -77,7 +77,7 @@ A function can specify that it does not throw exception by providing a `noexcept
     * the keyword appears after the parameter list and before the trailing return
     * we may also specify `noexcept` on the declaration and definition of a function pointer
         + it may not appear in a `typdef` or type alias
-    * in a member function the `noexcept` specifier follows any `const` or reference qualifiers
+    * in a member function the `noexcept` specifier follows any `const` or `reference` qualifiers
         + and it precedes `final`, `override`, or `= 0` on a virtual method
 - it's possible that a `noexcept` function **does throw**; it's possible to be compiled
     * however, if it does, `terminate` is called
@@ -113,7 +113,7 @@ The `std::exception` is the root of the hierarchy
 
 
 ## Namespaces
-When an application uses libraries from many different vendors, it's almost inevitable that some of these naems will **crash**
+When an application uses libraries from many different vendors, it's almost inevitable that some of these names will **crash**
 - if you name them very long ones, this might solve the problem, but it's not an ideal solution though
     * therefore, C++ supports **namespaces** to solve this naming collision problem in the sophisticated way 
 - the following codes show the basic use of the **namespaces**
