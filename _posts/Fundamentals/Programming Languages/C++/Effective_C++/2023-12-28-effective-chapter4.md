@@ -190,7 +190,7 @@ namespace std {
             }
         }
         ```
-            + specialize `std::swap`, and make it call your custom `public noexcept` swap method
+            + specialize `std::swap`, and make it call your custom public swap method
         * 2-B: if the target is the class template
         ```c++
         namespace MyNamespace {
