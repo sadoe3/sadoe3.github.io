@@ -80,7 +80,7 @@ If the parameter of the function doesn't need to be changed,
 When you return a reference, always make sure that the reference returned refers to the object that exists at that time
 ```c++
 // example of the bad code
-const ClassName operator*(const ClassName &lhs, const ClassName &lhs) {
+const ClassName& operator*(const ClassName &lhs, const ClassName &lhs) {
     ClassName result(lhs.a * rhs.a, lhs.b * rhs.b);
     return result;              // result would be destroyed after exiting this function
 }
@@ -145,7 +145,7 @@ When you define an **overloaded operator**, if there's chance where the **left-h
     class Rational {
         // same definition without operator*
     };
-    const Rational operator*(const Rational& rhs) {
+    const Rational operator*(const Rational& lhs, const Rational& rhs) {
         return Rational(lhs.numerator() * rhs.numerator(), lhs.denominator() * rhs.denominator());
     }
     Rational result = oneHalf * 2;      // fine
@@ -171,7 +171,7 @@ namespace std {
     * if this is not efficient for your case, then you need to implement your custom swap function
         + the typical example is using **Pimpl** (pointer to implementation) Idiom
 - you can do so by following these steps:
-    1. implement `public noexcept` swap member function which does the **efficient swap**
+    1. implement public swap member function which does the **efficient swap**
         ```c++
         class ClassName {
         public:
@@ -181,7 +181,7 @@ namespace std {
             }
         };
         ```
-    * 2-A: if the target is the normal class
+        * 2-A: if the target is the normal class
         ```c++
         namespace std {
             template<>
@@ -190,8 +190,8 @@ namespace std {
             }
         }
         ```
-        + specialize `std::swap`, and make it call your custom `public noexcept` swap method
-    * 2-B: if the target is the class template
+            + specialize `std::swap`, and make it call your custom `public noexcept` swap method
+        * 2-B: if the target is the class template
         ```c++
         namespace MyNamespace {
             template <typename T>
@@ -206,7 +206,7 @@ namespace std {
             }
         }
         ```
-        + define non-member swap function in the same namespace as your class template, and make it call your custom `public noexcept` swap
+            + define non-member swap function in the same namespace as your class template, and make it call your custom `public noexcept` swap
 - the reason why there 2 different cases for step 2 is because it's fine to totally specialize `std` templates for user-defiend types,
     * but never try to add something completely new to `std`
     * and to partially specialize function template means adding a completely new overloaded one
