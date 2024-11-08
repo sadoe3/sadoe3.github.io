@@ -70,7 +70,7 @@ Exception-safe code must offer one of the 3 guarantees
 - the **strong** guarantee
     * it's acquired by promising that the **basic** guarantee is acquired
     * and after handling the exception, the state is always the previous one so that the program state is as if they were never been called
-        + this can be easily implemented by copy-and-swap tecnique
+        + this can be easily implemented by copy-and-swap technique
         + which is use the local variable so that the corruption or modification on that object doesn't matter
 - the **nothrow** guarantee
     * it's acquired by promising that the function doesn't throw an exeption
