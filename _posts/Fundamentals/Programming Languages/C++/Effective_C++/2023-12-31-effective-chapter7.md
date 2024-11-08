@@ -48,7 +48,7 @@ public:
 
 ### Factor parameter-independent code out of templates
 Using templates can lead to *code bloat* : binaries with **replicated** (or almost replicated) code, data or both
-- the result of **code bloat** can be source code that looks like fit and trim yest object code that's fat and flabby
+- the result of **code bloat** can be source code that looks like fit and trim yet object code that's fat and flabby
 - there are 2 possible causes of code duplications
     * due to **non-type** template parameter
         ```c++
