@@ -48,7 +48,7 @@ void f(T &param);       // param is a reference
 
 int x = 25;             // x is an int
 const int cx = x;       // cx is a const int
-const int &x = x;       // rx is a reference to x as a const int
+const int &rx = x;       // rx is a reference to x as a const int
 
 f(x);                   // T is int; param's type is int&
 f(cx);                  // T is const int; param's type is const int&
@@ -61,7 +61,7 @@ void f(const T &param);       // param is new a reference-to-const
 
 int x = 25;                   // as before
 const int cx = x;             // as before
-const int &x = x;             // as before
+const int &rx = x;             // as before
 
 f(x);                         // T is int; param's type is const int&
 f(cx);                        // T is int; param's type is const int&
@@ -101,7 +101,7 @@ void f(T &&param);            // param is now a universal reference
 
 int x = 25;                   // as before
 const int cx = x;             // as before
-const int &x = x;             // as before
+const int &rx = x;             // as before
 
 f(x);                         // x is lvalue, so T is int&, param's type is also int&
 f(cx);                        // cx is lvalue, so T is const int&, param's type is also const int&
