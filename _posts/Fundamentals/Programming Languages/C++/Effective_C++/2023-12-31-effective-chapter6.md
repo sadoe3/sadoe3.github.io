@@ -49,7 +49,7 @@ public:
         return curHealth;
     }
     // other members;
-private:
+protected:      // this should be protected not private
     virtual int getHealthReal() const {
         // some codes
     }
