@@ -35,11 +35,11 @@ Be careful with the **conventions** you choose, and once chosen, be careful to *
 
 ### G24: Follow Standard Conventions
 Every team should **follow** a coding **standard** based on common **industry norm**
-A- this coding standard should specify:
+- this coding standard should specify:
 	* **where** to declare data members
 	* **how** to name classes, methods, and variables
 	* ** where** to put braces; and so on
-A- the team should **not need a document** to describe these conventions because their **code** provides the **examples**
+- the team should **not need a document** to describe these conventions because their **code** provides the **examples**
 
 ### G12: Clutter
 Keep your source files **clean**, well organized, and **free** of **clutter**
