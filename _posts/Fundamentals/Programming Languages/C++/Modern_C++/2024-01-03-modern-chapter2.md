@@ -68,7 +68,7 @@ processWidget(w, highPriority);                 // undefined behavior;
 - `std::vector<bool>::reference` is an example of a **proxy** class
     * a class that exists for the purpose of **emulating** and augmenting the behavior of some **other type**
     * the Standard Library's smart pointer types are also proxy classes
-    * some proxy classes are designed to be apparaent to clients
+    * some proxy classes are designed to be apparent to clients
         + that's the case for `std::shared_ptr`, and `std::unique_ptr`
         + it's okay for `auto` to deduce such types
     * other proxy classes are designed to act more or less invisibly
