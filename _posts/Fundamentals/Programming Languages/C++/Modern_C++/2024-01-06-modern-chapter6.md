@@ -138,7 +138,7 @@ In C++14, lambdas now can use `auto` in their parameter specifications
 
 ### Prefer lambdas to `std::bind`
 In C++ only, `std::bind` may be useful for implementing move capture or for binding objects with templatized function call operators
-- however, by default, lambdas are more readable, more expensive, and may be more efficient than using `std::bind`
+- however, by default, lambdas are more readable, more expressive, and may be more efficient than using `std::bind`
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
