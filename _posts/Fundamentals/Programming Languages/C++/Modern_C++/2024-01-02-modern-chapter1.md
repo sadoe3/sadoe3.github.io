@@ -230,9 +230,9 @@ auto &func2 = someFunc;         // func2's type is void (&) (int, double)
 - the **one exception** is related to the initialization by a **braced initializer**
     ```c++
     // example of the exception
-    auto x1 = 25;            // type is int, value is 27
+    auto x1 = 25;            // type is int, value is 25
     auto x2(25);             // same as above
-    auto x3 = {25};          // type is std::initialier_list<int>, value is {27}
+    auto x3 = {25};          // type is std::initialier_list<int>, value is {25}
     auto x4{25};             // same as above
 
 
