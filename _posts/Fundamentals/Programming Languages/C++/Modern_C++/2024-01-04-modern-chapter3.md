@@ -69,7 +69,7 @@ ClassName c6({});                   // call third constructor
 
 ### Prefer `nullptr` to `0` and `NULL`
 `nullptr`'s advantage is that it doen'st have an integral type
-- to be honest, it doen'st have a pointer type either
+- to be honest, it doesn't have a pointer type either
     * its actual type is `std::nullptr_t` which implicitly converts to all raw pointer types so that it makes `nullptr` act as if it were a pointer of all types
 - the fact that template type deduction  deduces the **wrong** types for `0` and `NULL`
     * is the most compelling reason to use `nullptr` instead of them
