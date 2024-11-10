@@ -269,11 +269,11 @@ a.getB().getC().doSomething();
 // clean
 myCollaborator.doSomething();
 ```
+- this is sometimes called the **Law of Demeter**
 - if `A` collaborates with `B`, and `B` collaborates with `C`
 	* then, we do **not** want classes that use `A` to know about `C`
     * make sure that classes know **only** about their **immediate collaborators** and
         + do **not know** the navigation map of the **whole system**
-- this is sometimes called the **Law of Demeter**
 
 
 ## Names
