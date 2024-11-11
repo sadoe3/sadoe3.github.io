@@ -1,11 +1,11 @@
 ---
-title: "Socket Programming"
+title: "Socket Programming - Sockets"
 
 categories:
     - socket
 
 tags:
-    - [Socket Programming, C, socket, windows]
+    - [Socket Programming, C, socket, windows, tcp, udp]
 
 toc: true
 toc_label: "목차"
