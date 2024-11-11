@@ -37,25 +37,32 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">Game Engines</span>
+        <span class="nav__sub-title">Network Programming</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "ue4-self" %}
-                        <li><a href="/categories/ue4-self" class="sidebar-category">UE4 through self-study ({{category[1].size}})</a></li>
+                    {% if category[0] == "socket" %}
+                        <li><a href="/categories/socket" class="sidebar-category">Socket Programming ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "unity-lecture" %}
-                        <li><a href="/categories/unity-lecture" class="sidebar-category">Unity through lectures ({{category[1].size}})</a></li>
+                    {% if category[0] == "game-patterns" %}
+                        <li><a href="/categories/game-patterns" class="sidebar-category">Game Programming Patterns ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "unity-self" %}
-                        <li><a href="/categories/unity-self" class="sidebar-category">Unity through self-study ({{category[1].size}})</a></li>
+                    {% if category[0] == "windows" %}
+                        <li><a href="/categories/windows" class="sidebar-category">Windows Programming ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "iocp" %}
+                        <li><a href="/categories/iocp" class="sidebar-category">IOCP Server ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -78,6 +85,28 @@
                 {% for category in site.categories %}
                     {% if category[0] == "design-patterns" %}
                         <li><a href="/categories/design-patterns" class="sidebar-category">Design Patterns ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">Game Engines</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "ue4-self" %}
+                        <li><a href="/categories/ue4-self" class="sidebar-category">UE4 through self-study ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "unity-lecture" %}
+                        <li><a href="/categories/unity-lecture" class="sidebar-category">Unity through lectures ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "unity-self" %}
+                        <li><a href="/categories/unity-self" class="sidebar-category">Unity through self-study ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
