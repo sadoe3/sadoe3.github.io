@@ -87,7 +87,7 @@ struct sockaddr_in6 {
 };
 ```
 
-### `in_addr6`
+### `in6_addr`
 ```c++
 // (IPv6 only)
 struct in6_addr {
@@ -107,6 +107,24 @@ struct sockaddr_storage {
 ```
 - this structure is **large** enough to hold both `IPv4` and `IPv6` stuctures
 - based on the value of `ss_family`, you can **cast** this structure to `sockaddr_in` or `sockaddr_in6`
+
+
+## Functions regarding them
+
+### `inet_pton()`
+```c++
+struct sockaddr_in sa;      // IPv4
+struct sockaddr_in6 sa6;    // IPv6
+
+inet_pton(AF_INET, "11.11.120.17", &(sa.sin_addr));             // IPv4
+inet_pton(AF_INET6, "2302:db28:6b3:1::3590", &(sa6.sin6_addr)); // IPv6
+```
+- `inet_pton()` converts an IP address in numbers-and-dots notation into either `in_addr` or `in6_addr` depending on whether you specify `AF_INET` or `AF_INET6`
+    * `pton` stands for **presentation to network**
+- `inet_pton()` returns
+    * `-1` on **error**
+    * `0` if the address is messed up
+- hence it's recommended to check to make sure the result is greater than `0` before using
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
