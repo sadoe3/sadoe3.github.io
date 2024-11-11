@@ -52,7 +52,7 @@ Although there are numerous types of **Internet Sockets**, this book covers rega
         + **regardless** of whether the recipient receives it or not 
     * this mechanism makes `UDP` **less** reliable than `TCP` but **much faster** than `TCP`
 - `tftp` and `video` are the typcial examples which use **datagram sockets**
-    * note that `tftp` and other similar programs which need **reliable** connection have their **own protocol** on top of `UDP`
+    * note that `tftp` and other similar programs which need a **reliable** connection have their **own protocol** on top of `UDP`
         + the custom protocol makes the recipient **reply** to the packet that he just received (sending back an `ACK` packet)
         + if the sender **doesn't get** the response in like 5 seconds, he will **re-transmit** the packet **until** he finally gets the response
     * for other programs which can be **unreliable**, you just **ignore** the dropped packets or **cleverly compensate** for them
