@@ -126,5 +126,28 @@ inet_pton(AF_INET6, "2302:db28:6b3:1::3590", &(sa6.sin6_addr)); // IPv6
     * `0` if the address is messed up
 - hence it's recommended to check to make sure the result is greater than `0` before using
 
+### `inet_ntop()`
+```c++
+// IPv4
+char ip4[INET_ADDRSTRLEN];      // space to hold the IPv4 string
+struct sockaddr_in sa;          // pretend this is loaded with something
+
+inet_ntop(AF_INET, &(sa.sin_addr), ip4, INET_ADDRSTRLEN);
+printf("The IPv4 address is: %s\n", ip4);
+
+
+// IPv6:
+char ip6[INET6_ADDRSTRLEN];     // space to hold the IPv6 string
+struct sockaddr_in6 sa6;        // pretend this is loaded with something
+
+inet_ntop(AF_INET6, &(sa6.sin6_addr), ip6, INET6_ADDRSTRLEN);
+printf("The address is: %s\n", ip6);
+```
+- `inet_ntop()` does the opposite job of `inet_pton()`
+- it's worth noting that `INET_ADDRSTRLEN` and `INET6_ADDRSTRLEN` are **macro**s for representing the **size** of the string
+- also these functions (`inet_pton()`, `inet_ntop()`) only work with **numeric IP addresses**
+    * which means that they **won’t do** any nameserver **DNS lookup** on a hostname, like `www.example.com`
+- `getaddrinfo()` does that 
+
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
