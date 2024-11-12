@@ -5,7 +5,7 @@ categories:
     - socket
 
 tags:
-    - [Socket Programming, C, socket, windows]
+    - [Socket Programming, c++, socket, windows]
 
 toc: true
 toc_label: "목차"

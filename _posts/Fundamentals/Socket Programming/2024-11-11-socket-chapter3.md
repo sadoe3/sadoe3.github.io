@@ -5,7 +5,7 @@ categories:
     - socket
 
 tags:
-    - [Socket Programming, C, socket, windows, struct, data types]
+    - [Socket Programming, c++, socket, windows, struct, data types]
 
 toc: true
 toc_label: "목차"

@@ -5,7 +5,7 @@ categories:
     - socket
 
 tags:
-    - [Socket Programming, C, socket, windows, blocking, poll, serialization]
+    - [Socket Programming, c++, socket, windows, blocking, poll, serialization]
 
 toc: true
 toc_label: "목차"
