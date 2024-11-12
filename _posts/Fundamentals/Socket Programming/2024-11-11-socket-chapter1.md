@@ -30,12 +30,14 @@ You must include `<winsock2.h>`
     * project name -> right click -> properties -> under Configuration Properties -> Linker -> Input -> Additional Dependencies -> add `ws2_32.lib;`
         + then the Additional Dependencies should look like this by default : `ws2_32.lib;%(AdditionalDependencies)`
     * After applying this change, it would work properly
+- moreover, you need to include `<ws2tcpip.h>` to use additional functionality related to socket programming 
 
 ### Functions
 You need to call `WSAStartup()` before handling with the sockets library and call `WSACleanup()` after using them
 ```c++
 // initial settings for socket programming
 #include <winsock2.h>
+#include <ws2tcpip.h>
 #include <iostream>
 
 int main() {
