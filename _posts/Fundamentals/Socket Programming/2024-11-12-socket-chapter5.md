@@ -214,6 +214,7 @@ SOCKET accept(SOCKET s, sockaddr *addr, int *addrlen);
 - `addrlen` is a local integer variable that should be set to `sizeof(sockaddr_storage)` **before** its address its address is passed to `accept()`
     * `accept()` will not put more than that many bytes into `addr`
     * if it puts **fewer** in, it'll **change** the value of `addrlen` to reflect that
+- below is the example use
     ```c++
     // example use
     addrinfo hints, * res;
