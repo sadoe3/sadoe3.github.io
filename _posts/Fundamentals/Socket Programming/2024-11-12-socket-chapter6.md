@@ -1,11 +1,11 @@
 ---
-title: "Socket Programming - Client/Server"
+title: "Socket Programming - Example"
 
 categories:
     - socket
 
 tags:
-    - [Socket Programming, C, socket, windows, client-server, client, server]
+    - [Socket Programming, C, socket, windows, example, client, server, tcp, udp]
 
 toc: true
 toc_label: "목차"
