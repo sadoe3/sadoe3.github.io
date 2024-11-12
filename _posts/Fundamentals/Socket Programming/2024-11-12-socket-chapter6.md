@@ -134,7 +134,7 @@ int main() {
 - the point regarding `fork()` is that `std::thread` can be the alternative to `fork()`
     * `handleClient()` does the real work
 
-### client
+### Client
 ```c++
 #include <iostream>
 #include <winsock2.h>
