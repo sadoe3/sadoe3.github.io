@@ -53,6 +53,7 @@ int main() {
     return 0;
 }
 ```
+- it's worth noting that `WSA` stands for **Windows Sockets API** 
 
 ### Difference Linux and Windows
 - in order to close socket in Windows
