@@ -72,8 +72,9 @@ SOCKET socket(int domain, int type, int protocol);
     * it's worth noting that `PF_INET` (protocal famaily) thing is **closely related** to its `AF` (address family) version
     * but the most **correct** thing to do is to use `AF_INET` in your `sockaddr_in` and `PF_INET` in your call to `socket()`
 - `type` parameter is `SOCK_STREAM` or `SOCK_DGRAM`
-- `protocol` parameter can be set to `0` to choose the proper protocol for the given type.
+- `protocol` parameter can be set to `0` to choose the proper protocol for the given type
     * or you can call `getprotobyname()` to look up the protocol you want like `tcp` 
+- below is the example use
     ```c++
     // example use
     addrinfo hints, * res;
@@ -159,6 +160,7 @@ int connect(SOCKET s, sockaddr *name, int namelen);
 - the difference is that
     * `bind()` is related to the **local** address and port number
     * `connect()` is related to the **remote** connection
+- below is the example use
     ```c++
     // example use
     addrinfo hints, * res;
