@@ -113,12 +113,13 @@ struct sockaddr_storage {
 
 ### `inet_pton()`
 ```c++
-struct sockaddr_in sa;      // IPv4
-struct sockaddr_in6 sa6;    // IPv6
+sockaddr_in sa;      // IPv4
+sockaddr_in6 sa6;    // IPv6
 
 inet_pton(AF_INET, "11.11.120.17", &(sa.sin_addr));             // IPv4
 inet_pton(AF_INET6, "2302:db28:6b3:1::3590", &(sa6.sin6_addr)); // IPv6
 ```
+- it's worth noting that you don't specify `struct` keyword to use structures defined in `C` when you use it in `C++` source file
 - `inet_pton()` converts an IP address in numbers-and-dots notation into either `in_addr` or `in6_addr` depending on whether you specify `AF_INET` or `AF_INET6`
     * `pton` stands for **presentation to network**
 - `inet_pton()` returns
@@ -130,18 +131,18 @@ inet_pton(AF_INET6, "2302:db28:6b3:1::3590", &(sa6.sin6_addr)); // IPv6
 ```c++
 // IPv4
 char ip4[INET_ADDRSTRLEN];      // space to hold the IPv4 string
-struct sockaddr_in sa;          // pretend this is loaded with something
+sockaddr_in sa;          // pretend this is loaded with something
 
 inet_ntop(AF_INET, &(sa.sin_addr), ip4, INET_ADDRSTRLEN);
-printf("The IPv4 address is: %s\n", ip4);
+std::cout << "The IPv4 address is: " << ip4 << std::endl;
 
 
 // IPv6:
 char ip6[INET6_ADDRSTRLEN];     // space to hold the IPv6 string
-struct sockaddr_in6 sa6;        // pretend this is loaded with something
+sockaddr_in6 sa6;        // pretend this is loaded with something
 
 inet_ntop(AF_INET6, &(sa6.sin6_addr), ip6, INET6_ADDRSTRLEN);
-printf("The address is: %s\n", ip6);
+std::cout << "The IPv6 address is: " << ip6 << std::endl;
 ```
 - `inet_ntop()` does the opposite job of `inet_pton()`
 - it's worth noting that `INET_ADDRSTRLEN` and `INET6_ADDRSTRLEN` are **macro**s for representing the **size** of the string
