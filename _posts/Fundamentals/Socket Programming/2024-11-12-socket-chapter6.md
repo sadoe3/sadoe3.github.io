@@ -5,7 +5,7 @@ categories:
     - socket
 
 tags:
-    - [Socket Programming, C, socket, windows, example, client, server, tcp, udp]
+    - [Socket Programming, c++, socket, windows, example, client, server, tcp, udp]
 
 toc: true
 toc_label: "목차"
