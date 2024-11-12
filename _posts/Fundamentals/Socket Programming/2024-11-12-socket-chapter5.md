@@ -34,27 +34,27 @@ int getaddrinfo(const char *node,               // e.g. "www.example.com" or IP
 - you give a **port number** or **service name** to `service` parameter
 - `hints` parameter points to the `addrinfo` structure which contains the relevant information
 - if `getaddrinfo()` is executed properly, `res` will point to a **linked list** of `addrinfo`s
-```c++
-// example use
-int status;
-struct addrinfo hints;
-struct addrinfo *servinfo;          // will point to the results
+    ```c++
+    // example use
+    int status;
+    struct addrinfo hints;
+    struct addrinfo *servinfo;          // will point to the results
 
-memset(&hints, 0, sizeof hints);    // make sure the struct is empty
-hints.ai_family = AF_UNSPEC;        // don't care IPv4 or IPv6
-hints.ai_socktype = SOCK_STREAM;    // TCP stream sockets
-hints.ai_flags = AI_PASSIVE;        // fill in my IP for me
+    memset(&hints, 0, sizeof hints);    // make sure the struct is empty
+    hints.ai_family = AF_UNSPEC;        // don't care IPv4 or IPv6
+    hints.ai_socktype = SOCK_STREAM;    // TCP stream sockets
+    hints.ai_flags = AI_PASSIVE;        // fill in my IP for me
 
-if ((status = getaddrinfo(NULL, "3460", &hints, &servinfo)) != 0) {
-    fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
-    exit(1);
-}
+    if ((status = getaddrinfo(NULL, "3460", &hints, &servinfo)) != 0) {
+        fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
+        exit(1);
+    }
 
-// servinfo now points to a linked list of 1 or more struct addrinfos
-// ... do everything until you don't need servinfo anymore ....
+    // servinfo now points to a linked list of 1 or more struct addrinfos
+    // ... do everything until you don't need servinfo anymore ....
 
-freeaddrinfo(servinfo);             // free the linked-list
-```
+    freeaddrinfo(servinfo);             // free the linked-list
+    ```
 - it's worth noting that if you set `hints.ai_flags` to `AI_PASSIVE`
     * this requests `getaddrinfo()` to assign the address of **my local host** to the socket structures
         + so that you can put `NULL` as the first parameter
@@ -74,31 +74,31 @@ SOCKET socket(int domain, int type, int protocol);
 - `type` parameter is `SOCK_STREAM` or `SOCK_DGRAM`
 - `protocol` parameter can be set to `0` to choose the proper protocol for the given type.
     * or you can call `getprotobyname()` to look up the protocol you want like `tcp` 
-```c++
-// example use
-addrinfo hints, * res;
-memset(&hints, 0, sizeof(hints));
-hints.ai_family = AF_UNSPEC;
-hints.ai_socktype = SOCK_STREAM;
-int status= getaddrinfo("www.example.com", "http", &hints, &res);
-if (status != 0) {
-    std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
-    WSACleanup();
-    return 1;
-}
+    ```c++
+    // example use
+    addrinfo hints, * res;
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    int status= getaddrinfo("www.example.com", "http", &hints, &res);
+    if (status != 0) {
+        std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
+        WSACleanup();
+        return 1;
+    }
 
-SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-if (sock == INVALID_SOCKET) {
-    std::cerr << "Socket creation failed with error: " << WSAGetLastError() << std::endl;
-    WSACleanup();
-    return 1;
-}
+    SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sock == INVALID_SOCKET) {
+        std::cerr << "Socket creation failed with error: " << WSAGetLastError() << std::endl;
+        WSACleanup();
+        return 1;
+    }
 
 
-// Cleanup
-freeaddrinfo(res);
-closesocket(sock);
-```
+    // Cleanup
+    freeaddrinfo(res);
+    closesocket(sock);
+    ```
 - if there's an error, `socket()` returns `INVALID_SOCKET`
     * you can print the details by calling `WSAGetLastError()`
 - just like `freeaddrinfo()`, you need to call `closesocket()` after using the socket
@@ -112,37 +112,37 @@ int bind(SOCKET s, sockaddr *name, int namelen);
 - `s` parameter is the socket returned by `socket()`
 - `name` parameter is a pointer to a `sockaddr` structure that contains information about your address
 - `namelen` parameter is the length in bytes of that address
-```c++
-// example use
-addrinfo hints, * res;
-memset(&hints, 0, sizeof(hints));
-hints.ai_family = AF_UNSPEC;
-hints.ai_socktype = SOCK_STREAM;
-hints.ai_flags = AI_PASSIVE;
-int status= getaddrinfo(NULL, "3450", &hints, &res);
-if (status != 0) {
-    std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
-    WSACleanup();
-    return 1;
-}
+    ```c++
+    // example use
+    addrinfo hints, * res;
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+    int status= getaddrinfo(NULL, "3450", &hints, &res);
+    if (status != 0) {
+        std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
+        WSACleanup();
+        return 1;
+    }
 
 
-SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-if (sock == INVALID_SOCKET) {
-    std::cerr << "socket creation failed with error: " << WSAGetLastError() << std::endl;
-    WSACleanup();
-    return 1;
-}
+    SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sock == INVALID_SOCKET) {
+        std::cerr << "socket creation failed with error: " << WSAGetLastError() << std::endl;
+        WSACleanup();
+        return 1;
+    }
 
 
-status = bind(sock, res->ai_addr, res->ai_addrlen);
-if (status == SOCKET_ERROR) {
-    std::cerr << "bind failed with error: " << WSAGetLastError() << std::endl;
-    closesocket(sock);
-    WSACleanup();
-    return 1;
-}
-```
+    status = bind(sock, res->ai_addr, res->ai_addrlen);
+    if (status == SOCKET_ERROR) {
+        std::cerr << "bind failed with error: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+    ```
 - if there's an error, `bind()` returns `SOCKET_ERROR`
 - unlike the functions above, you **don't need to call** anything when you're done
 - if you get the error code `10049`, then try to use your **locol IP address** because that code means it's impossible to bind
@@ -159,34 +159,34 @@ int connect(SOCKET s, sockaddr *name, int namelen);
 - the difference is that
     * `bind()` is related to the **local** address and port number
     * `connect()` is related to the **remote** connection
-```c++
-// example use
-addrinfo hints, * res;
-memset(&hints, 0, sizeof(hints));
-hints.ai_family = AF_UNSPEC;
-hints.ai_socktype = SOCK_STREAM;
-int status= getaddrinfo("www.example.com", "http", &hints, &res);
-if (status != 0) {
-    std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
-    WSACleanup();
-    return 1;
-}
-SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-if (sock == INVALID_SOCKET) {
-    std::cerr << "socket creation failed with error: " << WSAGetLastError() << std::endl;
-    WSACleanup();
-    return 1;
-}
+    ```c++
+    // example use
+    addrinfo hints, * res;
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    int status= getaddrinfo("www.example.com", "http", &hints, &res);
+    if (status != 0) {
+        std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
+        WSACleanup();
+        return 1;
+    }
+    SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sock == INVALID_SOCKET) {
+        std::cerr << "socket creation failed with error: " << WSAGetLastError() << std::endl;
+        WSACleanup();
+        return 1;
+    }
 
 
-status = connect(sock, res->ai_addr, res->ai_addrlen);
-if (status == SOCKET_ERROR) {
-    std::cerr << "connect failed with error: " << WSAGetLastError() << std::endl;
-    closesocket(sock);
-    WSACleanup();
-    return 1;
-}
-```
+    status = connect(sock, res->ai_addr, res->ai_addrlen);
+    if (status == SOCKET_ERROR) {
+        std::cerr << "connect failed with error: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+    ```
 - it's worth noting that `bind()` is **not called** because specifying local port is not necessary
 
 ### `listen()`
@@ -212,55 +212,55 @@ SOCKET accept(SOCKET s, sockaddr *addr, int *addrlen);
 - `addrlen` is a local integer variable that should be set to `sizeof(sockaddr_storage)` **before** its address its address is passed to `accept()`
     * `accept()` will not put more than that many bytes into `addr`
     * if it puts **fewer** in, it'll **change** the value of `addrlen` to reflect that
-```c++
-// example use
-addrinfo hints, * res;
-memset(&hints, 0, sizeof(hints));
-hints.ai_family = AF_UNSPEC;
-hints.ai_socktype = SOCK_STREAM;
-hints.ai_flags = AI_PASSIVE;
-int status= getaddrinfo(NULL, "3490", &hints, &res);
-if (status != 0) {
-    std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
-    WSACleanup();
-    return 1;
-}
-SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-if (sock == INVALID_SOCKET) {
-    std::cerr << "socket creation failed with error: " << WSAGetLastError() << std::endl;
-    WSACleanup();
-    return 1;
-}
-status = bind(sock, res->ai_addr, res->ai_addrlen);
-if (status == SOCKET_ERROR) {
-    std::cerr << "bind failed with error: " << WSAGetLastError() << std::endl;
-    closesocket(sock);
-    WSACleanup();
-    return 1;
-}
+    ```c++
+    // example use
+    addrinfo hints, * res;
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+    int status= getaddrinfo(NULL, "3490", &hints, &res);
+    if (status != 0) {
+        std::cerr << "getaddrinfo failed: " << gai_strerror(status) << std::endl;
+        WSACleanup();
+        return 1;
+    }
+    SOCKET sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sock == INVALID_SOCKET) {
+        std::cerr << "socket creation failed with error: " << WSAGetLastError() << std::endl;
+        WSACleanup();
+        return 1;
+    }
+    status = bind(sock, res->ai_addr, res->ai_addrlen);
+    if (status == SOCKET_ERROR) {
+        std::cerr << "bind failed with error: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
 
 
 
-status = listen(sock, 5);
-if (status == SOCKET_ERROR) {
-    std::cerr << "listen failed with error: " << WSAGetLastError() << std::endl;
-    closesocket(sock);
-    WSACleanup();
-    return 1;
-}
+    status = listen(sock, 5);
+    if (status == SOCKET_ERROR) {
+        std::cerr << "listen failed with error: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
 
-sockaddr_storage theirAddr;
-int addrSize = sizeof theirAddr;
-SOCKET newSocket = accept(sock, reinterpret_cast<sockaddr*>(&theirAddr), &addrSize);
-if (newSocket == INVALID_SOCKET) {
-    std::cerr << "accept failed with error: " << WSAGetLastError() << std::endl;
-    closesocket(sock);
-    WSACleanup();
-    return 1;
-}
-```
+    sockaddr_storage theirAddr;
+    int addrSize = sizeof theirAddr;
+    SOCKET newSocket = accept(sock, reinterpret_cast<sockaddr*>(&theirAddr), &addrSize);
+    if (newSocket == INVALID_SOCKET) {
+        std::cerr << "accept failed with error: " << WSAGetLastError() << std::endl;
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+    ```
 
-### `send()` and `recv()`
+### `send()` 
 ```c++
 int send(SOCKET s, const char *buf, int len, int flags);
 // example use
@@ -279,6 +279,8 @@ bytes_sent = send(sock, msg, len, 0);
     * just set it to `0` for now
 - `send()` returns the number of bytes sent
     * `-1` means error
+
+### `recv()`
 ```c++
 int recv(SOCKET s, const char *buf, int len, int flags);
 ```
@@ -286,8 +288,7 @@ int recv(SOCKET s, const char *buf, int len, int flags);
     * it returns the number of bytes read
         + `-1` means error
 
-
-### `sendto()` and `recvfrom()`
+### `sendto()` 
 ```c++
 int sendto(SOCKET s, const const *buf, int len, int flags, const sockaddr *to, int tolen);
 ```
@@ -295,6 +296,8 @@ int sendto(SOCKET s, const const *buf, int len, int flags, const sockaddr *to, i
 - `tolen` is the size of the structure to which `to` points
     * it can be `sizeof *to`
 - the rest is same as `send()`
+
+### `recvfrom()`
 ```c++
 int recvfrom(SOCKET s, const const *buf, int len, int flags, const sockaddr *from, int *fromlen);
 ```
