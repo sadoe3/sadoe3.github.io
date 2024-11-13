@@ -24,6 +24,7 @@ You can use the **network functionality** by calling **system calls** or **libra
 - the point is that these functions should be executed in a proper **order**
 
 ### `getaddrinfo()`
+You can obtain the **network addresses** through a **protocol-independent** way, simplifying the process of supporting both IPv4 and IPv6 addresses, as well as dealing with DNS resolution
 ```c++
 int getaddrinfo(const char *node,               // e.g. "www.example.com" or IP
                 const char *service,            // e.g. "http" or port number ("80")
@@ -64,6 +65,7 @@ int getaddrinfo(const char *node,               // e.g. "www.example.com" or IP
 - it's crucial to note that once you get the address information, you need to **free** it after using it just like the dynamic allocation by calling `freeaddrinfo()`
 
 ### `socket()`
+`socket()` returns the **communication channel** (socket) based on the parameters you give (`IPv4` or `IPv6` / `TCP` or `UDP` / etc)
 ```c++
 SOCKET socket(int domain, int type, int protocol);
 ```
@@ -107,6 +109,7 @@ SOCKET socket(int domain, int type, int protocol);
         + `freeaddrinfo()` - `closesocket()` - `WSACleanup()`
 
 ### `bind()`
+`bind()` is mainly called in **server** applications where it assigns a **local** `address` and `port` to the **socket**
 ```c++
 int bind(SOCKET s, sockaddr *name, int namelen);
 ```
@@ -152,6 +155,7 @@ int bind(SOCKET s, sockaddr *name, int namelen);
     * it will check to see if the socket is unbound, and will `bind()` it to an unused local port necessary
 
 ### `connect()`
+`connect()` is mainly used in **client** applications where it is called in order to **initiate a connection** to a server using the **provided address and port**
 ```c++
 int connect(SOCKET s, sockaddr *name, int namelen);
 ```
@@ -189,26 +193,33 @@ int connect(SOCKET s, sockaddr *name, int namelen);
         return 1;
     }
     ```
-- it's worth noting that `bind()` is **not called** because specifying local port is not necessary
+- it's worth noting that `connect()` is **not necessary** for `UDP` sockets
 
 ### `listen()`
-```c++
-int listen(SOCKET s, int backlog);
-```
+`listen()` is a function which must **be called after** `bind()` is called if you want to **make a connection** with any client
+- because `listen()` marks the socket as a **listening socket** so that the clients' **connection requests** are **queued** in `backlog`
+- if you **don't call** this function, then those **connection requests** are **ignored**
+    ```c++
+    int listen(SOCKET s, int backlog);
+    ```
 - `listen()` puts the data inside its queue of which size is set by the `backlog` paramemter
     * if the sender sends more data, the outnumbered data are handled based on which OS you use
     * some of them may be **refused** or **dropped**
-- `s` parameter is the `SOCKET`
-- `backlog` parameter sets the **number** of **connections allowed** on the incoming queue
+- `backlog` parameter sets the **maximum size** of the queue which handles the **connection requests**
 - the example use is below with `accept()`
 
 ### `accept()`
-```c++
-SOCKET accept(SOCKET s, sockaddr *addr, int *addrlen);
-```
+`accept()` create new **communication channel** (socket) for **each connection request** in the `backlog`, which is used for communication with that **specific client**
+- which means there are only **2 machines** in that socket
+    + a **server** and a single **client**
+    + other clients doesn't know about this channel
+- it's worth noting that it's absolutely okay for a **client** to have **multiple sockets** to same server by sending **multiple connection requests**
+    ```c++
+    SOCKET accept(SOCKET s, sockaddr *addr, int *addrlen);
+    ```
 - `accept()` returns a **new** `SOCKET` which contains the data inside the **queue** which `listen()` handles with
     * the point is that the **original** `SOCKET` is still **listening**
-- `s` parameter is the original `SOCKET`
+- `s` parameter is the **listening socket**
 - `addr` parameter will usually be a pointer to a local `sockaddr_storage` structure
     * this is where the information about the incoming connection will go
 - `addrlen` is a local integer variable that should be set to `sizeof(sockaddr_storage)` **before** its address its address is passed to `accept()`
@@ -264,6 +275,7 @@ SOCKET accept(SOCKET s, sockaddr *addr, int *addrlen);
     ```
 
 ### `send()` 
+`send()` sends `buf` to the other machine on the socket `s`
 ```c++
 int send(SOCKET s, const char *buf, int len, int flags);
 // example use
@@ -275,7 +287,6 @@ bytes_sent = send(sock, msg, len, 0);
 ```
 - it's worth noting that these 2 functions are related to **stream** sockets or **connected datagram** sockets
     * if you want to use regualr **unconnected** datagram sockets, you need to call `sendto()` or `recvfrom()`
-- `s` parameter is the `SOCKET`
 - `buf` parameter is the pointer to the data you want to send
 - `len` parameter is the length of that data in **bytes**
 - `flags` would be covered in later chapter
@@ -284,6 +295,7 @@ bytes_sent = send(sock, msg, len, 0);
     * `-1` means error
 
 ### `recv()`
+`recv()` receives data from the other machine on the socket `s` and stores it into `buf` 
 ```c++
 int recv(SOCKET s, const char *buf, int len, int flags);
 ```
@@ -291,7 +303,8 @@ int recv(SOCKET s, const char *buf, int len, int flags);
     * it returns the number of bytes read
         + `-1` means error
 
-### `sendto()` 
+### `sendto()`
+`sendto()` is the `UDP` version of `send()`
 ```c++
 int sendto(SOCKET s, const const *buf, int len, int flags, const sockaddr *to, int tolen);
 ```
@@ -301,6 +314,7 @@ int sendto(SOCKET s, const const *buf, int len, int flags, const sockaddr *to, i
 - the rest is same as `send()`
 
 ### `recvfrom()`
+`recvfrom()` is the `UDP` version of `recv()`
 ```c++
 int recvfrom(SOCKET s, const const *buf, int len, int flags, const sockaddr *from, int *fromlen);
 ```
@@ -310,12 +324,12 @@ int recvfrom(SOCKET s, const const *buf, int len, int flags, const sockaddr *fro
 - the rest is same as `recv()`
 
 ### `shutdown()`
+`shutdown()` will prevent any more reads and writes to the socket
 ```c++
 int shutdown(SOCKET s, int how);
 ```
-- `shutdown()` will prevent any more reads and writes to the socket
-    * but it's worth noting that it **doesn’t actually close** the socket
-        + it just changes its usability.
+- but it's worth noting that it **doesn’t actually close** the socket
+    * it just changes its usability.
     * in order to **free** a socket, you need to call `close()`
 - `how` Effect
     * `0`: Further **receives** are disallowed
@@ -323,10 +337,10 @@ int shutdown(SOCKET s, int how);
     * `2`: Further **sends** and **receives** are disallowed (like close())
 
 ### `getpeername()`
+`getpeername()` will tell you the **information** regarding the **other side** of the connection
 ```c++
 int getpeername(SOCKET s, sockaddr *name, int *namelen);
 ```
-- `getpeername()` will tell you the **information** regarding the **other side** of the connection
 - `name` points to a `sockaddr` structure (or a `sockaddr_in`) that will hold the **information**
 - `namelen` is a pointer to an `int`
     * which should be initialized to `sizeof *addr` or `sizeof(sockaddr)`
@@ -335,11 +349,11 @@ int getpeername(SOCKET s, sockaddr *name, int *namelen);
     * you can use `inet_ntop()`, `getnameinfo()`, or `gethostbyaddr()` to print or get more information
 
 ### `gethostname()`
+`gethostname()` will tell you the name of the computer that your program is running on
 ```c++
 int gethostname(char *hostname, int size);
 ```
-- `gethostname()` will tell you the name of the computer that your program is running on
-    * that name can then be used by `getaddrinfo()` to determine the IP address of your local machine
+- the name from `gethostname()` can then be used by `getaddrinfo()` to determine the IP address of your local machine
 - `hostname` points to an array of chars that will contain the **hostname** upon the function’s return 
 - `size` is the length in `bytes` of the hostname array
 - it returns `0` on **successful** completion
