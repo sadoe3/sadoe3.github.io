@@ -171,7 +171,7 @@ int main() {
                 if (currentSocket == listeningSocket) {
                     // If listening socket still resides in the read set after select(), this means that new connection request is queued
                     newSocket = accept(listeningSocket, reinterpret_cast<sockaddr*>(&clientAddr), &addrLength);
-                    if (newSocket == SOCKET_ERROR) 
+                    if (newSocket == INVALID_SOCKET) 
                         std::cerr << "accept" << std::endl;
                     else {
                         // If the new socket has been created successfully, then add it to master set and change maxSocket if needed
