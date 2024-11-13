@@ -20,10 +20,12 @@ date: 2024-11-11
 > 이 포스트는 `Beej's Guide to Network Programming`을 바탕으로 작성되었습니다.
 
 ## What is a socket?
-A **socket** is a **way to communicate** with other programs over a network
+A **socket** is a **communication channel** with other programs over a network
 - and its implementation differs across operating systems
     * `file descriptors` in Unix-based systems
+        + it's just `int`
     * `socket handles` in Windows
+        + it's `SOCKET` but can be used as `int` (they are compatible in Windows)
 - there are various kinds of sockets
     * but this book deals only with the one type of sockets
         + **Internet Sockets**
