@@ -428,6 +428,8 @@ In order to use **Boost**'s libraries, you need to install it
 ```c++
 #include <iostream>
 #include <winsock2.h>
+
+#include <sstream> 
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/access.hpp>
