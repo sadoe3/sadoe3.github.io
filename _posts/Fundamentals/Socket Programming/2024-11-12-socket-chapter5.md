@@ -219,6 +219,7 @@ int connect(SOCKET s, sockaddr *name, int namelen);
     ```
 - `accept()` returns a **new** `SOCKET` which contains the data inside the **queue** which `listen()` handles with
     * the point is that the **original** `SOCKET` is still **listening**
+    * it returns `INVALID_SOCKET` on error
 - `s` parameter is the **listening socket**
 - `addr` parameter will usually be a pointer to a local `sockaddr_storage` structure
     * this is where the information about the incoming connection will go
