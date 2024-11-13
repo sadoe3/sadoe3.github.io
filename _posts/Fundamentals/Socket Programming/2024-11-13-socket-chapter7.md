@@ -79,8 +79,146 @@ int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, timev
 
 ### chat program - server
 ```c++
+#include <iostream>
+#include <winsock2.h>
+#include <ws2tcpip.h>       // For additional utilities like inet_pton()
 
+#define PORT "9034"         // Port number for communication
+
+int main() {    
+    //Initialize Winsock
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        std::cerr << "WSAStartup failed!" << std::endl;
+        return 1;
+    }
+
+    // Define the sockaddr_in6 structure for IPv6 server connection
+    addrinfo hints, *results, *currentNode;
+    int status;
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC;         
+    hints.ai_socktype = SOCK_STREAM;    // TCP socket
+    hints.ai_flags = AI_PASSIVE;        // Use local IP Address
+
+    // Get address info for the server using IPv6
+    if ((status = getaddrinfo(NULL, PORT, &hints, &results)) != 0) {
+        std::cerr << "server: " << gai_strerror(status) << std::endl;
+        return 1;
+    }
+
+    // Create socket
+    SOCKET listeningSocket;
+    for (currentNode = results; currentNode != NULL; currentNode = currentNode->ai_next) {
+        listeningSocket = socket(currentNode->ai_family, currentNode->ai_socktype, currentNode->ai_protocol);
+        if (listeningSocket < 0)
+            continue;
+    
+        if (bind(listeningSocket, currentNode->ai_addr, currentNode->ai_addrlen) < 0) {
+            closesocket(listeningSocket);
+            continue;
+        }
+        break;
+    }
+    if (currentNode == NULL) {
+        std::cerr << "server: failed to bind" << std::endl;
+        return 1;
+    }
+    freeaddrinfo(results);      // Done with the address info
+    
+
+    // Set up fd_sets for select
+    fd_set setMaster;
+    fd_set setRead;
+    int maxSocket;
+    FD_ZERO(&setMaster);
+    FD_ZERO(&setRead);
+
+    // Make as listening socket
+    if (listen(listeningSocket, 10) == SOCKET_ERROR) {
+        std::cerr << "listen" << std::endl;
+        return 1;
+    }
+    // Add the listeningSocket to the master set
+    FD_SET(listeningSocket, &setMaster);
+    
+    // maxSocket keeps track of the biggest socket
+    maxSocket = listeningSocket;
+    
+
+    auto getAddr = [](sockaddr* socketAddr) -> void* { if (socketAddr->sa_family == AF_INET) return &(reinterpret_cast<sockaddr_in*>(&socketAddr)->sin_addr); else return &(reinterpret_cast<sockaddr_in6*>(&socketAddr)->sin6_addr); };
+    SOCKET newSocket;
+    sockaddr_storage clientAddr;
+    int addrLength = sizeof clientAddr;
+
+    constexpr unsigned BUF_SIZE = 256;
+    char buf[BUF_SIZE];
+    int numBytes;
+    char remoteIP[INET6_ADDRSTRLEN];
+
+    int currentSocket, currentSocketNested;
+    // main loop
+    while (true) {
+        // Copy master set because select() might modify it
+        setRead = setMaster;
+        if (select(maxSocket + 1, &setRead, NULL, NULL, NULL) == SOCKET_ERROR) {     // Set timeout NULL so that server always waits for any change
+            std::cerr << "select" << std::endl;
+            return 1;
+        }
+        // Search for data to read
+        for (currentSocket = 0; currentSocket <= maxSocket; currentSocket++) {
+            if (FD_ISSET(currentSocket, &setRead)) {
+                if (currentSocket == listeningSocket) {
+                    // If listening socket still resides in the read set after select(), this means that new connection request is queued
+                    newSocket = accept(listeningSocket, reinterpret_cast<sockaddr*>(&clientAddr), &addrLength);
+                    if (newSocket == SOCKET_ERROR) 
+                        std::cerr << "accept" << std::endl;
+                    else {
+                        // If the new socket has been created successfully, then add it to master set and change maxSocket if needed
+                        FD_SET(newSocket, &setMaster);
+                        if (newSocket > maxSocket)
+                            maxSocket = newSocket;
+                        std::cout << "server: new connection from " << inet_ntop(clientAddr.ss_family, getAddr(reinterpret_cast<sockaddr*>(&clientAddr)), remoteIP, INET6_ADDRSTRLEN) << " on socket " << newSocket << std::endl;
+                    }
+                }
+                else {
+                    // Handle data from a client
+                    if ((numBytes = recv(currentSocket, buf, BUF_SIZE, 0)) <= 0) {
+                        if (numBytes == 0)
+                            std::cout << "server: socket " << currentSocket << " is closed" << std::endl;
+                        else
+                            std::cerr << "recv" << std::endl;
+
+                        // If there's problem or the connection is closed by the peer, let the server not handle this connection anymore
+                        closesocket(currentSocket);
+                        FD_CLR(currentSocket, &setMaster);
+                    }
+                    else {
+                        for (currentSocketNested = 0; currentSocketNested <= maxSocket; currentSocketNested++) {
+                            // Send to everyone!
+                            if (FD_ISSET(currentSocketNested, &setMaster)) {
+                                // Except the listeningSocket and the sender
+                                if (currentSocketNested != listeningSocket && currentSocketNested != currentSocket) {
+                                    if (send(currentSocketNested, buf, numBytes, 0) == SOCKET_ERROR)
+                                        std::cerr << "send" << std::endl;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    WSACleanup();
+
+    return 0;
+}
 ```
+- it's worth noting that `select()` might **modify** the given `fd_set`s based on whether the sockets deserve to be in the set or not
+    * if some sockets don't deserve, then they would be **removed** from the set
+    * hence, if you want to keep track of all clients during the infinite loop
+        + you need to make a **master set** which has all the sockets
+        + and **copy** it then, use the copied version to `select()`
 
 ### chat program - client
 ```c++
