@@ -378,6 +378,8 @@ In order to use **Boost**'s libraries, you need to install it
         cd vcpkg
         .\bootstrap-vcpkg.bat
         // this will install the vcpkg package manager.
+        
+        setx VCPKG_INSTALLATION_TELEMETRY 0             // if you don't want your usage to be shared type this command
         ```
     2. install **Boost** using `vcpkg`:
         ```c++
