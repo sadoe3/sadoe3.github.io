@@ -293,6 +293,33 @@ bytes_sent = send(sock, msg, len, 0);
     * just set it to `0` for now
 - `send()` returns the number of bytes sent
     * `-1` means error
+- it's worth noting that `send()` might not send all the bytes
+    * which means that the remaining data still in `buf` waiting to be sent out
+- in order to fix this issue, you can write a function like below
+    ```c++
+    int sendAll(int s, char* buf, int* len) {
+        int total = 0, bytesLeft = *len, n = -1;
+
+        while (total < *len) {
+            n = send(s, buf + total, bytesLeft, 0);
+            if (n == -1)
+                break;
+            total += n;
+            bytesLeft -= n;
+        }
+        *len = total;
+
+        return n == -1 ? -1 : 0;
+    }
+    // example use
+    char buf[10] = "Kyle!";
+    int len;
+    len = strlen(buf);
+    if (sendAll(s, buf, &len) == -1) {
+        std::cerr << "sendAll" << std::endl;
+        std::cout << "We only sent " << len << " bytes because of the error!" << std::endl;
+    }
+    ```
 
 ### `recv()`
 `recv()` receives data from the other machine on the socket `s` and stores it into `buf` 

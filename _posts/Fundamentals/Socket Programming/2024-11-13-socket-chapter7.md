@@ -69,7 +69,7 @@ int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, timev
     * `tv_sec` represents the **seconds** portion of the timeout
     * `tv_usec` represents the **microseconds** portion of the timeout
     * the actual timeout is the combination of both values in **microseconds**
-        + **timeout** = `tv_sec` x 1,000,000 + `tv_usec`
+        + **timeout** = `tv_sec` x `1,000,000` + `tv_usec`
     * if you set the fields to `0`, `select()` will timeout **immediately**
     * if you set the parameter timeout to `NULL`, it will **never timeout**
 - `select()` returns
@@ -344,5 +344,8 @@ int main() {
     * run multiple **client**s
     * send any sentence from a **certain client**
     * then the **other clients** will receive it
+
+### Serialization
+:D
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
