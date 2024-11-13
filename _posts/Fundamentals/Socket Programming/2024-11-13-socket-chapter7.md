@@ -346,6 +346,29 @@ int main() {
     * then the **other clients** will receive it
 
 ### Serialization
-:D
+Send **text** data across the network is **easy**
+- but what happens if you want to send **other types** of data like `int`, `float` or even `class`
+- you have a few options to use
+    * convert the number into text with a function like `sprintf()`, then send the text. The receiver will parse the text back into a number using a function like `strtol()`
+        + this method is easy, but requires **more space** and **more time** for the conversion
+    * just send the data **without any modification**, passing a pointer to the data to `send()`
+        ```c++
+        // sending
+        double d = 3490.15926;
+        send(s, &d, sizeof d, 0);
+        // receiving
+        double d;
+        recv(s, &d, sizeof d, 0);
+        ```
+        + this method may work if the peer's achitecture represents **same** `bit representation` and `byte ordering`
+        + otherwise, this method is very **dangerous**, and it's usually referred as **not portable**
+        + in case you **don't need portability**, this is nice and fast
+    * **encode** the number into a `portable binary form`. The receiver will **decode** it
+        + this method is called **serialization**
+        + there are various ways to use or implement **serialization**
+        + and I'll cover regarding **Boost Serialization** for `C++` code
+
+### Boost Serialization
+
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
