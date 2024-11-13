@@ -42,7 +42,7 @@ date: 2024-11-13
     * Windows I/O Completion Ports (`IOCP`)
         + suitable for a high-performance with large numbers of sockets
 
-### `select()`
+## `select()`
 `select()` gives you the power to **monitor several sockets** at the **same time**
 ```c++
 int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, timeval *timeout);
@@ -345,7 +345,7 @@ int main() {
     * send any sentence from a **certain client**
     * then the **other clients** will receive it
 
-### Serialization
+## Serialization
 Send **text** data across the network is **easy**
 - but what happens if you want to send **other types** of data like `int`, `float` or even `class`
 - you have a few options to use
@@ -379,7 +379,7 @@ In order to use **Boost**'s libraries, you need to install it
         .\bootstrap-vcpkg.bat
         // this will install the vcpkg package manager.
         
-        setx VCPKG_INSTALLATION_TELEMETRY 0             // if you don't want your usage to be shared type this command
+        setx VCPKG_INSTALLATION_TELEMETRY 0             // type this command if you don't want your usage to be shared
         ```
     2. install **Boost** using `vcpkg`:
         ```c++
@@ -510,6 +510,12 @@ int main() {
 ```
 - it's worth noting that you use `boost::archive::binary_oarchive` (output archive) object to **serialize** the data to send
     * you can serialize the data by simply using `<<` (output operator)
+
+
+## Data Encapsulation
+seems like these two topics might need to go up so that they are part of `techniques`
+
+## Broadcast Packets
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
