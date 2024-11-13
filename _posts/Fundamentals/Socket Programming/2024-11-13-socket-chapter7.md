@@ -411,14 +411,17 @@ In order to use **Boost**'s libraries, you need to install it
         SimpleData(int i, double d) : intValue(i), doubleValue(d) {}
 
         template <class Archive>
-        void serialize(Archive &ar, const unsigned int version) {
+        void serialize(Archive& ar, const unsigned int version) {
             // need to match the order of declaration
-            ar & intValue;
-            ar & doubleValue;
+            ar& BOOST_SERIALIZATION_NVP(intValue);
+            ar& doubleValue;        // omitting BOOST_SERIALIZATION_NVP is fine
         }
     };
     ```
 - it's worth noting that `serialize()` writes the data members to a stream in the **order** in which they are **declared in the class**
+- it's **okay** to **omit** `BOOST_SERIALIZATION_NVP` (Named Value Pair) for binary data
+    * but if you want to care about **human-readable** formats like `XML` or if you want to **explicitly name** your members
+    * it's a good idea to include it
 - the example use is shown below
 
 ### Boost Serialization - Server
@@ -435,6 +438,27 @@ public:
     // same code
 };
 
+// Function to receive the serialized data over the socket
+SimpleData receiveSerializedData(SOCKET sock) {
+    // Step 1: Receive data from the socket
+    constexpr unsigned BUF_SIZE = 1024;
+    char buffer[BUF_SIZE];
+    int bytesReceived = recv(sock, buffer, BUF_SIZE, 0);
+    if (bytesReceived == SOCKET_ERROR) {
+        std::cerr << "Failed to receive data." << std::endl;
+        throw std::runtime_error("Receive failed");
+    }
+
+    // Step 2: Store received data in a string (buffer) and deserialize it
+    std::string receivedData(buffer, bytesReceived);
+    std::istringstream iss(receivedData);
+    boost::archive::binary_iarchive inputArchive(iss);
+
+    SimpleData data;
+    inputArchive >> data; 
+    return data;
+}
+
 int main() {
     // same code
 
@@ -449,14 +473,9 @@ int main() {
 
     std::cout << "Client connected." << std::endl;
 
-    // Deserialize the received data
-    boost::archive::binary_iarchive ia(clientSocket);
-    SimpleData receivedData;
-    ia >> receivedData;
-
-    std::cout << "Received Data:\n";
-    std::cout << "intValue: " << receivedData.intValue << std::endl;
-    std::cout << "doubleValue: " << receivedData.doubleValue << std::endl;
+    // Receive and deserialize data from client
+    SimpleData receivedData = receiveSerializedData(clientSocket);
+    std::cout << "Received data: " << receivedData.intValue << ", " << receivedData.doubleValue << std::endl;
 
     // Clean up
     closesocket(clientSocket);
@@ -465,13 +484,17 @@ int main() {
     return 0;
 }
 ```
-- it's worth noting that you use `boost::archive::binary_iarchive` (input archive) object to **deserialize** the received data
+- it's worth noting that you need to implement a `receiveSerializedData()` which uses `boost::archive::binary_iarchive` (input archive) object to **deserialize** the received data
+    * you need to use **std::ostringstream** to construct `binary_oarchive` object
     * you can deserialize the data by simply using `>>` (input operator)
+        * then, you are able to **send** the **text** data which is **serialized** and returned from `oss.str()`
 
 ### Boost Serialization - Client
 ```c++
 #include <iostream>
 #include <winsock2.h>
+
+#include <sstream> 
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/access.hpp>
@@ -480,6 +503,24 @@ class SimpleData {
 public:
     // same code
 };
+
+// Function to send the serialized data over the socket
+void sendSerializedData(SOCKET sock, const SimpleData& data) {
+    // Step 1: Serialize data into a stringstream (in-memory buffer)
+    std::ostringstream oss;
+    boost::archive::binary_oarchive outputArchive(oss);
+    outputArchive << data;  // Serialize the object into the stream
+
+    // Step 2: Convert serialized data into a byte buffer
+    std::string serializedData = oss.str();
+
+    // Step 3: Send the serialized data over the socket
+    int result = send(sock, serializedData.c_str(), serializedData.size(), 0);
+    if (result == SOCKET_ERROR)
+        std::cerr << "Failed to send data." << std::endl;
+    else
+        std::cout << "Sent " << result << " bytes." << std::endl;
+}
 
 int main() {
     // same code
@@ -498,10 +539,7 @@ int main() {
     SimpleData dataToSend(42, 3.14);
 
     // Serialize and send the data
-    boost::archive::binary_oarchive oa(clientSocket);
-    oa << dataToSend;
-
-    std::cout << "Sent Data: intValue = " << dataToSend.intValue << ", doubleValue = " << dataToSend.doubleValue << std::endl;
+    sendSerializedData(clientSocket, dataToSend);
 
     // Clean up
     closesocket(clientSocket);
@@ -509,8 +547,10 @@ int main() {
     return 0;
 }
 ```
-- it's worth noting that you use `boost::archive::binary_oarchive` (output archive) object to **serialize** the data to send
+- it's worth noting that you need to implement `sendSerializedData()` which uses `boost::archive::binary_oarchive` (output archive) object to **serialize** the data to send
+    * you need to use **std::ostringstream** to construct `binary_oarchive` object
     * you can serialize the data by simply using `<<` (output operator)
+    * then, you are able to **send** the **text** data which is **serialized** and returned from `oss.str()`
 
 
 ## Data Encapsulation
