@@ -488,6 +488,8 @@ int main() {
     * you need to use **std::ostringstream** to construct `binary_oarchive` object
     * you can deserialize the data by simply using `>>` (input operator)
         * then, you are able to **send** the **text** data which is **serialized** and returned from `oss.str()`
+- it's also note worthing that if you want to handle the error inside another function which uses its return value for another purpose
+    * you can accomplish this by throwing **exception classess**
 
 ### Boost Serialization - Client
 ```c++
@@ -540,6 +542,11 @@ int main() {
 
     // Serialize and send the data
     sendSerializedData(clientSocket, dataToSend);
+
+    fd_set setRead;
+    FD_ZERO(&setRead);
+    FD_SET(clientSocket, &setRead);
+    select(clientSocket + 1, &setRead, NULL, NULL, NULL);
 
     // Clean up
     closesocket(clientSocket);
