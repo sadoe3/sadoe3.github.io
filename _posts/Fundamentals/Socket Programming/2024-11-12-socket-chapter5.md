@@ -301,7 +301,8 @@ int recv(SOCKET s, const char *buf, int len, int flags);
 ```
 - `recv()` works similarly to how `send()` works
     * it returns the number of bytes read
-        + `-1` means error
+        + `-1` means **error**
+        + `0` means that the **connection** has been gracefully **closed** by the peer
 
 ### `sendto()`
 `sendto()` is the `UDP` version of `send()`
