@@ -462,17 +462,6 @@ SimpleData receiveSerializedData(SOCKET sock) {
 int main() {
     // same code
 
-    // Accept client connections
-    clientSocket = accept(listenSocket, (struct sockaddr*)&clientAddr, &clientSize);
-    if (clientSocket == INVALID_SOCKET) {
-        std::cerr << "Accept failed!" << std::endl;
-        closesocket(listenSocket);
-        WSACleanup();
-        return 1;
-    }
-
-    std::cout << "Client connected." << std::endl;
-
     // Accept a client connection
     fd_set setRead;
     FD_ZERO(&setRead);
@@ -490,7 +479,7 @@ int main() {
 
     // Clean up
     closesocket(clientSocket);
-    closesocket(listenSocket);
+    closesocket(listeningSocket);
     WSACleanup();
     return 0;
 }
@@ -537,8 +526,8 @@ int main() {
     // same code
 
     // Connect to the server
-    if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
-        std::cerr << "Connect failed!" << std::endl;
+    if (connect(clientSocket, res->ai_addr, res->ai_addrlen) == -1) {
+        std::cerr << "connect failed!" << std::endl;
         closesocket(clientSocket);
         WSACleanup();
         return 1;
