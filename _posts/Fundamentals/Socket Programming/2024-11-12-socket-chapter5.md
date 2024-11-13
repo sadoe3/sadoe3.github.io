@@ -264,7 +264,7 @@ int connect(SOCKET s, sockaddr *name, int namelen);
         return 1;
     }
 
-    sockaddr_storage theirAddr;
+    sockaddr_storage theirAddr;     // always try to use sockaddr_storage
     int addrSize = sizeof theirAddr;
     SOCKET newSocket = accept(sock, reinterpret_cast<sockaddr*>(&theirAddr), &addrSize);
     if (newSocket == INVALID_SOCKET) {
@@ -274,6 +274,10 @@ int connect(SOCKET s, sockaddr *name, int namelen);
         return 1;
     }
     ```
+- it's worth noting that when you call `accept()` try to use `sockaddr_storage` object
+    * because it's **generic** which means that it covers `IPv4` and `IPv6` at the same time
+    * if you use `sockaddr_in` for its second parameter, `accept()` handles with only `IPv4`
+        + if the `sock` uses `IPv6`, then `accept()` returns `INVALID_SOCKET`
 
 ### `send()` 
 `send()` sends `buf` to the other machine on the socket `s`
