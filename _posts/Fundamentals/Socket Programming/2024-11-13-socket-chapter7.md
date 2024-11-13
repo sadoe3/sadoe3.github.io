@@ -473,6 +473,17 @@ int main() {
 
     std::cout << "Client connected." << std::endl;
 
+    // Accept a client connection
+    fd_set setRead;
+    FD_ZERO(&setRead);
+    FD_SET(listeningSocket, &setRead);
+    select(listeningSocket + 1, &setRead, NULL, NULL, NULL);
+
+    sockaddr_in clientAddr;
+    int clientAddrSize = sizeof(clientAddr);
+    SOCKET clientSocket = accept(listeningSocket, (sockaddr*)&clientAddr, &clientAddrSize);
+    std::cout << "Client connected." << std::endl;
+
     // Receive and deserialize data from client
     SimpleData receivedData = receiveSerializedData(clientSocket);
     std::cout << "Received data: " << receivedData.intValue << ", " << receivedData.doubleValue << std::endl;
