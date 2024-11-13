@@ -385,6 +385,7 @@ In order to use **Boost**'s libraries, you need to install it
         ```c++
         // once vcpkg is installed, use the following command to install Boost:
         .\vcpkg install boost
+        // this would take long time because it would install whole libraries
         ```
     3. integrate `vcpkg` with **Visual Studio**:
         ```c++
