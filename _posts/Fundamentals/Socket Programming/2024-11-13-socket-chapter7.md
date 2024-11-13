@@ -446,7 +446,7 @@ SimpleData receiveSerializedData(SOCKET sock) {
     int bytesReceived = recv(sock, buffer, BUF_SIZE, 0);
     if (bytesReceived == SOCKET_ERROR) {
         std::cerr << "Failed to receive data." << std::endl;
-        throw std::runtime_error("Receive failed");
+        throw std::runtime_error("Receive failed");     // exception handling!!
     }
 
     // Step 2: Store received data in a string (buffer) and deserialize it
@@ -460,7 +460,8 @@ SimpleData receiveSerializedData(SOCKET sock) {
 }
 
 int main() {
-    // same code
+    // same code (until listen())
+    std::cout << "Waiting for connection..." << std::endl;
 
     // Accept a client connection
     fd_set setRead;
@@ -468,9 +469,12 @@ int main() {
     FD_SET(listeningSocket, &setRead);
     select(listeningSocket + 1, &setRead, NULL, NULL, NULL);
 
-    sockaddr_in clientAddr;
+    // try to use sockaddr_storage for generic code;
+    // if you use sockaddr_in, accept() returns INVALID_SOCKET if clientSocket uses IPv6
+    sockaddr_storage clientAddr;
+
     int clientAddrSize = sizeof(clientAddr);
-    SOCKET clientSocket = accept(listeningSocket, (sockaddr*)&clientAddr, &clientAddrSize);
+    SOCKET clientSocket = accept(listeningSocket, reinterpret_cast<sockaddr*>(&clientAddr), &clientAddrSize);
     std::cout << "Client connected." << std::endl;
 
     // Receive and deserialize data from client
@@ -540,13 +544,8 @@ int main() {
     // Create the data to send
     SimpleData dataToSend(42, 3.14);
 
-    // Serialize and send the data
+    // Send serialized data to the server
     sendSerializedData(clientSocket, dataToSend);
-
-    fd_set setRead;
-    FD_ZERO(&setRead);
-    FD_SET(clientSocket, &setRead);
-    select(clientSocket + 1, &setRead, NULL, NULL, NULL);
 
     // Clean up
     closesocket(clientSocket);
