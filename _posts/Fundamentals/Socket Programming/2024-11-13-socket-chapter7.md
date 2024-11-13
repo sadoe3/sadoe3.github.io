@@ -400,6 +400,7 @@ In order to use **Boost**'s libraries, you need to install it
 
     class SimpleData {
     public:
+        // declaration order
         int intValue;
         double doubleValue;
 
@@ -408,11 +409,13 @@ In order to use **Boost**'s libraries, you need to install it
 
         template <class Archive>
         void serialize(Archive &ar, const unsigned int version) {
+            // need to match the order of declaration
             ar & intValue;
             ar & doubleValue;
         }
     };
     ```
+- it's worth noting that `serialize()` writes the data members to a stream in the **order** in which they are **declared in the class**
 - the example use is shown below
 
 ### Boost Serialization - Server
@@ -459,7 +462,8 @@ int main() {
     return 0;
 }
 ```
-- it's
+- it's worth noting that you use `boost::archive::binary_iarchive` (input archive) object to **deserialize** the received data
+    * you can deserialize the data by simply using `>>` (input operator)
 
 ### Boost Serialization - Client
 ```c++
@@ -502,7 +506,8 @@ int main() {
     return 0;
 }
 ```
-- it's
+- it's worth noting that you use `boost::archive::binary_oarchive` (output archive) object to **serialize** the data to send
+    * you can serialize the data by simply using `<<` (output operator)
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
