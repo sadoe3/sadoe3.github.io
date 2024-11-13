@@ -369,6 +369,140 @@ Send **text** data across the network is **easy**
         + and I'll cover regarding **Boost Serialization** for `C++` code
 
 ### Boost Serialization
+In order to use **Boost**'s libraries, you need to install it
+- there are various ways to accomplish this, I choose to use `vcpkg` (Visual Studio's Package Manager)
+    1. install `vcpkg`:
+        ```c++
+        // clone the vcpkg repository:
+        git clone https://github.com/microsoft/vcpkg.git
+        cd vcpkg
+        .\bootstrap-vcpkg.bat
+        // this will install the vcpkg package manager.
+        ```
+    2. install **Boost** using `vcpkg`:
+        ```c++
+        // once vcpkg is installed, use the following command to install Boost:
+        .\vcpkg install boost
+        ```
+    3. integrate `vcpkg` with **Visual Studio**:
+        ```c++
+        // to integrate vcpkg with Visual Studio, run the following command from the vcpkg directory:
+        .\vcpkg integrate install
+        // this will automatically configure Visual Studio to use the libraries installed by vcpkg.
+        ```
+    4. use **Boost** in **Visual Studio**:
+        + from now on **Boost** will be available for your **existing** and **future** projects
+        + you can now use **Boost** headers and libraries by simply **including** them in your C++ project, and **Visual Studio** will automatically link them
+- after installing it, you can implement a `class` which support **Boost Serialization**
+    ```c++
+    #include <boost/serialization/serialization.hpp>
+    #include <boost/serialization/access.hpp>
+
+    class SimpleData {
+    public:
+        int intValue;
+        double doubleValue;
+
+        SimpleData() : intValue(0), doubleValue(0.0) {}
+        SimpleData(int i, double d) : intValue(i), doubleValue(d) {}
+
+        template <class Archive>
+        void serialize(Archive &ar, const unsigned int version) {
+            ar & intValue;
+            ar & doubleValue;
+        }
+    };
+    ```
+- the example use is shown below
+
+### Boost Serialization - Server
+```c++
+#include <iostream>
+#include <winsock2.h>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/access.hpp>
+
+
+class SimpleData {
+public:
+    // same code
+};
+
+int main() {
+    // same code
+
+    // Accept client connections
+    clientSocket = accept(listenSocket, (struct sockaddr*)&clientAddr, &clientSize);
+    if (clientSocket == INVALID_SOCKET) {
+        std::cerr << "Accept failed!" << std::endl;
+        closesocket(listenSocket);
+        WSACleanup();
+        return 1;
+    }
+
+    std::cout << "Client connected." << std::endl;
+
+    // Deserialize the received data
+    boost::archive::binary_iarchive ia(clientSocket);
+    SimpleData receivedData;
+    ia >> receivedData;
+
+    std::cout << "Received Data:\n";
+    std::cout << "intValue: " << receivedData.intValue << std::endl;
+    std::cout << "doubleValue: " << receivedData.doubleValue << std::endl;
+
+    // Clean up
+    closesocket(clientSocket);
+    closesocket(listenSocket);
+    WSACleanup();
+    return 0;
+}
+```
+- it's
+
+### Boost Serialization - Client
+```c++
+#include <iostream>
+#include <winsock2.h>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/access.hpp>
+
+class SimpleData {
+public:
+    // same code
+};
+
+int main() {
+    // same code
+
+    // Connect to the server
+    if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
+        std::cerr << "Connect failed!" << std::endl;
+        closesocket(clientSocket);
+        WSACleanup();
+        return 1;
+    }
+
+    std::cout << "Connected to server.\n";
+
+    // Create the data to send
+    SimpleData dataToSend(42, 3.14);
+
+    // Serialize and send the data
+    boost::archive::binary_oarchive oa(clientSocket);
+    oa << dataToSend;
+
+    std::cout << "Sent Data: intValue = " << dataToSend.intValue << ", doubleValue = " << dataToSend.doubleValue << std::endl;
+
+    // Clean up
+    closesocket(clientSocket);
+    WSACleanup();
+    return 0;
+}
+```
+- it's
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
