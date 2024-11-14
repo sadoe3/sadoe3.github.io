@@ -29,6 +29,28 @@ date: 2024-11-13
 - various functions block
     * `accept()` blocks
     * all the `recv()` functions block
+    * `select()` which would be covered soon also blocks
+    * other functions like `send()` can block if a certain condition is satisfied
+
+### Broadcast Packets
+It is possible to send data to **multiple machines at once** by using the concept of **broadcasting**
+- the `sender` sends the message once to the **broadcast address**
+    * `all machines` on the network segment that are **listening on that broadcast address** will receive the message
+    * it's worth noting that **no** machine **forwards the message**
+        + each machine **independently** receives the broadcast and processes it
+- **Broadcasting** is done with `UDP` and standard `IPv4`
+    * with `IPv6`, you have to utilize the **multicasting**
+- the **only difference** between a `UDP` application that **can** broadcast and one that **cannnot**
+    * is whether the socket option `SO_BROADCAST` is set or not
+- you can set it like below
+    ```c++
+    int broadcast = 1;
+    //char broadcast = '1'; // if int version doesn't work, try this
+    if (setsockopt(socket, SOL_SOCKET, SO_BROADCAST, &broadcast, sizeof broadcast) == SOCKET_ERROR) {
+        std::cerr << "setsockopt (SO_BROADCAST)" << std::endl;
+        return 1;
+    }
+    ```
 
 ### `poll()`
 `poll()` is a function utilized on **Unix-like** systems 
@@ -629,10 +651,6 @@ void sendSerializedData(SOCKET sock, const SimpleData& data) {
         std::cout << "Sent " << result << " bytes." << std::endl;
 }
 ```
-
-
-## Broadcast Packets
-
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
