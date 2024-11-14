@@ -562,9 +562,77 @@ int main() {
 
 
 ## Data Encapsulation
-seems like these two topics might need to go up so that they are part of `techniques`
+**Data encapsulation** involves adding a `header` (and sometimes a `trailer`) that contains **metadata** such as the `size of the data`, source and destination `addresses`, and control information so that the **receiver** can properly process and interpret the received data
+- the simplest method to implement **data encapsulation** is sending `size` information **first** and sending the actual data
+    * there are 2 ways to accomplish this
+    * call `recv()` to get **size first**, then **keep calling** `recv()` until it reads all data
+        + this method is good but needs to call `recv()` at least twice
+    * use **work buffer** which is large enough to contain `two data` (packet)
+        + after calling `recv()`, check whether the received data is complete or not based on the **first value** of work buffer which is `size` information
+        + the reason why the **work buffer** is large enough to contain `two packets` is that there might be a situation where `one complete packet` and `a partial second packet` are received at the **same time**
+- the below example uses first method
+
+### Data Encapsulation - Server
+```c++
+// same code from Boost Serializaiton
+// minor changes regarding this function
+
+SimpleData receiveSerializedData(SOCKET sock) {
+    // Step 1: Data Encapsulation! Receive size information first
+    size_t networkSize, dataSize;
+    int bytesReceived = recv(sock, reinterpret_cast<char*>(&networkSize), sizeof(networkSize), 0);
+    if (bytesReceived == SOCKET_ERROR) {
+        std::cerr << "Failed to receive size" << std::endl;
+        throw std::runtime_error("Receive failed");
+    }
+    dataSize = ntohl(networkSize);  // Portability! Convert networkSize from network byte order to size_t
+
+    // Step 2: Infinite loop until receiving complete data from the socket
+    constexpr unsigned BUF_SIZE = 1024;
+    char buffer[BUF_SIZE];
+    bytesReceived = 0;
+    while (bytesReceived < dataSize) {
+        bytesReceived += recv(sock, buffer, BUF_SIZE, 0);
+        if (bytesReceived == SOCKET_ERROR) {
+            std::cerr << "Failed to receive data." << std::endl;
+            throw std::runtime_error("Receive failed");
+        }
+    }
+
+    // same code
+}
+```
+- it's worth noting that **network byte order** conversions is utilized in order to achieve **portability** when receiving or sending the `size` information
+
+### Data Encapsulation - Client
+```c++
+// same code from Boost Serializaiton
+// minor changes regarding this function
+
+void sendSerializedData(SOCKET sock, const SimpleData& data) {
+    // same code
+
+    // Step 3: Data Encapsulation! Send the size
+    size_t networkSize = htonl(serializedData.size());       // Portability! Convert size information (size_t) to network byte order
+    int result = send(sock, reinterpret_cast<const char*>(&networkSize), sizeof(networkSize), 0);
+    if (result == SOCKET_ERROR)
+        std::cerr << "Failed to send data." << std::endl;
+    else
+        std::cout << "size is sent" << std::endl;
+
+
+    // Step 4: Send the serialized data over the socket
+    result = send(sock, serializedData.c_str(), serializedData.size(), 0);
+    if (result == SOCKET_ERROR)
+        std::cerr << "Failed to send data." << std::endl;
+    else
+        std::cout << "Sent " << result << " bytes." << std::endl;
+}
+```
+
 
 ## Broadcast Packets
+
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
