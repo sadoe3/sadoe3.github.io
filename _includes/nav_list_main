@@ -98,15 +98,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "unity-lecture" %}
-                        <li><a href="/categories/unity-lecture" class="sidebar-category">Unity through lectures ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "unity-self" %}
-                        <li><a href="/categories/unity-self" class="sidebar-category">Unity through self-study ({{category[1].size}})</a></li>
+                    {% if category[0] == "unity" %}
+                        <li><a href="/categories/unity" class="sidebar-category">Unity ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
