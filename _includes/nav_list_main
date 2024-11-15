@@ -47,6 +47,13 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "windows" %}
+                        <li><a href="/categories/windows" class="sidebar-category">Windows Programming ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "game-patterns" %}
                         <li><a href="/categories/game-patterns" class="sidebar-category">Game Programming Patterns ({{category[1].size}})</a></li>
                     {% endif %}
@@ -54,8 +61,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "windows" %}
-                        <li><a href="/categories/windows" class="sidebar-category">Windows Programming ({{category[1].size}})</a></li>
+                    {% if category[0] == "sql" %}
+                        <li><a href="/categories/sql" class="sidebar-category">SQL ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -89,6 +96,13 @@
                 {% endfor %}
             </ul>
         <span class="nav__sub-title">Technoloy</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "qt6" %}
+                        <li><a href="/categories/qt6" class="sidebar-category">Qt 6 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "ue5" %}
