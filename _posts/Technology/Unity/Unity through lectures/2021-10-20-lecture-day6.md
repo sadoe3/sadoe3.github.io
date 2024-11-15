@@ -2,10 +2,10 @@
 title: "Unity 강의 - Day 6"
 
 categories:
-    - unity-lecture
+    - unity
 
 tags:
-    - [Game Engine, Unity]
+    - [Game Engine, Unity, Lecture]
 
 toc: true
 toc_label: "목차"
