@@ -1,5 +1,5 @@
 ---
-title: "Socket Programming - Data Types"
+title: "Socket Programming : Data Types"
 
 categories:
     - socket

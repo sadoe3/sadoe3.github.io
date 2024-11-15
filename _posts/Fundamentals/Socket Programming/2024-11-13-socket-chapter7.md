@@ -1,5 +1,5 @@
 ---
-title: "Socket Programming - Advanced Techniques"
+title: "Socket Programming : Advanced Techniques"
 
 categories:
     - socket

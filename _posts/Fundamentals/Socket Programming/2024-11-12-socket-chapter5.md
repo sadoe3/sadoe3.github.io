@@ -1,5 +1,5 @@
 ---
-title: "Socket Programming - System Calls"
+title: "Socket Programming : System Calls"
 
 categories:
     - socket

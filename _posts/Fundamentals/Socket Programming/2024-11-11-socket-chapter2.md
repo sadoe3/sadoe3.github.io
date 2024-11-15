@@ -1,5 +1,5 @@
 ---
-title: "Socket Programming - Sockets"
+title: "Socket Programming : Sockets"
 
 categories:
     - socket

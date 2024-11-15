@@ -1,5 +1,5 @@
 ---
-title: "Socket Programming - Initial Settting"
+title: "Socket Programming : Initial Settting"
 
 categories:
     - socket
