@@ -88,11 +88,11 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">Game Engines</span>
+        <span class="nav__sub-title">Technoloy</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "ue4-self" %}
-                        <li><a href="/categories/ue4-self" class="sidebar-category">UE4 through self-study ({{category[1].size}})</a></li>
+                    {% if category[0] == "ue5" %}
+                        <li><a href="/categories/ue5" class="sidebar-category">Unreal Engine 5 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -110,7 +110,14 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">For Better Development</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "etc" %}
+                        <li><a href="/categories/etc" class="sidebar-category">etc. ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">Practical Knowledge</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "coding-practice" %}
@@ -122,13 +129,6 @@
                 {% for category in site.categories %}
                     {% if category[0] == "game-dev-knowledge" %}
                         <li><a href="/categories/game-dev-knowledge" class="sidebar-category">Knowledge regarding Game Dev ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "etc" %}
-                        <li><a href="/categories/etc" class="sidebar-category">etc. ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
