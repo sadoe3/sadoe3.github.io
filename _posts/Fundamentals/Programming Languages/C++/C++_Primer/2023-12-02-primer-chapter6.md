@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 6"
+title: "C++ Primer : 6. Functions"
 
 categories:
     - cpp

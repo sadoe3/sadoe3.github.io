@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 14"
+title: "C++ Primer : 14. Overloaded Operations and Conversions"
 
 categories:
     - cpp

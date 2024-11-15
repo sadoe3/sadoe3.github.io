@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 7"
+title: "C++ Primer : 7. Classes"
 
 categories:
     - cpp

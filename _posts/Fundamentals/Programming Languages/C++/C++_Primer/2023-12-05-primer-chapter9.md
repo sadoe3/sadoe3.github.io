@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 9"
+title: "C++ Primer : 9. Sequential Containers"
 
 categories:
     - cpp

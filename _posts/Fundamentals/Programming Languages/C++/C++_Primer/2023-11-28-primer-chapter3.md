@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 3"
+title: "C++ Primer : 3. Strings, Vectors, and Arrays"
 
 categories:
     - cpp

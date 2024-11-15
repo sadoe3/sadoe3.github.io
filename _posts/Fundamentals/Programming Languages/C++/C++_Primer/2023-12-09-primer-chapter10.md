@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 10"
+title: "C++ Primer : 10. Generic Algorithms"
 
 categories:
     - cpp

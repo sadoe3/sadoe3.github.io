@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 8"
+title: "C++ Primer : 8. The IO Library"
 
 categories:
     - cpp

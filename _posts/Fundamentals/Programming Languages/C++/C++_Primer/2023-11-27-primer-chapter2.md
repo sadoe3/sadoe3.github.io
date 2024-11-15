@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 2"
+title: "C++ Primer : 2. Variables and Basic Types"
 
 categories:
     - cpp

@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 17"
+title: "C++ Primer : 17. Specialized Library Facilities"
 
 categories:
     - cpp

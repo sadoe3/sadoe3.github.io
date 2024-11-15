@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 16"
+title: "C++ Primer : 16. Templates and Generic Programming"
 
 categories:
     - cpp

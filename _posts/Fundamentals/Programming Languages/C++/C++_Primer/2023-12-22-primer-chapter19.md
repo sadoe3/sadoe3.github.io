@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 19"
+title: "C++ Primer : 19. Specialized Tools and Techniques"
 
 categories:
     - cpp

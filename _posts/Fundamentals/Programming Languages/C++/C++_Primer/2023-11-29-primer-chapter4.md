@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 4"
+title: "C++ Primer : 4. Expressions"
 
 categories:
     - cpp

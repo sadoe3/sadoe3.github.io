@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 13"
+title: "C++ Primer : 13. Copy Control"
 
 categories:
     - cpp

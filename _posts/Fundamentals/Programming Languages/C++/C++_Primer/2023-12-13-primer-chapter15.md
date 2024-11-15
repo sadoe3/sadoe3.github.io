@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 15"
+title: "C++ Primer : 15. Object-Oriented Programming"
 
 categories:
     - cpp

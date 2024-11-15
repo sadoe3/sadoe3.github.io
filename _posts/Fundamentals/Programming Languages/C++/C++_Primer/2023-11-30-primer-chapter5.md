@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 5"
+title: "C++ Primer : 5. Statements"
 
 categories:
     - cpp

@@ -1,5 +1,5 @@
 ---
-title: "C++ Primer : Chapter 12"
+title: "C++ Primer : 12. Dynamic Memory"
 
 categories:
     - cpp
