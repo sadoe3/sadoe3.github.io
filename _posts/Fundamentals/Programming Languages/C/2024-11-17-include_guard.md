@@ -73,19 +73,19 @@ int func1() {
 
 ### Modern Alternative: `#pragma once`
 Another alternative to traditional include guards is the `#pragma once` directive
+```c++
+// header.h
+#pragma once
+
+int func1() {
+    return 1;
+}
+
+// other files are same
+```
+- still, the project is executed **properly**
 - it tells the preprocessor to include the file only once
     * regardless of how many times it’s encountered
-    ```c++
-    // header.h
-    #pragma once
-
-    int func1() {
-        return 1;
-    }
-
-    // other files are same
-    ```
-    * still the project is executed **properly**
 - it's a more **modern** and **simpler** approach, but it’s not part of the C standard (though it's supported by most modern compilers)
     * hence if you want to achieve the **portabilty** to the legacy code, try to use the **traditional way**
 
