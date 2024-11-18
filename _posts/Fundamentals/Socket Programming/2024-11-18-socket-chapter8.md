@@ -64,16 +64,16 @@ If you try to run a local server on a port that is **already occupied** by anoth
             if (result == 0) {
                 // If bind succeeds, this means that the port is free
                 // Don't forget to close the socket after testing
-                close(sockfd); 
+                closesocket(sockfd); 
                 return false;
             } else {
                 // If bind fails and error is EADDRINUSE, the port is in use
                 if (errno == EADDRINUSE) {
-                    close(sockfd);  // Close the socket
+                    closesocket(sockfd);  // Close the socket
                     return true;
                 } else {
                     std::cerr << "Bind failed: " << strerror(errno) << std::endl;
-                    close(sockfd);
+                    closesocket(sockfd);
                     throw std::runtime_error("Bind failed");
                 }
             }
