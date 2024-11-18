@@ -368,6 +368,13 @@ int shutdown(SOCKET s, int how);
     * `0`: Further **receives** are disallowed
     * `1`: Further **sends** are disallowed
     * `2`: Further **sends** and **receives** are disallowed (like close())
+- it's worth noting that the code below shows the typical way to **disconnect from the server**
+    ```c++
+    // Shutdown the socket gracefully (optional but recommended)
+    shutdown(clientSocket, SD_BOTH);  // SD_SEND or SD_RECEIVE or SD_BOTH
+    // Close the socket after shutting it down
+    closesocket(clientSocket);
+    ```
 
 ### `getpeername()`
 `getpeername()` will tell you the **information** regarding the **other side** of the connection
