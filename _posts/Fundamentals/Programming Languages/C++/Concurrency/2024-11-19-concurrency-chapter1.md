@@ -15,12 +15,12 @@ classes: wide
 date: 2024-11-19
 ---
 
-# C++ Concurrency : title
+# C++ Concurrency : Chapter 1
 
-> 이 포스트는 `C++ Concurrency in Action (1st ed.)`을 바탕으로 작성되었습니다.
+> 이 포스트는 `C++ Concurrency in Action (2nd ed.)`을 바탕으로 작성되었습니다.
 
-## Time Complexity
-`O(n)`
+## Temp
+Temp
 
 
 
