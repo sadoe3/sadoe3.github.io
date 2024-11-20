@@ -1,5 +1,5 @@
 ---
-title: "C++ Concurrency : title"
+title: "C++ Concurrency : About Concurrency"
 
 categories:
     - cpp
