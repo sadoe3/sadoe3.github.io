@@ -430,6 +430,7 @@ There are **two ways** to obtain **Thread IDs**
             return 0;
         }
         ```
+        
 - If a `std::thread` object does **not** manage an **active** thread, calling `.get_id()` returns a **default-constructed** `std::thread::id` object, representing `no thread`.
 - **Thread IDs** are useful for managing `thread-specific` data or debugging.
 - **Thread IDs** can be used as `keys` in ordered (`std::map`) or unordered (`std::unordered_map`) **associative containers**:
