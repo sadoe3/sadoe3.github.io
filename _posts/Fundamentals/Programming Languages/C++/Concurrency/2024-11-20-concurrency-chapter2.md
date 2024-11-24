@@ -64,18 +64,18 @@ std::thread myThread{FunctionObject()};
 
 ### Managing the Lifetime of std::thread
 After initiating a thread, you must **explicitly decide** `how to manage` it **before** the `std::thread` object is **destroyed**.
-- it's worth noting that the **decision** is tied to the **lifetime** of the `std::thread` object, **not** the **lifetime** of the `initial functor`.
+- It's worth noting that the **decision** is tied to the **lifetime** of the `std::thread` object, **not** the **lifetime** of the `initial functor`.
     * This means you **can** make the decision **after** the `thread function` **returns**, as long as the std::thread object itself still exists.
 
 ### `.join()` OR `.detach()`
-Threr are **two options** for your decision
+There are **two options** for your decision.
 
 **1. `.join()`**
-- this call **waits** for the thread to **complete execution**. 
+- This call **waits** for the thread to **complete execution**. 
 - After calling `.join()`, you **cannot** interact with the thread object since the **thread** is `terminated`.
 
 **2. `.detach()`**
-- this call **separates** the thread from the std::thread object, allowing it to **run independently**. 
+- This call **separates** the thread from the std::thread object, allowing it to **run independently**. 
 - `Detached` threads are often referred to as `*daemon threads*`
     * and they are typically **long-running**.
 - It's worth noting that you need to ensure that any **data** accessed by a `detached` thread remains **valid**.
@@ -84,6 +84,11 @@ Threr are **two options** for your decision
 ### No Decision
 If you forget to call `.join()` or `.detach()` before the destruction of the std::thread object
 - Then the **destructor** calls `std::terminate`.
+
+### `.detach()` From Initial Thread
+If you call `.detach()` on the **initial thread** which called `main()` to run other `thread function` on separate thread
+- There is a chance where you **cannot** see the result of the other `thread function`
+- This is because the `main()` can be **terminated** before that other `thread function` does its work
 
 
 ## Exception Handling with `std::thread`
