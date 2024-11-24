@@ -323,13 +323,278 @@ It's possible for deadlocks to happen even without `lock()` due to `join()` wher
     ```
     ```cpp
     // basic use
-    
+    HierarchicalMutex highMutex(10000);
+    HierarchicalMutex lowMutex(5000);
+    HierarchicalMutex otherMutex(6000);
+    void doLowStuff() {
+        std::lock_guard<HierarchicalMutex> guard(lowMutex);
+        std::cout << "doing low level stuff" << std::endl;
+    }
+    void doHighStuff() {
+        std::lock_guard<HierarchicalMutex> guard(highMutex);
+        doLowStuff();
+        std::cout << "doing high level stuff" << std::endl;
+
+    }
+    void threadA() {
+        doHighStuff();
+    }
+
+    void doOtherStuff() {
+        try {
+            doHighStuff();
+        }
+        catch (const std::logic_error& e) {
+            std::cerr << e.what() << std::endl;
+            return;
+        }
+
+        std::cout << "doing other stuff" << std::endl;
+    }
+    void threadB() {
+        std::lock_guard<HierarchicalMutex> guard(otherMutex);
+        doOtherStuff();
+    }
+
+    // threadA
+	std::thread t1(threadA);		// works properly
+	t1.join();
+    /* print result
+    doing low level stuff
+    doing high level stuff
+    */
+
+    // threadB
+	std::thread t2(threadB);		// failed to call doHighStuff()
+	t2.join();
+    /* print result
+    mutex hierarchy violated
+    */
+    ```
+    * The core concept of this guideline is to divide your application into **layers** and identify all the `std::mutex` objects that may be locked in any given layer
+    * When code tries to **lock** a `std::mutex` object, it is **not permitted** to **lock** that object
+        + if the `hierarchy value` of that `std::mutex` object is **greater than or equal to** the value of the `std::mutex` object **already locked** in the lower layer
+    * With `HierarchicalMutex` objects, it's **impossible** for **deadlocks** to occur
+        + because the `HierarchicalMutex` objects themselves enforce the **lock ordering**
+    * Although this is a common pattern, C++ Standard Library doesn't provide direct support
+        * hence, you need to implement your own version like the example above
+- **Extend these guidelines beyond locks**
+    * As mentioned above, `.join()` can cause deadlocks
+    * Therefore, it's highly recommended to apply these guidlines to `.join()` or other stuff which might lead to a **wait cycle**
+        + For instance, avoid calling `.join()` if you already have a lock
+
+
+## `std::unique_lock`
+`std::unique_lock` is **similar** to `std::lock_guard` in that it supports the `RAII` idiom
+- However, it offers more **flexibility**:
+    * You **can** call `lock()` and `unlock()` **directly**, which is **not possible** with `std::lock_guard`
+    * `std::unique_lock` allows you to **defer** the timing of when the `std::mutex` is **locked**
+        + However, this comes with a **cost**, as it requires managing an `internal flag`, which may impact **performance** and **memory** usage
+    * The **ownership** of the `std::mutex` can be **transferred** between `std::unique_lock` objects
+
+### Deferred Locking
+In the case of `std::lock_guard`, the `std::mutex` is **locked** at the time of **construction**
+- With `std::unique_lock`, you can **defer** the timing of **locking** to whenever you want
+    ```cpp
+    std::mutex m;
+    std::unique_lock<std::mutex> lockA(m, std::defer_lock);
+    // m is not locked during construction
+    // You can later call lock() to lock m at the appropriate time
+    ```
+- It's worth noting that if you do **not** provide `std::defer_lock`
+    * the **constructor** of `std::unique_lock` will call `lock()`
+
+### Ownership 
+A `std::unique_lock` object **only owns** the `std::mutex` **if** `lock()` is **called** on it
+- Until then, it does **not own** the `std::mutex` and will **not** call `unlock()` in its **destructor**
+- If the `std::mutex` is **owned** by calling `lock()`
+    * `unlock()` will be **called** automatically when the `std::unique_lock` is **destroyed**
+- You can check whether a `std::unique_lock` **owns** the `std::mutex` by calling the `.owns_lock()` member function
+
+### Transferring Ownership
+The title is somewhat **misleading** because it's still **possible** to **transfer** `ownership` even if the `std::unique_lock` does **not own** the `std::mutex` object
+- What actually happens is that the **right** to **manage** the `std::mutex` is **transferred** to another `std::unique_lock` object
+- `Ownership` of a `std::unique_lock` can be **transferred** by **moving** it
+    + just like **transferring** `ownership` of a `std::thread`
+- The code below shows the basic example of this
+    ```cpp
+    std::mutex m;
+    std::unique_lock<std::mutex> u1(m, std::defer_lock);
+    std::unique_lock<std::mutex> u2 = std::move(u1);  // Ownership transferred to u2
+
+    u1.lock();  // Undefined behavior! u1 no longer owns m
+    u2.lock();  // Correct usage: u2 owns m
+    ```
+    ```cpp
+    std::mutex m;
+    std::unique_lock<std::mutex> f() {
+        std::unique_lock<std::mutex> tempGuard(m, std::defer_lock);
+        return tempGuard;
+    }
+
+    int main() {
+        std::unique_lock<std::mutex> guard(f());
+        guard.lock();  // Locking m after it's moved to guard from tempGuard
+    }
+    ```
+- The **destructor** of a **moved-from** `std::unique_lock` does **not call** `unlock()`
+    * because it no longer has a `std::mutex` object to manage
+- If you try to call `lock()` on a **moved-from** `std::unique_lock` object
+    * it results in **undefined behavior**
+- You can use `std::lock` to **lock** multiple `std::unique_lock` objects **at once**
+    ```cpp
+    // same swap example
+    friend void swap(MyClass& lhs, MyClass& rhs) {
+        if (&lhs == &rhs) return;
+        
+        // same line count, but different order
+        std::unique_lock<std::mutex> guardLeft(lhs.m, std::defer_lock);
+        std::unique_lock<std::mutex> guardRight(rhs.m, std::defer_lock);
+        std::lock(lhs.m, rhs.m); 
+        
+        swap(lhs.data, rhs.data);
+    }
+    ```
+
+### Minimizing Lock Duration for Performance
+In general, a **lock** should be held for the **minimum time** necessary to perform the required operations in order to optimize **performance**  
+- This means you should **lock** a `std::mutex` object **only while** `accessing the shared data`
+    * and perform any `data processing` **outside** the lock
+- Therefore, **avoid** performing `time-consuming activities` while holding a **lock**
+    ```cpp
+    std::mutex m;
+    std::unique_lock<std::mutex> myLock(m);
+    Data inputData = readData();                        // Read data
+    myLock.unlock();  
+
+    ResultType result = processData(inputData);         // Time-consuming processing
+
+    myLock.lock();    
+    writeResult(inputData, result);                     // Write results
     ```
 
 
-### unique_lock
+## Extra Details
 
+### `std::call_once` and `std::once_flag`
+In situations where multiple functions need to initialize some shared resource and can be run in separate threads
+- We often face the challenge of ensuring that the `initialization` occurs **only once**, regardless of which thread calls it first
+- In order to achieve this, you can use a combination of `std::call_once` and `std::once_flag` to ensure that a function is executed **only once**
+    * no matter how many threads attempt to call it
+- In the following example, `std::call_once()` ensures that the `openConnection()` is called **only once**, even if `sendData` or `receiveData` are called by **multiple threads**
+    ```cpp
+    class ConnectionManager {
+    public:
+        void sendData(DataPacket const& data) {
+            std::call_once(initFlag, &ConnectionManager::openConnection, this);
+            connection.sendData(data);
+        }
+        DataPacket receiveData() {
+            std::call_once(initFlag, &ConnectionManager::openConnection, this);
+            return connection.receiveData();
+        }
+        // Other member functions
+    private:
+        void openConnection() {
+            // Code to initialize the connection
+        }
+        ConnectionHandle connection;
+        std::once_flag initFlag;
+        // Other data members
+    };
+    ```
+    * The `std::call_once()` is used to ensure that `openConnection` is called only once, regardless of how many threads invoke `sendData` or `receiveData`
+        + In order to make this possible, you need to pass `std::once_flag` object as the flag for checking
+    * It's worth noting that when passing a `member function` to `std::call_once`, you must also pass the `this` pointer, as member functions **implicitly require** it
+- In other words, if you're calling a `global function` (rather than a `member function`), you **don't need** to pass the `this` pointer
+    ```cpp
+    std::once_flag flag;
+    void f() {
+        // Code to execute once
+    }
+    std::call_once(flag, f);
+    ```
+    * `f()` will be called only once, regardless of how many times `std::call_once` is invoked across different threads
 
+### `std::shared_mutex`
+`std::shared_mutex` and `std::shared_timed_mutex` both provide a mechanism for **concurrent** `read/write` locking
+- `std::shared_timed_mutex` supports `additional operations` which will be covered in the next chapter
+    * If you don't need these extra features
+    * it is recommended to use `std::shared_mutex` for better **performance**
+- **Exclusive Ownership**
+    * You can use `std::lock_guard`, `std::unique_lock`, or `std::scoped_lock` with a `std::shared_mutex` for **exclusive** access
+- **Shared Ownership**
+    * You can use `std::shared_lock<std::shared_mutex>` for **shared** access
+- **Locking Behavior**
+    * Multiple `std::shared_lock` objects on the **same** `std::shared_mutex` do **not block each other**
+        + If one `std::shared_lock` is **already** holding the **lock**, other `std::shared_lock` objects **can** still acquire the **lock without waiting**.
+    * When it comes to `std::unique_lock`, `std::lock_guard` and `std::scoped_lock`, these types **block** if any `std::shared_lock` objects are **already** holding the **lock**
+        + They require **exclusive ownership**, so if the `std::shared_mutex` is held, they must **wait** until it is **released**
+    * If a `std::unique_lock`, `std::lock_guard`, or `std::scoped_lock` acquires the **lock first**
+        + `std::shared_lock` objects must **wait** for it to be **released** because the `std::shared_mutex` is **held exclusively**
+- It's worth noting that, technically speaking, it is possible to use `std::shared_lock` for **concurrent** `writing` 
+    * However, it is **not recommended** due to the risk of `data inconsistency` and `concurrency issues`
+    * Therefore, try to use
+        + `std::shared_lock<std::shared_mutex>` for `read` operations only
+        + and others (`std::lock_guard`, `std::unique_lock`, or `std::scoped_lock`) for `write` operations
+- `std::mutex` requires exclusive ownership for both `reading` and `writing`
+    * Only one thread can hold the lock at a time regardless of whether it tries to read or write
+- `std::shared_mutex` allows
+    * **shared ownership** for `reading`
+        + (**multiple** threads **can** acquire the **lock simultaneously** for `reading`)
+    * and **exclusive ownership** for `writing`
+    * Which means multiple threads can read concurrently, but only one thread can write at a time
+- In order to utilize `std::shared_mutex` or `std::shared_lock`
+    * include `<shared_mutex>` header file
+- The code below shows an example of how `std::shared_mutex` works
+    ```cpp
+    #include <iostream>
+    #include <shared_mutex>
+    #include <thread>
+
+    std::shared_mutex sharedMutex;
+    void reader(int id) {
+        std::shared_lock<std::shared_mutex> lock(sharedMutex);
+        std::cout << "Reader " << id << " is reading\n";
+    }
+    void writer() {
+        std::unique_lock<std::shared_mutex> lock(sharedMutex);
+        std::cout << "Writer is writing\n";
+    }
+
+    int main() {
+        std::thread t1(reader, 1);
+        std::thread t2(reader, 2);
+        std::thread t3(writer);
+
+        t1.join();
+        t2.join();
+        t3.join();
+
+        return 0;
+    }
+    /* possible output -> in this case, writer is called first but readers can be called first as well
+    Writer is writing
+    Reader Reader 1 is reading
+    2 is reading
+    */
+    ```
+    * **`Reader` threads** can run concurrently, as `std::shared_lock` allows multiple threads to hold the lock simultaneously for reading
+    * The **`Writer` thread** will wait until all `Reader` threads release their shared locks
+        + Once the writer acquires the lock in exclusive mode, no other threads can acquire it until the `writer` is done
+
+### `std::recursive_mutex`
+A `std::recursive_mutex` is similar to a normal `std::mutex`, but it **allows** `a thread` to call `lock()` **multiple times** on the **same** `std::recursive_mutex` object without causing a deadlock
+- This makes it useful when a thread needs to acquire the same mutex repeatedly (e.g., in `recursive functions`)
+- It's worth noting that if you **lock** the `std::recursive_mutex` object **multiple times** (e.g., `3 times`)
+    * you must **unlock** it the **same number of times** (i.e., `3 times`) before the `std::recursive_mutex` object can be **locked** by `another thread`
+    * In this case, `std::lock_guard<std::recursive_mutex>` or `std::unique_lock<std::recursive_mutex>` can be used to automatically handle **unlocking** when the it goes out of scope, ensuring that the `std::recursive_mutex` object is released properly
+- If it's **absolutely necessary** to use `std::recursive_mutex` 
+    * for example, when dealing with `recursive functions` that need to **lock** the **same** `std::recursive_mutex` object **multiple times**
+    * then it's okay to use it
+- Otherwise, try to **avoid** `std::recursive_mutex`
+    * It's generally a good idea to reconsider your design to eliminate the need for it
+    * A better design may avoid having a thread lock the same mutex multiple times, which can improve clarity and reduce the risk of mistakes
 
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
