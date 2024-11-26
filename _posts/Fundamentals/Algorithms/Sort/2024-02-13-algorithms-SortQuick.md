@@ -27,11 +27,11 @@ The algorithm for the **quick sort** requires 2 functions
     * which uses recursion
 
 ### `partition()` Function
-This function takes the collection, first index, and last index as parameters
-1. it sets the current `pivot` index based on the given first and last index
-    * `pivot = (firstIndex + lastIndex) / 2`
+This function takes the `collection`, `first index`, and `last index` as parameters
+1. it sets the current `pivot` index to `first index`
+    * `pivot = firstIndex`
 2. it sets the `leftIndex` and `rightIndex` based on the given first and last index
-    * `leftIndex = firstIndex`
+    * `leftIndex = pivot`
     * `rightIndex = lastIndex`
 3. it performs iterations until this condition : `leftIndex < rightIndex` is `true`
     * during iterations
@@ -45,20 +45,17 @@ This function takes the collection, first index, and last index as parameters
         + then, swap `collection[leftIndex]` and `collection[rightIndex]`
 4. after the iteration ends, `leftIndex` would be same as `rightIndex`
     * then, there are 2 possible results
-        1. `rightIndex > pivot`
-            + in this case, if `collection[rightIndex] < collection[pivot]`
-                - then, swap `collection[rightIndex]` with `collection[pivot]`
+        1. `collection[rightIndex] < collection[pivot]`
+            + in this case,
+                - swap `collection[rightIndex]` with `collection[pivot]`
                 - and, `return rightIndex`
+        2. `collection[rightIndex] >= collection[pivot]`
+            + in this case,
+            + check whether `firstIndex` and `lastIndex` is same, meaning that the given collecion has only one element
+                - then, just ruturn that element
             + otherwise
                 - swap `collection[rightIndex - 1]` with `collection[pivot]`
                 - and, `return (rightIndex - 1)`
-        2. `rightIndex <= pivot`
-            + in this case, if  `collection[rightIndex] > collection[pivot]`
-                - then, swap `collection[rightIndex]` with `collection[pivot]`
-                - and, `return rightIndex`
-            + otherwise
-                - swap `collection[rightIndex + 1]` with `collection[pivot]`
-                - and, `return (rightIndex + 1)`
 
 ### `quickSort()` Function
 This function takes the collection, first index, and last index as parameters too
@@ -98,9 +95,9 @@ void Vector<Type>::doQuickSort() {
 ### Partition
 ```c++
 template <typename Type>
-unsigned partition(Type elements[], const unsigned &firstIndex, const unsigned &lastIndex) {
-    unsigned pivot = (firstIndex + lastIndex) / 2;
-    unsigned leftIndex = firstIndex, rightIndex = lastIndex;
+unsigned partition(Type elements[], const unsigned& firstIndex, const unsigned& lastIndex) {
+    unsigned pivot = firstIndex;
+    unsigned leftIndex = pivot, rightIndex = lastIndex;
     Type cachedElement;
 
     while (leftIndex < rightIndex) {
@@ -117,37 +114,22 @@ unsigned partition(Type elements[], const unsigned &firstIndex, const unsigned &
         }
     }
 
-    if (rightIndex > pivot) {
-        if (elements[rightIndex] < elements[pivot]) {
-            cachedElement = elements[pivot];
-            elements[pivot] = elements[rightIndex];
-            elements[rightIndex] = cachedElement;
-            
-            return rightIndex;
-        }
-        else {
-            cachedElement = elements[pivot];
-            elements[pivot] = elements[rightIndex - 1];
-            elements[rightIndex - 1] = cachedElement;
+    if (elements[rightIndex] < elements[pivot]) {
+        cachedElement = elements[pivot];
+        elements[pivot] = elements[rightIndex];
+        elements[rightIndex] = cachedElement;
 
-            return (rightIndex - 1);
-        }
+        return rightIndex;
     }
     else {
-        if (elements[rightIndex] > elements[pivot]) {
-            cachedElement = elements[pivot];
-            elements[pivot] = elements[rightIndex];
-            elements[rightIndex] = cachedElement;
+        if (firstIndex == lastIndex)
+            return pivot;
 
-            return rightIndex;
-        }
-        else {
-            cachedElement = elements[pivot];
-            elements[pivot] = elements[rightIndex + 1];
-            elements[rightIndex + 1] = cachedElement;
+        cachedElement = elements[pivot];
+        elements[pivot] = elements[rightIndex - 1];
+        elements[rightIndex - 1] = cachedElement;
 
-            return (rightIndex + 1);
-        }
+        return (rightIndex - 1);
     }
 }
 ```
