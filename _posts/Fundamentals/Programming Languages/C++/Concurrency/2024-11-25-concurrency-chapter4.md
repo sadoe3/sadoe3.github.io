@@ -477,7 +477,7 @@ Functions that wait with `timeout` value, such as `wait_for()` returns
     * Otherwise, it returns
         + `std::future_status::ready` if the task is done
         + `std::future_status::deferred` if the task is not started yet
-- `std::cv_status` if the object is `std::future`
+- `std::cv_status` if the object is `std::condition_variable`
     * If the `timeout` **occurs** then it returns
         + `std::cv_status::timeout`
     * Otherwise, it returns
