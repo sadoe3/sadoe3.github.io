@@ -145,7 +145,7 @@ bool operator<(const Data &lhs, const Data &rhs) {
     * however, if the class also has ==, define < only if the definitions of < and == yield **consistent** results
 
 ## Assignment Operators
-This is covered in the [previous chapter](https://sadoe3.github.io/cpp/chapter13/)
+This is covered in the [previous chapter](https://sadoe3.github.io/cpp/primer-chapter13/#copy-assignment-operator)
 - the additional point is that we can get the class type object of the different type as the right-hand side operand
 - compound-assignment operators have the same function prototype and definition with two excpetion
     * the operator for the name of the method is changed to compound assignment operator 
