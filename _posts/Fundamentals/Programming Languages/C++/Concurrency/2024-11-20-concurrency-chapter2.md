@@ -90,6 +90,26 @@ If you call `.detach()` on the **initial thread** which called `main()` to run o
 - There is a chance where you **cannot** see the result of the other `thread function`
 - This is because the `main()` can be **terminated** before that other `thread function` does its work
 
+### Order of Executions
+It's worth noting that the `thread creation order` is **not** the `execution order`
+```cpp
+std::thread t1(f1);
+std::thread t2(f2);
+```
+- Although this **single** statement, `std::thread t1(f1);`, **creates** the `thread` and guarantees the **call** to its `thread function` after the construction
+    * **this does not mean that the order of thread creation determines the order of execution**
+- The `thread creation order` refers to the **order** in which `threads` are **constructed**
+    * For instance, `t1` constructed before `t2`
+    * This order is specified by the sequence of code **you wrote** in the `source file`
+- However, the `execution order` refers to the **order** in which `thread functions` are **called**
+    * For instance, `f2()` called before `f1()`
+    * This order is governed by the **operating system**'s `thread scheduler`
+    * Once a `thread` is created, the `thread scheduler` decides **when** to schedule and execute it, based on available resources, priorities, and other factors
+- It's worth noting that the `thread scheduler` can schedule `threads` in **any order**
+    * which means that even if `t2` is created after `t1`, `f2()` (the function associated with `t2`) can begin execution before `f1()` (the function associated with `t1`)
+- Therefore, you should think of `threads` as **starting concurrently**
+    * The `execution order` (the order in which `thread functions` are executed) can **vary** across **different runs** of the program
+
 
 ## Exception Handling with `std::thread`
 When managing threads, the handling of `.join()` and `.detach()` requires careful consideration:
