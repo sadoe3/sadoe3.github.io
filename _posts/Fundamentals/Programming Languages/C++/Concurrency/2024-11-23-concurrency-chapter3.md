@@ -1,11 +1,11 @@
 ---
-title: "C++ Concurrency : Data Sharing"
+title: "C++ Concurrency : Mutex"
 
 categories:
     - cpp
 
 tags:
-    - [C++, Programming Language, Concurrency, data sharing, data, mutex]
+    - [C++, Programming Language, Concurrency, data sharing, data protection, high-level synchronization, synchronization, data, mutex]
 
 toc: true
 toc_label: "목차"

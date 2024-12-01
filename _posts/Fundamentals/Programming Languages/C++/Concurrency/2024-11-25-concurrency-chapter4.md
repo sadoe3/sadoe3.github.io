@@ -1,11 +1,11 @@
 ---
-title: "C++ Concurrency : Synchronization"
+title: "C++ Concurrency : High-Level Synchronization"
 
 categories:
     - cpp
 
 tags:
-    - [C++, Programming Language, Concurrency, synchronization, condition variable, future, latch, barrier]
+    - [C++, Programming Language, Concurrency, high-level synchronization, synchronization, condition variable, future, latch, barrier]
 
 toc: true
 toc_label: "목차"
