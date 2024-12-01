@@ -15,27 +15,27 @@ date: 2021-11-19
 ---
 
 ## Assignment operator in C++
-- C++에서는 reference type으로 지정하지않으면, class의 instance를 포함한 모든 object는 assignment operator를 만났을때 copy를 하는것이 기본적인 처리방식이다.
-- reference type으로 지정해야만, assignment operator를 만났을 때, 해당 object의 reference를 얻는 것임.
-- 사실 reference라는 개념은 그냥 기존에 존재하던 object의 다른 이름이라고 생각하면 편함.
-    - 즉 reference object는 별도의 메모리를 안에서 존재하지 않음.
-    - 그냥 reference object가 만들어지면, 특정 object의 다른 이름이 만들어졌다고 생각하면 되고, 그 이름을 통해서도 기존에 존재하던 object를 access할 수 있게 한다라는 개념으로 생각하면 됨.
-    - 즉, 그냥 다른 이름이기 때문에, reference object와 refernce object가 references to 하는 기존의 오브젝트는 서로 같은 object라고 생각하면 됨
-- copy의 개념은 말 그대로 동일한 데이터를 갖는 object가 별도의 memory에 존재한다는 의미임.
-    - 즉, 이 두개의 object는 서로 다른 object라고 생각해야함
+- In C++, unless specified as a reference type, all objects, including instances of classes, perform a copy operation when the assignment operator is used by default.
+- Only if the object is specified as a reference type does the assignment operator assign the reference to the object.
+- In fact, the concept of a reference can be thought of as just another name for an already existing object.
+    - That is, a reference object does not exist in memory as a separate entity.
+    - When a reference object is created, it’s simply another name for an existing object, and through that name, you can access the original object.
+    - In other words, since it's just another name, the reference object and the original object it refers to are considered to be the same object.
+- The concept of copying means that an object with the same data as the original is created in a separate memory location.
+    - In this case, these two objects are considered distinct from each other.
 
 ## Assignment operator in C#
-- C#에서는 refernce type의 모든 instance는 assignment operator를 만나면 기본적으로 해당 object의 reference를 얻는것이 기본적인 처리방식이다.
-- reference type을 대상으로 copy를 하고 싶은 경우, 해당 object에서 `.Clone()` method를 call을 해서, 동일한 데이터를 갖고 있는 새로운 object에 대한 reference를 얻는 식으로 유사 copy를 하면 된다.
-    - 이 방식은 마치 C에서 pointer를 통해 유사 call-by-reference를 구현한 것과 비슷한 개념이라고 생각하면 됨
-- value type의 경우, 모든 instance는 assignment operator를 만나면 기본적으로 copy를 하는 것이 기본적인 처리방식이다.
+- In C#, every instance of a reference type, by default, receives the reference to the object when the assignment operator is used.
+- If you want to copy a reference type object, you must call the `.Clone()` method on the object to obtain a reference to a new object with the same data.
+    - This approach is similar to how C uses pointers for a call-by-reference-like behavior.
+- For value types, every instance, by default, performs a copy when the assignment operator is used.
 
 ## Differences
-- 즉, C++은 class type의 instance던 int같은 built-in type의 instance던 assignment operator를 만났을때 reference로 받을지 copy로 받을지를 선택할 수 있음
-- 그러나, C#은 class type의 instance는 무조건 reference로 받아야되고, 그렇지 않은 type의 instance는 무조건 copy로 받아야함
-    - 그래서 c#에서 int같은 built-in type을 reference로 받기 위해선, 해당 type을 data member로 갖고 있는 class를 만들어서, 해당 class를 사용해야함 (이런 class를 wrapper class라고 함)
-    - 또한 class를 copy로 받기 위해선, `clone`을 사용할 수도 있지만, 애초에 해당 class를 만들때 class로 만드는게 아니라 struct로 만들어서 사용하면 된다.
-- 그래서 C++이나 C#은 모두 동일한 기능을 지원하긴 하지만, 이들을 수행하기 위해선 서로 다른 방법을 사용해야한다는 것을 알 수 있다.
-    - 사실 이런 점은 여러개의 언어들을 사용하다보면 자연스럽게 겪는 현상이긴하다.
+- In C++, whether it is an instance of a class type or a built-in type like `int`, the assignment operator allows you to choose whether to receive a reference or a copy.
+- However, in C#, an instance of a class type is always received by reference, while non-class types (value types) are always received by copy.
+    - To receive a built-in type like `int` by reference in C#, you would need to create a class containing that type as a data member (known as a wrapper class).
+    - To receive a class type by copy, you can use `Clone()`, but another option is to define the class as a `struct` instead of a `class` when it is initially created.
+- Thus, while both C++ and C# provide the same functionality, they require different approaches to achieve these behaviors.
+    - This is a common experience when working with multiple programming languages.
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}

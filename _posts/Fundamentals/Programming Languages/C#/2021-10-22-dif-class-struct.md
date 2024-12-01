@@ -14,23 +14,22 @@ toc_sticky: true
 date: 2021-10-22
 ---
 
-## differences in C/C++
-- C에서는 struct를 structure 만들때 사용하고, class라는 keyword가 없다.
-- C++에서는 둘다 class를 만들때 사용하며, 차이는 default access가 public이냐 private이냐의 차이만 존재한다.
-    - class가 private, struct가 public
+## Differences in C/C++
+- In C, `struct` is used to define structures, and there is no `class` keyword.
+- In C++, both `struct` and `class` can be used to define types, with the only difference being the default access level: `class` defaults to private, while `struct` defaults to public.
 
 ## Similarity
-- C#에서 class와 struct는 모두 property와 method를 갖을 수 있다. 
-- 그래서 대부분에 상황에서는 둘다 같은 사용법으로 코딩을 진행해도, 크게 문제가 발생되지 않는다.
+- In C#, both `class` and `struct` can have properties and methods. 
+- Therefore, in most cases, you can use either one without major issues, as they share similar functionality.
 
 ## Difference
-- 그러나 C#에서 class와 struct는 결정적인 차이를 갖게 된다.
-- 바로 class는 reference type으로 instance가 만들어지고, struct는 value type으로 instance가 만들어진다는 것이다.
-- 그래서 객체지향 자료형을 만들고 싶은데, reference type이 필요하면 class로 만들고, value type이 필요하면 struct로 만들어주면 된다.
+- However, in C#, `class` and `struct` have a crucial distinction.
+- A `class` is a reference type, meaning instances are created as references, while a `struct` is a value type, meaning instances are created with their actual values.
+- If you want to create an object-oriented type that requires a reference, use a `class`; if you need a value type, use a `struct`.
 
-## out keyword
-- 위에서 언급한 차이가 있긴 해도, C#에는 out이라는 keyword를 이용하여 struct instance를 passed-by-reference의 형태로 method의 argument에 보낼 수 있게 해준다.
-- 사용방법은 out keyword를 해당 argument 앞에 써주면 된다.
+## `out` Keyword
+- Despite the difference mentioned above, C# provides the `out` keyword, allowing you to pass a `struct` instance by reference to a method.
+- To do this, simply place the `out` keyword before the argument in the method signature.
 ```c#
 // example of using out keyword
 tempFunction(out argumentName);
