@@ -299,13 +299,13 @@ private:
     HazardPointer* hazardPointer;
 };
 std::atomic<void*>& getHazardPointerThisThread() {
-    thread_local static hazardPointerOwner hazard;
+    static thread_local hazardPointerOwner hazard;
     return hazard.get_pointer();
 }
 ```
 - It's worth noting that you can **improve** the solution by changing the `location` or `length of the array`
     * This example only demonstrates the raw implementation as a tutorial
-- It's also crucial to understand that a `thread_local static` object **exists separately** for **each thread**
+- It's also crucial to understand that a `static thread_local` object **exists separately** for **each thread**
     * It is **created** when the `thread` **starts**
     * It is **destroyed** when the `thread` **terminates**
 
