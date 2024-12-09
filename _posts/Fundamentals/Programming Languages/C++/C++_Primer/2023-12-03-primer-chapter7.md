@@ -547,18 +547,34 @@ public:
 private:
     static double interest;
     double money;
-}
+};
 
+// define static members
 void ClassA::doSomething() {        // defining outside; same as normal methods
     ...     // some codes
 }
+double ClassA::interest = 0;
+
+// use them
 ...         // some codes
 ClassA::initInterest();
 ClassA a;
 a.calculateMoney();
 ```
+- the `static` members are constructed when the program starts, and destructed when it ends
+- in order to use `static` **data member**, you have to **define** it
+    * there are 2 ways to define it
+        + define it at **global scope**
+        + define it with **in-class initializer**
+            - in order to use this method, you need to satisfy the condtions below
+            - the `static` **data member** must be `const (integral type)` or `constexpr (literal type)`
+            - the **initializer** must be a `constant expression`
+- you can use `static` members in 2 ways
+    * `ClassName::data` or `ClassName::method()` : you don't have to create an object using this way
+        + member functions of the class can use the `static` members directly, without the `::(scope operator)`
+    * `object.data` or `object.method()` : you can access to the `static` members through the same way as accessing to the normal members
 - if the member is declared as `static`, it exists **outside** any object of the class
-    * there's only **one** static member in the program, and all objects share it
+    * there's only **one** `static` member in the program, and all objects **share** it
         + for data members, objects **don't contain** data associated with `static` data members
         ```c++
         struct ClassA {
@@ -576,16 +592,8 @@ a.calculateMoney();
             - therefore, `static` member functions don't have a `this` pointer in either of explicit way and implicit way
             - you can't access to the normal members of the class inside the `static` method
             - you can't set `static` member function as `const` because there's no `this` pointer
-- you can use `static` members in 2 ways
-    * `ClassName::data` or `ClassName::method()` : you don't have to create an object using this way
-        + member functions of the class can use the `static` members directly, without the `::(scope operator)`
-    * `object.data` or `object.method()` : you can access to the `static` members through the same way as accessing to the normal members
-- generally, `static` data members are initialized through `static` methods, however, it's possible to use in-class initializer to initialize `static` data members if the following conditions are satisfied
-    * the `static` data member must be `const (integral type)` or `constexpr (literal type)`
-    * the initializer must be a constant expression
 - there are 2 special uses of `static` data members unlike normal data members
     * `static` data members can have incomplete types
-        + in particular, they can have the same type as the class type of which it is a member
         ```c++
         class Bar {
             static Bar a;           // ok
@@ -593,7 +601,8 @@ a.calculateMoney();
             Bar c;                  // error; normal data members must have complete type
         }
         ```
-        + they can be used as the default argument of the methods
+        + in particular, they can have the same type as the class type of which it is a member
+    * they can be used as the default argument of the methods
         ```c++
         class Bar {
         public:
