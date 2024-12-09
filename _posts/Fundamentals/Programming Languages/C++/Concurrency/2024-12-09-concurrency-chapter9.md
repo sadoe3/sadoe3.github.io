@@ -27,7 +27,7 @@ Without a `thread pool`, you would need to **manually and explicitly** manage th
 - When tasks are **submitted** to the pool, they are placed on a `queue` of pending work
 - Each task is then **taken** from the `queue` by one of the `worker threads`, which executes the task and then loops back to take another task from the `queue`
 
-### No Wait
+### No Waiting
 The **simplest** way to implement a `thread pool` is to create one that has **no** mechanism for **waiting** for tasks to complete
 ```cpp
 class ThreadPool {
