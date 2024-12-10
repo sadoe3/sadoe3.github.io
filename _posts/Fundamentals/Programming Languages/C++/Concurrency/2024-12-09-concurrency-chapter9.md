@@ -22,7 +22,7 @@ date: 2024-12-09
 ## Thread Pool
 Without a `thread pool`, you would need to **manually and explicitly** manage threads by creating `std::thread` objects for each individual task
 - On most systems, it is **impractical** to create a separate thread for every task, especially when tasks can potentially be executed in parallel
-- A **`thread pool`** is a mechanism that maintains a **fixed number of `worker threads`** (typically equal to the number returned by `std::thread::hardware_concurrency()`) 
+- A **`thread pool`** is a mechanism that maintains a **fixed number of `worker threads`** (typically **equal** to the number returned by `std::thread::hardware_concurrency()`) 
     * which are responsible for processing tasks
 - When tasks are **submitted** to the pool, they are placed on a `queue` of pending work
 - Each task is then **taken** from the `queue` by one of the `worker threads`, which executes the task and then loops back to take another task from the `queue`
@@ -518,12 +518,136 @@ thread_local QueueWorkStealing* ThreadPool::workQueueLocal = nullptr;
 
 
 ## Thread Interruption
+In many sitautions it's desirable to siganl from one thread taht another should stop
+
+### Basic Implementation
+If you want the `interruption` only, then `std::atomic<bool>` at **global scope** is enough for the implementation
+```cpp
+std::atomic<bool> flagInterrupt(false);
+// A function that checks the interruption flag
+void do_work() {
+    while (true) {
+        // Check the atomic interrupt flag periodically
+        if (flagInterrupt.load(std::memory_order_acquire)) {
+            std::cout << "Thread interrupted, stopping work...\n";
+            break;
+        }
+
+        // Simulate some work
+        std::cout << "Working...\n";
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
+}
+
+int main() {
+    std::thread worker(do_work);
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    // Set the interrupt flag to signal the worker thread to stop
+    flagInterrupt.store(true, std::memory_order_release);
+
+    worker.join();
+    return 0;
+}
+```
+- If you want more, you need to implement a `wrapper class`
+
+### Refined Implementation
+The main idea is just to add `.interrupt()` method to the original `std::thread` class
+```cpp
+// custom exception class for the interruption
+class InterruptException : public std::exception {
+public:
+    InterruptException() = default;
+};
+```
+```cpp
+// wrapper class which supports the interruption
+class ThreadInterruptible {
+    friend void checkInterruption();
+public:
+    template<typename FunctionType, typename... Args>
+    ThreadInterruptible(FunctionType f, const Args&... rest) : flag(nullptr) {
+        std::promise<std::atomic<bool>*> p;                             // needed to get the value from the different thread
+        threadInternal = std::thread([f, &p, &rest...] {
+            p.set_value(&thisThreadInterruptFlag);                      // set the thread_local flag on separate thread to std::promise on current thread
+            try {
+                f(rest...);
+            }
+            catch (const InterruptException&) {
+                std::cout << "interrupted" << '\n';                     // do something here; or just swallow it to terminate only
+            }
+        });
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));      // sleep for the case where immediate interrupt might occur until flag is properly reset
+        flag = p.get_future().get();                                    // get the address of the thread_local flag on separate thread through std::future
+    }
+
+    // new functionality!!
+    void interrupt() {
+        if(flag)
+            flag->store(true, std::memory_order_relaxed);
+    }
+
+    void join() {
+        threadInternal.join();
+    }
+    void detach() {
+        threadInternal.detach();
+    }
+    bool joinable() const {
+        return threadInternal.joinable();
+    }
+
+private:
+    static thread_local std::atomic<bool> thisThreadInterruptFlag;
+
+    std::thread threadInternal;
+    std::atomic<bool>* flag;
+};
+thread_local std::atomic<bool> ThreadInterruptible::thisThreadInterruptFlag = false;         // reset the flag to false when starting the new thread
+```
+```cpp
+// function to check whether current thread is interrupted or not
+void checkInterruption() {
+    if (ThreadInterruptible::thisThreadInterruptFlag.load(std::memory_order_relaxed))
+        throw InterruptException();
+}
+```
+- But as you can see, there're some **techniques** involved to add the `.interrupt()`
+- The code below shows the example of using `ThreadInterruptible`
+    ```cpp
+    void doSomething(int id) {
+        while (true) {
+            checkInterruption();
+            std::cout << "working on " << id << '\n';
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        }
+    }
+
+    int main() {
+        std::vector<ThreadInterruptible> threads;
+        threads.push_back(ThreadInterruptible(doSomething, 1));
+        threads.push_back(ThreadInterruptible(doSomething, 2));
 
 
+        // interrupt all threads to stop!!
+        for (unsigned i = 0; i < threads.size(); ++i)
+            threads[i].interrupt();
+        
+        
+        for (unsigned i = 0; i < threads.size(); ++i)
+            threads[i].join();
 
-
-
-
-
+        return 0;
+    }
+    /*
+    result
+    working on 1
+    working on 2
+    interrupted
+    interrupted
+    */
+    ```
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
