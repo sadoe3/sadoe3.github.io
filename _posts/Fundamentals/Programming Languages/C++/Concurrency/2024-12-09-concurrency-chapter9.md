@@ -649,5 +649,7 @@ void checkInterruption() {
     interrupted
     */
     ```
+- It's also possible to add a functionality to **prevent** a certain thread from being **interrupted** if you want
+
 
 [맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
