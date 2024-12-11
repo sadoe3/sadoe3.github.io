@@ -62,7 +62,6 @@ The most straightforward way to locate issues is by **reviewing** the code itsel
     * If that's not possible, take an **adequate break** before reviewing it yourself to give yourself some distance and **reduce familiarity** with your own code
 - When reviewing the code on your own, try to **explain** how it works **in detail**
     * Ask **yourself** questions about the code and make sure to explain the answers to ensure clarity and thorough understanding
-    * As you explain, think about each line: What could happen? Which data does it access? And so on.
 - Try these questions when reviewing multithreaded code
     * Which data needs to be protected from concurrent access?
     * How do you ensure that the data is protected?
