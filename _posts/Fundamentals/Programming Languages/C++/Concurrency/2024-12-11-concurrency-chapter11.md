@@ -19,9 +19,6 @@ date: 2024-12-11
 
 > 이 포스트는 `C++ Concurrency in Action (2nd ed.)`을 바탕으로 작성되었습니다.
 
-
-# rephrase them
-
 ## Concurrency-Related Bugs
 In order to test or debug the concurrency issue, you must understand the problem itself first
 
