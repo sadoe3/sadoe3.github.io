@@ -148,28 +148,28 @@ There are **three key techniques** for testing multithreaded code
 - The following code demonstrates this structure
     ```cpp
     // test for concurrent `push()` and `pop()`
-    void testConcurrentPushPopOnEmpty`queue`() {
+    void testConcurrentPushPopOnEmptyQueue() {
         // step 1
-        `queue`ThreadSafe<int> my`queue`;
+        QueueThreadSafe<int> myQueue;
         std::promise<void> go, readyPush, readyPop;
         std::shared_future<void> ready(go.get_future());
         std::future<void> donePush;
         std::future<int> donePop;
 
         try {
-            donePush = std::async(std::launch::async, [&my`queue`, ready, &readyPush]() {
+            donePush = std::async(std::launch::async, [&myQueue, ready, &readyPush]() {
                     // step 2
                     readyPush.set_value();
                     ready.wait();
                     // step 3 - test it!!
-                    my`queue`.push(42);
+                    myQueue.push(42);
                 });
-            donePop = std::async(std::launch::async, [&my`queue`, ready, &readyPop]() -> int {
+            donePop = std::async(std::launch::async, [&myQueue, ready, &readyPop]() -> int {
                     // step 2
                     readyPop.set_value();
                     ready.wait();
                     // step 3 - test it!!
-                    return my`queue`.`pop()`;
+                    return myQueue.`pop()`;
                 });
 
             // step 2
@@ -181,7 +181,7 @@ There are **three key techniques** for testing multithreaded code
             // step 4
             donePush.get();
             assert(donePop.get() == 42);
-            assert(my`queue`.empty());
+            assert(myQueue.empty());
         }
         catch (...) {
             // excpetion handling
