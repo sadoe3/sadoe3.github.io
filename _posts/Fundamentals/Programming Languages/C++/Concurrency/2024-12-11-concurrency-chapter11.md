@@ -169,7 +169,7 @@ There are **three key techniques** for testing multithreaded code
                     readyPop.set_value();
                     ready.wait();
                     // step 3 - test it!!
-                    return myQueue.`pop()`;
+                    return myQueue.pop();
                 });
 
             // step 2
