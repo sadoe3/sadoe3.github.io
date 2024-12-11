@@ -97,8 +97,8 @@ After reviewing your code, it's essential to **verify** that there are no bugs p
 - Next, you should take into account other factors related to the **test environment**
     * What you mean by `multiple threads` in each case
         + `3`, `5`, `60`?
-    * Whether there are enough processing cores in the system for each thread to run on its own core
-    * Which processor architectures the tests should be run on
+    * Whether there are enough processing `cores` in the system for each thread to run on its own core
+    * Which `processor architectures` the tests should be run on
     * How you ensure suitable scheduling for the **while parts** of your tests
 - It's important to note that library calls may use internal variables to store state, which becomes shared if multiple threads use the same set of library calls 
     * This can be problematic because it's not always obvious that the code is accessing shared data
