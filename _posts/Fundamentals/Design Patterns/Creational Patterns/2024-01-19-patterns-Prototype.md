@@ -82,6 +82,10 @@ public:
 class WidgetPrototypeFactory : public WidgetFactory {
 public:
 	WidgetPrototypeFactory(Button *inputButton, ScrollBar *inputScrollBar) : prototypeButton(inputButton), prototypeScrollBar(inputScrollBar) {}
+	~WidgetPrototypeFactory() {
+		delete prototypeButton;
+		delete prototypeScrollBar;
+	}
 
 	Button* makeButton() const override {
 		return prototypeButton->clone();
