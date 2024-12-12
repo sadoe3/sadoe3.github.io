@@ -56,8 +56,6 @@ Suppose that you want to create a manual for a certain product in multiple langu
     * overrides the factory method to return an instance of a ConcreteProduct
 - **Product** (`Manual`)
     * defines the interface of objects the factory method creates.
-- **ConcreteProduct** (`EnglishManual`, `KoreanManual`)
-    * implements the Product interface.
 
 ### Sample Code
 ```c++
