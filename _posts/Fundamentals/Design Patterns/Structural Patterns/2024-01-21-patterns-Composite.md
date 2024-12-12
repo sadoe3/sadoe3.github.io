@@ -269,42 +269,42 @@ There are many issues to consider when implementing the Composite pattern:
             - `getComposite` lets you query a component to see if it's a composite.
             - Component provides a default operation that returns a null pointer.
         + The Composite class redefines this operation to return itself through the this pointer:
-        ```c++
-        class Composite;
+            ```c++
+            class Composite;
 
-        class Component {
-        public:
+            class Component {
+            public:
+                //...
+                virtual Composite* getComposite() { return 0; }
+            };
+
+            class Composite : public Component {
+            public:
+                void Add(Component*);
+                //...
+                virtual Composite* getComposite() { return this; }
+            };
+
+            class Leaf : public Component {
             //...
-            virtual Composite* getComposite() { return 0; }
-        };
-
-        class Composite : public Component {
-        public:
-            void Add(Component*);
-            //...
-            virtual Composite* getComposite() { return this; }
-        };
-
-        class Leaf : public Component {
-        //...
-        };
-        ```
+            };
+            ```
         + You can perform `add` and `remove` safely on the composite it returns.
-        ```c++
-        Composite* aComposite = new Composite;
-        Leaf* aLeaf = new Leaf;
+            ```c++
+            Composite* aComposite = new Composite;
+            Leaf* aLeaf = new Leaf;
 
-        Component* aComponent;
-        Composite* test;
+            Component* aComponent;
+            Composite* test;
 
-        aComponent = aComposite;
-        if( test = aComponent->getComposite() )
-            test->Add(new Leaf);
+            aComponent = aComposite;
+            if( test = aComponent->getComposite() )
+                test->Add(new Leaf);
 
-        Component = aLeaf;
-        if( test = Component->getComposite() )
-            test->Add(new Leaf);            //will not add leaf
-        ```
+            Component = aLeaf;
+            if( test = Component->getComposite() )
+                test->Add(new Leaf);            //will not add leaf
+            ```
     * Similar tests for a Composite can be done using the C++ dynamic cast construct.
         + Of course, the problem here is that we don't treat all components uniformly. 
         + We have to revert to testing for different types before taking the appropriate action.
