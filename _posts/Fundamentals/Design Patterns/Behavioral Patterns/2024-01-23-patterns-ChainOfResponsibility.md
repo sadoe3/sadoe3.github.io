@@ -94,6 +94,8 @@ public:
 		attackPower -= defensePower;
 		if (sucessor != nullptr)
 			sucessor->defense(attackPower);
+		else
+			std::cout << "defeat" << std::endl;
 	}
 	virtual void playDestroyAnimation() = 0;
 protected:
