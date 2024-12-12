@@ -48,7 +48,7 @@ Use the **Bridge** pattern when
 ### Motivation
 Suppose that you want to implement multiple levels of stage and initialize them differently based on whether the player uses sword or bow.
 - We can solve this by using **inheritance** for the `Stage` classes
-- However, the **problem** is that the base class of `Stage` class hierarchy needs **two** methods which do the **same** thing because stages for the sword player should be initialized differently fomr the stages for the bow player
+- However, the **problem** is that the base class of `Stage` class hierarchy needs **two** methods which do the **same** thing because stages for the sword player should be initialized differently from the stages for the bow player
     * plus, the **client** code should **know** the details of the **implementaion**
 - A **solution** is to put the interface(abstaction) and its implementation in **separate class hierarchies**
     * we refer to the **relationship** between the interface's base class and implementation's base class as a **bridge**, because it **bridges** the abstraction and its implemenation, letting them **vary independetly** 
