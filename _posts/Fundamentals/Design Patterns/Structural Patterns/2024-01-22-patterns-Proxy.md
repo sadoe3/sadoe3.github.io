@@ -77,7 +77,7 @@ Suppose that you want to implement a 2D platformer game.
 // this code exists for test purpose only
 // this is not related to Proxy pattern
 struct Position { unsigned x, y; };
-enum class MonsterType { Minion, General, Boss, LastMonsterType};
+enum class MonsterType { Minion, General, Boss, LastMonsterType };
 
 // Subject
 class GameObject {
@@ -85,8 +85,7 @@ public:
 	virtual ~GameObject() = default;
 	virtual void spawn() = 0;
 protected:
-	GameObject(const Position & spawnPosition) : isEnabled(false), cururentPosition(spawnPosition) { }
-	bool isEnabled;
+	GameObject(const Position& spawnPosition) : cururentPosition(spawnPosition) {}
 	Position cururentPosition;
 };
 
@@ -95,15 +94,17 @@ class Monster : GameObject {
 public:
 	Monster(const Position& spawnPosition, const MonsterType& inputType) : GameObject(spawnPosition) {
 		// create the real monster based on the given type
-		std::cout << "Real monster (" << static_cast<int>(inputType) << ") is created" << std::endl;
+		std::cout << "Real monster (";
+		switch (inputType) {
+		case MonsterType::Minion: std::cout << "Minon"; break;
+		case MonsterType::Boss: std::cout << "Boss"; break;
+		case MonsterType::General: std::cout << "General"; break;
+		}
+		std::cout << ") has been created" << std::endl;
 	}
 
 	void spawn() override {
-		if (isEnabled == false) {
-			// spawn this monster at the target position
-			isEnabled = true;
-			std::cout << "monster has been spawned at " << cururentPosition.x << ", " << cururentPosition.y << "\n" << std::endl;
-		}
+		std::cout << "monster has been spawned at " << cururentPosition.x << ", " << cururentPosition.y << "\n" << std::endl;
 	}
 private:
 	// data regarding the real monster : ex) health, power
@@ -113,17 +114,23 @@ private:
 class MonsterProxy : GameObject {
 	friend class MonsterSpawnDetector;
 public:
-	MonsterProxy(const Position& spawnPosition, const MonsterType &inputType) : GameObject(spawnPosition), type(inputType), monster(nullptr) {
-		// create the real monster based on the given type
-		std::cout << "Proxy monster (" << static_cast<int>(inputType) << ") is created" << std::endl;
-		isEnabled = true;
+	MonsterProxy(const Position& spawnPosition, const MonsterType& inputType) : GameObject(spawnPosition), type(inputType), monster(nullptr) {
+		// create the fake monster based on the given type
+		std::cout << "Proxy monster (";
+		switch (inputType) {
+			case MonsterType::Minion: std::cout << "Minon"; break;
+			case MonsterType::Boss: std::cout << "Boss"; break;
+			case MonsterType::General: std::cout << "General"; break;
+		}
+		std::cout << ") has been created" << std::endl;
 	}
 	~MonsterProxy() {
 		delete monster;
 	}
 
-	void spawn() {
-		getObject()->spawn();
+	void spawn() override {
+		if (monster == nullptr)
+			getObject()->spawn();
 	}
 protected:
 	Monster* getObject() {
@@ -142,7 +149,7 @@ private:
 // this code is not related to Proxy pattern
 class MonsterSpawnDetector {
 public:
-	MonsterSpawnDetector(Position & inputPlayerPosition) : playerPosition(inputPlayerPosition), SEARCH_AREA_X(3){ }
+	MonsterSpawnDetector(Position& inputPlayerPosition) : playerPosition(inputPlayerPosition), SEARCH_AREA_X(3) {}
 	bool isVisible(MonsterProxy* targetMonster) {
 		if (playerPosition.x + SEARCH_AREA_X > targetMonster->cururentPosition.x)
 			return true;
@@ -163,16 +170,16 @@ const unsigned int MAX_POSITION_X = 20;
 const unsigned int MAX_MONSTER_COUNT = 5;
 std::default_random_engine randomEngine;
 std::uniform_int_distribution<unsigned int> xPositionDistribution(0, MAX_POSITION_X);
-std::uniform_int_distribution<int> monsterTypeDistribution(0, static_cast<short>(MonsterType::LastMonsterType));
+std::uniform_int_distribution<int> monsterTypeDistribution(0, static_cast<short>(MonsterType::LastMonsterType) - 1);
 
 
 std::vector<MonsterProxy*> monsters;
-for (int curCount = 0; curCount < MAX_MONSTER_COUNT; curCount++) 
+for (int curCount = 0; curCount < MAX_MONSTER_COUNT; ++curCount)
     monsters.push_back(new MonsterProxy({ xPositionDistribution(randomEngine), 0 }, static_cast<MonsterType>(monsterTypeDistribution(randomEngine))));
 std::cout << std::endl;
 
 MonsterSpawnDetector spawnDetector(playerPosition);
-for (; playerPosition.x != MAX_POSITION_X; playerPosition.x++) {
+for (; playerPosition.x != MAX_POSITION_X; ++playerPosition.x) {
     std::cout << "current player's x position : " << playerPosition.x << std::endl;
     for (auto currentMonster : monsters) {
         if (spawnDetector.isVisible(currentMonster))
@@ -184,47 +191,47 @@ for (auto currentMonster : monsters)
     delete currentMonster;
 
 /*
-print result
-Proxy monster (0) is created
-Proxy monster (2) is created
-Proxy monster (0) is created
-Proxy monster (1) is created
-Proxy monster (2) is created
+possible result
+Proxy monster (Boss) has been created
+Proxy monster (Boss) has been created
+Proxy monster (Minon) has been created
+Proxy monster (Boss) has been created
+Proxy monster (General) has been created
 
 current player's x position : 0
-Real monster (0) is created
-monster has been spawned at 0, 0
+Real monster (Boss) has been created
+monster has been spawned at 2, 0
 
 current player's x position : 1
 current player's x position : 2
-Real monster (2) is created
+Real monster (Boss) has been created
 monster has been spawned at 4, 0
 
 current player's x position : 3
-Real monster (1) is created
-monster has been spawned at 5, 0
-
 current player's x position : 4
+Real monster (General) has been created
+monster has been spawned at 6, 0
+
 current player's x position : 5
 current player's x position : 6
-Real monster (2) is created
-monster has been spawned at 8, 0
-
 current player's x position : 7
 current player's x position : 8
 current player's x position : 9
 current player's x position : 10
 current player's x position : 11
-Real monster (0) is created
-monster has been spawned at 13, 0
-
 current player's x position : 12
 current player's x position : 13
 current player's x position : 14
 current player's x position : 15
+Real monster (Boss) has been created
+monster has been spawned at 17, 0
+
 current player's x position : 16
 current player's x position : 17
 current player's x position : 18
+Real monster (Minon) has been created
+monster has been spawned at 20, 0
+
 current player's x position : 19
 */
 ```
