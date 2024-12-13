@@ -518,7 +518,7 @@ thread_local QueueWorkStealing* ThreadPool::workQueueLocal = nullptr;
 
 
 ## Thread Interruption
-In many sitautions it's desirable to siganl from one thread taht another should stop
+In many sitautions it's desirable for one thread to signal another thread to stop
 
 ### Basic Implementation
 If you want the `interruption` only, then `std::atomic<bool>` at **global scope** is enough for the implementation
