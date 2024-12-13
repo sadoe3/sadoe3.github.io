@@ -114,14 +114,14 @@ private:
 	ShapeType shape = ShapeType::LastShapeType;
 };
 
-
-// ConcreteObserver
+// Observer
 class Speaker {
 public:
 	virtual ~Speaker() = default;
 	virtual void speak() = 0;
 };
 
+// ConcreteObserver
 class EnglishSpeaker : public Speaker, public Observer {
 public:
 	EnglishSpeaker(ShapeHolder* inputSubject) : subject(inputSubject) {
