@@ -74,6 +74,9 @@ Suppose that you want to implement the code covered from the [**Composite**](htt
 
 ### Sample Code
 ```c++
+#include <iostream>
+#include <map>
+#include <forward_list>
 
 // this code exists for test purpose only
 // this is not related to Visitor pattern
@@ -81,19 +84,22 @@ struct ItemData {
 	std::string name;
 	unsigned price;
 };
+
+enum class ItemID { Inventory, Consumable, Equipment, Defense, Attack, Potion, Helmet, Armor, Sword, Bow};
+
 std::map<unsigned, ItemData> dataBase;
 void initDB() {
-	dataBase[0] = ItemData{ "Inventory", 0 };
-	dataBase[1] = ItemData{ "Consumable", 0 };
-	dataBase[2] = ItemData{ "Equipment", 0 };
-	dataBase[3] = ItemData{ "Defense", 0 };
-	dataBase[4] = ItemData{ "Attack", 0 };
+	dataBase[static_cast<int>(ItemID::Inventory)] = ItemData{"Inventory", 0};
+	dataBase[static_cast<int>(ItemID::Consumable)] = ItemData{ "Consumable", 0 };
+	dataBase[static_cast<int>(ItemID::Equipment)] = ItemData{ "Equipment", 0 };
+	dataBase[static_cast<int>(ItemID::Defense)] = ItemData{ "Defense", 0 };
+	dataBase[static_cast<int>(ItemID::Attack)] = ItemData{ "Attack", 0 };
 
-	dataBase[5] = ItemData{ "Potion", 10 };
-	dataBase[6] = ItemData{ "Helmet", 32 };
-	dataBase[7] = ItemData{ "Armor", 200 };
-	dataBase[8] = ItemData{ "Sword", 1 };
-	dataBase[9] = ItemData{ "Bow", 5000 };
+	dataBase[static_cast<int>(ItemID::Potion)] = ItemData{ "Potion", 10 };
+	dataBase[static_cast<int>(ItemID::Helmet)] = ItemData{ "Helmet", 32 };
+	dataBase[static_cast<int>(ItemID::Armor)] = ItemData{ "Armor", 200 };
+	dataBase[static_cast<int>(ItemID::Sword)] = ItemData{ "Sword", 1 };
+	dataBase[static_cast<int>(ItemID::Bow)] = ItemData{ "Bow", 5000 };
 }
 
 
@@ -163,17 +169,8 @@ class ItemVisitor {
 public:
 	virtual ~ItemVisitor() = default;
 
-	// list all concrete items
-	virtual void visitInventory(Inventory*) = 0;
-	virtual void visitConsumable(Consumable*) = 0;
-	virtual void visitEquipment(Equipment*) = 0;
-	virtual void visitDefense(Defense*) = 0;
-	virtual void visitAttack(Attack*) = 0;
-	virtual void visitPotion(Potion*) = 0;
-	virtual void visitHelmet(Helmet*) = 0;
-	virtual void visitArmor(Armor*) = 0;
-	virtual void visitSword(Sword*) = 0;
-	virtual void visitBow(Bow*) = 0;
+	// polymorphism!
+	virtual void visit(Item*) = 0;
 protected:
 	ItemVisitor() = default;
 };
@@ -182,20 +179,20 @@ protected:
 // Composite
 class Inventory : public ItemComposite {        // component
 public:
-	Inventory() : ItemComposite(0) { }
+	Inventory() : ItemComposite(static_cast<int>(ItemID::Inventory)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
 		// for statement is needed for composite classes
-		for (auto currentItem : items) 
+		for (auto currentItem : items)
 			currentItem->accept(visitor);
 
-		visitor.visitInventory(this);
+		visitor.visit(this);
 	}
 };
 class Consumable : public ItemComposite {
 public:
-	Consumable() : ItemComposite(1) { }
+	Consumable() : ItemComposite(static_cast<int>(ItemID::Consumable)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
@@ -204,12 +201,12 @@ public:
 			currentItem->accept(visitor);
 		}
 
-		visitor.visitConsumable(this);
+		visitor.visit(this);
 	}
 };
 class Equipment : public ItemComposite {
 public:
-	Equipment() : ItemComposite(2) { }
+	Equipment() : ItemComposite(static_cast<int>(ItemID::Equipment)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
@@ -217,12 +214,12 @@ public:
 		for (auto currentItem : items)
 			currentItem->accept(visitor);
 
-		visitor.visitEquipment(this);
+		visitor.visit(this);
 	}
 };
 class Defense : public ItemComposite {
 public:
-	Defense() : ItemComposite(3) { }
+	Defense() : ItemComposite(static_cast<int>(ItemID::Defense)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
@@ -230,12 +227,12 @@ public:
 		for (auto currentItem : items)
 			currentItem->accept(visitor);
 
-		visitor.visitDefense(this);
+		visitor.visit(this);
 	}
 };
 class Attack : public ItemComposite {
 public:
-	Attack() : ItemComposite(4) { }
+	Attack() : ItemComposite(static_cast<int>(ItemID::Attack)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
@@ -243,54 +240,54 @@ public:
 		for (auto currentItem : items)
 			currentItem->accept(visitor);
 
-		visitor.visitAttack(this);
+		visitor.visit(this);
 	}
 };
 
 // Leaf
 class Potion : public Item {
 public:
-	Potion() : Item(5) { }
+	Potion() : Item(static_cast<int>(ItemID::Potion)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
-		visitor.visitPotion(this);
+		visitor.visit(this);
 	}
 };
 class Helmet : public Item {
 public:
-	Helmet() : Item(6) { }
+	Helmet() : Item(static_cast<int>(ItemID::Helmet)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
-		visitor.visitHelmet(this);
+		visitor.visit(this);
 	}
 };
 class Armor : public Item {
 public:
-	Armor() : Item(7) { }
+	Armor() : Item(static_cast<int>(ItemID::Armor)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
-		visitor.visitArmor(this);
+		visitor.visit(this);
 	}
 };
 class Sword : public Item {
 public:
-	Sword() : Item(8) { }
+	Sword() : Item(static_cast<int>(ItemID::Sword)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
-		visitor.visitSword(this);
+		visitor.visit(this);
 	}
 };
 class Bow : public Item {
 public:
-	Bow() : Item(9) { }
+	Bow() : Item(static_cast<int>(ItemID::Bow)) {}
 
 	// necessary code for Visitor
 	void accept(ItemVisitor& visitor) override {
-		visitor.visitBow(this);
+		visitor.visit(this);
 	}
 };
 
@@ -300,37 +297,13 @@ public:
 class ItemVisitorPrice : public ItemVisitor {
 public:
 	unsigned getTotalPrice() {
-		return total;
+		auto returnedValue = total;
+		// reset total for reuse
+		total = 0;
+		return returnedValue;
 	}
 
-	void visitInventory(Inventory* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitConsumable(Consumable* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitEquipment(Equipment* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitDefense(Defense* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitAttack(Attack* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitPotion(Potion* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitHelmet(Helmet* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitArmor(Armor* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitSword(Sword* target) override {
-		total += target->getPrice();
-	}
-	virtual void visitBow(Bow* target) override {
+	void visit(Item* target) override {
 		total += target->getPrice();
 	}
 
@@ -339,38 +312,10 @@ private:
 };
 class ItemVisitorName : public ItemVisitor {
 public:
-	void visitInventory(Inventory* target) override {
-		std::cout << target->getItemName() << std::endl;
-	}
-	virtual void visitConsumable(Consumable* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitEquipment(Equipment* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitDefense(Defense* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitAttack(Attack* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitPotion(Potion* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitHelmet(Helmet* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitArmor(Armor* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitSword(Sword* target) override {
-		std::cout << target->getItemName() << " ";
-	}
-	virtual void visitBow(Bow* target) override {
+	void visit(Item* target) override {
 		std::cout << target->getItemName() << " ";
 	}
 };
-
 
 
 
@@ -423,7 +368,6 @@ delete playerInventory;
 print result
 total price: 5243
 Bow Sword Attack Armor Helmet Defense Equipment Potion Consumable Inventory
-
 
 Bow is deleted
 Sword is deleted
