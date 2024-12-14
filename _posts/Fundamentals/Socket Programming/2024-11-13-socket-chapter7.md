@@ -612,13 +612,15 @@ SimpleData receiveSerializedData(SOCKET sock) {
     // Step 2: Infinite loop until receiving complete data from the socket
     constexpr unsigned BUF_SIZE = 1024;
     char buffer[BUF_SIZE];
-    bytesReceived = 0;
-    while (bytesReceived < dataSize) {
-        bytesReceived += recv(sock, buffer, BUF_SIZE, 0);
+    int totalBytesReceived = 0;
+    while (totalBytesReceived < dataSize) {
+        bytesReceived = recv(sock, buffer + totalBytesReceived, BUF_SIZE - totalBytesReceived, 0);
         if (bytesReceived == SOCKET_ERROR) {
             std::cerr << "Failed to receive data." << std::endl;
             throw std::runtime_error("Receive failed");
         }
+
+        totalBytesReceived += bytesReceived;
     }
 
     // same code
