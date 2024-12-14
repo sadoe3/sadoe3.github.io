@@ -566,10 +566,10 @@ int main() {
     std::cout << "Connected to server.\n";
 
     // Create the data to send
-    SimpleData dataToSend(42, 3.14);
+    SimpleData serializedData(42, 3.14);
 
     // Send serialized data to the server
-    sendSerializedData(clientSocket, dataToSend);
+    sendSerializedData(clientSocket, serializedData);
 
     // Clean up
     closesocket(clientSocket);
@@ -619,11 +619,8 @@ SimpleData receiveSerializedData(SOCKET sock) {
             std::cerr << "Failed to receive data." << std::endl;
             throw std::runtime_error("Receive failed");
         }
-
         totalBytesReceived += bytesReceived;
     }
-
-    // same code
 }
 ```
 - it's worth noting that **network byte order** conversions is utilized in order to achieve **portability** when receiving or sending the `size` information
@@ -637,20 +634,25 @@ void sendSerializedData(SOCKET sock, const SimpleData& data) {
     // same code
 
     // Step 3: Data Encapsulation! Send the size
-    size_t networkSize = htonl(serializedData.size());       // Portability! Convert size information (size_t) to network byte order
-    int result = send(sock, reinterpret_cast<const char*>(&networkSize), sizeof(networkSize), 0);
-    if (result == SOCKET_ERROR)
-        std::cerr << "Failed to send data." << std::endl;
-    else
-        std::cout << "size is sent" << std::endl;
-
+    size_t dataSize = serializedData.size();
+    uint32_t networkSize = htonl(dataSize);             // Portability! Convert size information (size_t) to network byte order
+    int bytesReceived = send(sock, reinterpret_cast<char*>(&networkSize), sizeof(networkSize), 0)
+    if(bytesReceived == SOCKET_ERROR) {
+        std::cerr << "failed to send data size to " << sock << std::endl;
+        throw std::runtime_error("failed to send");
+    }
 
     // Step 4: Send the serialized data over the socket
-    result = send(sock, serializedData.c_str(), serializedData.size(), 0);
-    if (result == SOCKET_ERROR)
-        std::cerr << "Failed to send data." << std::endl;
-    else
-        std::cout << "Sent " << result << " bytes." << std::endl;
+    size_t totalBytesSent = 0;
+    while (totalBytesSent < dataSize) {
+        size_t chunkSize = std::min(dataSize - totalBytesSent, static_cast<size_t>(BUF_SIZE));  // Prevent oversending
+        bytesReceived = send(sock, serializedData.c_str() + totalBytesSent, chunkSize, 0);
+        if (bytesReceived == SOCKET_ERROR) {
+            std::cerr << "failed to send data size to " << sock << std::endl;
+            throw std::runtime_error("failed to send");
+        }
+        totalBytesSent += bytesReceived;
+    }
 }
 ```
 
