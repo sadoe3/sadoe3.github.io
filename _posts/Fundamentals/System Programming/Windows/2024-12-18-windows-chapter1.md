@@ -1,5 +1,5 @@
 ---
-title: "Windows Programming : Thread Scheduling"
+title: "Windows Programming : Thread Scheduler"
 
 categories:
     - windows
