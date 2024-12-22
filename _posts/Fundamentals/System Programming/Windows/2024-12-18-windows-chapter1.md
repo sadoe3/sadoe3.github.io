@@ -142,7 +142,7 @@ DWORD WINAPI GetThreadPriority(HANDLE hProcess);
 - Below table shows the `constants` used in `Win32` for **priority classes**
 
     |Title|`Win32` Constant Value|Level Range|Default|
-    |:---:|:---|:---:|:---|
+    |:---:|:---|:---:|:---:|
     |Real-time|`REAL_TIME_PRIORITY_CLASS`|16-31|24|
     |High|`HIGH_PRIORITY_CLASS`|11-15|13|
     |Above Normal|`ABOVE_NORMAL_PRIORITY_CLASS`|8-12|10|
