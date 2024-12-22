@@ -140,6 +140,7 @@ DWORD WINAPI GetThreadPriority(HANDLE hProcess);
 ```
 - They take a `HANDLE` to a target process as the `first parameter`
 - Below table shows the `constants` used in `Win32` for **priority classes**
+
     |Title|`Win32` Constant Value|Level Range|Default|
     |:---:|:---|:---:|:---|
     |Real-time|`REAL_TIME_PRIORITY_CLASS`|16-31|24|
@@ -149,6 +150,7 @@ DWORD WINAPI GetThreadPriority(HANDLE hProcess);
     |Below Normal|`BELOW_NORMAL_PRIORITY_CLASS`|4-8|6|
     |Idle|`IDLE`|1-6|4|
 - Below table shows the `constants` used in `Win32` for **relataive priorities**
+
     |Title|`Win32` Constant Value|Level Modifier|
     |:---:|:---|:---:|
     |Time Critical|`THREAD_PRIORITY_TIME_CRITICAL`|**Absolute Value**: `31` for `real-time`, <br>`15` for `dynamic range`|
