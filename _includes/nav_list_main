@@ -54,6 +54,13 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "iocp" %}
+                        <li><a href="/categories/iocp" class="sidebar-category">IOCP Server ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "game-patterns" %}
                         <li><a href="/categories/game-patterns" class="sidebar-category">Game Programming Patterns ({{category[1].size}})</a></li>
                     {% endif %}
@@ -63,13 +70,6 @@
                 {% for category in site.categories %}
                     {% if category[0] == "sql" %}
                         <li><a href="/categories/sql" class="sidebar-category">SQL ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "iocp" %}
-                        <li><a href="/categories/iocp" class="sidebar-category">IOCP Server ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
