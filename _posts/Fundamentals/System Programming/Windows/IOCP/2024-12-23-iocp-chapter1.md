@@ -5,7 +5,7 @@ categories:
     - iocp
 
 tags:
-    - [C++, System Programming, Windows, OS, IOCP]
+    - [C++, System Programming, Windows, OS, IOCP, I/O Functions]
 
 toc: true
 toc_label: "목차"
@@ -258,6 +258,71 @@ int WSAAPI WSASend(
   [in]  LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 );
 ```
+```cpp
+/*
+same code to initialize socket programming
+*/
+
+
+// Different code from standard send()
+WSAOVERLAPPED sendOverlapped;
+SecureZeroMemory((PVOID) & sendOverlapped, sizeof (WSAOVERLAPPED));
+// Create an event handle and setup the overlapped structure.
+sendOverlapped.hEvent = WSACreateEvent();
+if (sendOverlapped.hEvent == NULL) {
+    printf("WSACreateEvent failed with error: %d\n", WSAGetLastError());
+    freeaddrinfo(result);
+    closesocket(socketListen);
+    closesocket(socketClientt);
+    return 1;
+}
+
+char buffer[DATA_BUFSIZE];
+WSABUF dataBuffers;
+dataBuffers.len = DATA_BUFSIZE;
+dataBuffers.buf = buffer;
+DWORD SendBytes;
+
+for(; clientSocket < endSocket; clientSocket++) {
+    // Similar code to standard send()
+    // Perform the asynchronous send operation
+    rc = WSASend(socketClient, &dataBuffers, 1, &SendBytes, 0, &sendOverlapped, NULL);
+    if (rc == SOCKET_ERROR && WSA_IO_PENDING != (err = WSAGetLastError())) {
+        printf("WSASend failed with error: %d\n", err);
+        break;
+    }
+
+    // Different code from standard send()
+    // Wait for completion
+    rc = WSAWaitForMultipleEvents(1, &sendOverlapped.hEvent, TRUE, INFINITE, TRUE);
+    if (rc == WSA_WAIT_FAILED) {
+        printf("WSAWaitForMultipleEvents failed with error: %d\n", WSAGetLastError());
+        break;
+    }
+
+    // Different code from standard send()
+    // Retrieve the result
+    rc = WSAGetOverlappedResult(socketClient, &sendOverlapped, &SendBytes, FALSE, &Flags);
+    if (rc == FALSE) {
+        printf("WSASend failed with error: %d\n", WSAGetLastError());
+        break;
+    }
+
+    printf("Wrote %d bytes\n", SendBytes);
+
+    // Different code from standard send()
+    // Reset the event after processing
+    WSAResetEvent(sendOverlapped.hEvent);
+}
+
+// clean up
+WSACloseEvent(sendOverlapped.hEvent);
+closesocket(AcceptSocket);
+closesocket(ListenSocket);
+freeaddrinfo(result);
+
+WSACleanup();
+```
 - **Parameters**
     * `s`
         + A `descriptor` that identifies a connected `socket`
@@ -291,6 +356,113 @@ int WSAAPI WSASend(
         + `Any other error code` indicates that the overlapped operation was **not successfully** initiated and no completion indication will occur
 - **Code Example**
     * You can view the example [here](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsasend#example-code)
+
+### [WSARecv()](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsarecv)
+`WSARecv()` is the **Windows-specific** version of the standard [recv()](https://sadoe3.github.io/socket/socket-chapter5/#recv) function used for receiving data over a network socket
+```cpp
+int WSAAPI WSARecv(
+  [in]      SOCKET                             s,
+  [in, out] LPWSABUF                           lpBuffers,
+  [in]      DWORD                              dwBufferCount,
+  [out]     LPDWORD                            lpNumberOfBytesRecvd,
+  [in, out] LPDWORD                            lpFlags,
+  [in]      LPWSAOVERLAPPED                    lpOverlapped,
+  [in]      LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
+);
+```
+```cpp
+/*
+same code to initialize socket programming
+*/
+
+
+// Different code from standard recv()
+WSAOVERLAPPED recvOverlapped;
+SecureZeroMemory((PVOID) & recvOverlapped, sizeof (WSAOVERLAPPED));
+// Create an event handle and setup the overlapped structure.
+recvOverlapped.hEvent = WSACreateEvent();
+if (recvOverlapped.hEvent == NULL) {
+    printf("WSACreateEvent failed with error: %d\n", WSAGetLastError());
+    freeaddrinfo(result);
+    closesocket(socketListen);
+    closesocket(socketClientt);
+    return 1;
+}
+
+char buffer[DATA_BUFSIZE];
+WSABUF dataBuffers;
+dataBuffers.len = DATA_BUFSIZE;
+dataBuffers.buf = buffer;
+DWORD recvBytes;
+
+while (true) {
+    flags = 0;
+    // Similar code to standard recv()
+    rc = WSARecv(ConnSocket, &DataBuf, 1, &RecvBytes, &flags, &RecvOverlapped, NULL);
+    if ((rc == SOCKET_ERROR) && (WSA_IO_PENDING != (err = WSAGetLastError()))) {
+        wprintf(L"WSARecv failed with error: %d\n", err);
+        break;
+    }
+
+    // Different code from standard recv()
+    rc = WSAWaitForMultipleEvents(1, &RecvOverlapped.hEvent, TRUE, INFINITE, TRUE);
+    if (rc == WSA_WAIT_FAILED) {
+        wprintf(L"WSAWaitForMultipleEvents failed with error: %d\n", WSAGetLastError());
+        break;
+    }
+
+    // Different code from standard recv()
+    rc = WSAGetOverlappedResult(ConnSocket, &RecvOverlapped, &RecvBytes, FALSE, &flags);
+    if (rc == FALSE) {
+        wprintf(L"WSARecv operation failed with error: %d\n", WSAGetLastError());
+        break;
+    }
+
+    wprintf(L"Read %d bytes\n", RecvBytes);
+
+    // Different code from standard recv()
+    WSAResetEvent(RecvOverlapped.hEvent);
+
+    // If 0 bytes are received, the connection was closed
+    if (RecvBytes == 0)
+        break;
+}
+
+// clean up
+WSACloseEvent(recvOverlapped.hEvent);
+closesocket(AcceptSocket);
+closesocket(ListenSocket);
+freeaddrinfo(result);
+
+WSACleanup();
+```
+- **Parameters**
+    * `s`
+        + A `descriptor` that identifies a connected `socket`
+    * `lpBuffers`
+        + A `pointer` to an array of `WSABUF` structures
+    * `dwBufferCount`
+        + The `number of WSABUF structures` in the `lpBuffers` array
+    * `lpNumberOfBytesRecvd`
+        + A `pointer` to the number, in bytes, of data **received** by this call if the receive operation completes immediately
+        + Use `NULL` for this parameter if the `lpOverlapped` parameter is **not** `NULL` to **avoid** potentially **erroneous results**
+            - This parameter can be `NULL` **only if** the `lpOverlapped` parameter is **not** `NULL`
+    * `lpFlags`
+        + A `pointer` to flags used to **modify the behavior** of the `WSARecv()` function call
+        + For more information, check [this](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsarecv#remarks) out
+    * `lpOverlapped`
+        + A `pointer` to a `WSAOVERLAPPED` structure
+        + This parameter is **ignored** for **nonoverlapped** `sockets`
+    * `lpCompletionRoutine`
+        + A `pointer` to the `completion routine` **called** when the `receive` operation has been **completed**
+        * This parameter is **ignored** for **nonoverlapped** `sockets`
+- **Return Value**
+    * If **no error** occurs and the `receive` operation has **completed immediately**
+        + `WSARecv()` returns `zero`
+    * Otherwise, a value of `SOCKET_ERROR` is returned
+- **Code Example**
+    * You can view the example [here](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsarecv#example-code)
+
 
 
 
