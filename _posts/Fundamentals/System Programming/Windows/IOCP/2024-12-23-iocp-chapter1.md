@@ -225,7 +225,7 @@ if (GetQueuedCompletionStatus(iocp, &bytesTransferred, &completionKey, &overlapp
         + A good rule of thumb is to have at least **twice** as many threads as the `number of processors` on the system
 
 ### `PostQueuedCompletionStatus()`
-Threads can use the PostQueuedCompletionStatus function to place completion packets in an I/O completion port's queue
+Threads can use this function to place a **custom** `completion packets` in an I/O completion port's queue
 ```cpp
 BOOL WINAPI PostQueuedCompletionStatus(
   _In_     HANDLE       CompletionPort,
