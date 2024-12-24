@@ -36,14 +36,14 @@ date: 2024-12-23
         + It follows **FIFO** order
             - the **oldest** task in the queue is processed **first**
         + These tasks can come from either **automatic** or **manual** posting
-    * `LIFO Queue` for **Threads**:
+    * `LIFO Queue` for **Threads**
         + `Threads` waiting for the `tasks` are maintained in a **LIFO** order
         + It follows **LIFO** order
             - the **most recently waiting** thread is **chosen** to process the task
 
 ### How IOCP Works
 You can use IOCP with supported `I/O functions` (described in the next section), but it's crucial to first understand the basic workflow
-- **Automatic Posting by the OS**:
+- **Automatic Posting by the OS**
     * Threads performing I/O operations (e.g., `ReadFile`, `WriteFile`, or asynchronous socket operations) do **not directly post** `completion packets` to the IOCP
     * Instead, the operating system **automatically posts** a `completion packet` to the IOCP **when the I/O operation completes**
 - **Manual Posting**
