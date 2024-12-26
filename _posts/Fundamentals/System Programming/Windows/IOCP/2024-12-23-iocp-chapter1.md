@@ -323,6 +323,15 @@ freeaddrinfo(result);
 
 WSACleanup();
 ```
+- Although it seems **similar** to standard `send()`, the mechanism how it works **differs** a lot
+    * `send()`
+        + The `calling thread` **does send** the data
+    * `WSASend()`
+        + The `calling thread` does **not send** the data
+        + Instead, it tells the operating system
+            - "Send this `data` on a **separate** `thread`."
+        + The **actual** `sending` of data **occurs later**
+            - triggered by the client's send operation or some other socket event
 - **Parameters**
     * `s`
         + A `descriptor` that identifies a connected `socket`
@@ -345,7 +354,7 @@ WSACleanup();
         + This parameter is **ignored** for **nonoverlapped** `sockets`
     * `lpCompletionRoutine`
         + A `pointer` to the `completion routine` **called** when the `send` operation has been **completed**
-        * This parameter is **ignored** for **nonoverlapped** `sockets`
+        + This parameter is **ignored** for **nonoverlapped** `sockets`
 - **Return Value**
     * If **no error** occurs and the `send` operation has **completed immediately**
         + `WSASend()` returns `zero`
@@ -356,6 +365,9 @@ WSACleanup();
         + `Any other error code` indicates that the overlapped operation was **not successfully** initiated and no completion indication will occur
 - **Code Example**
     * You can view the example [here](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsasend#example-code)
+- If you're using `IOCP`, calling `WSASend()` (or any other overlapped I/O function like `WSARecv()`) **alone** is **enough**
+    * because `IOCP` will handle the completion notifications for you automatically
+    * Next chapter will show how to use `IOCP`
 
 ### [WSARecv()](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsarecv)
 `WSARecv()` is the **Windows-specific** version of the standard [recv()](https://sadoe3.github.io/socket/socket-chapter5/#recv) function used for receiving data over a network socket
@@ -436,6 +448,21 @@ freeaddrinfo(result);
 
 WSACleanup();
 ```
+- Although it seems **similar** to standard `recv()`, the mechanism how it works **differs** a lot
+    * `recv()`
+        + It is a **blocking** or **non-blocking** function
+            - depending on the `socket configuration`
+        + When **called**, it attempts to **directly receive** data from the socket
+        + If there is **no data** available
+            - it either **blocks** (in blocking mode)
+            - or returns with an **error** (in non-blocking mode)
+    * `WSARecv()`
+        + It is an **asynchronous function** when used with IOCP
+        + When **called**, it does **not receive** data **immediately**
+        + Instead, it tells the operating system
+            - "When a `data to receive` becomes **available** for `this socket`, **queue** a `completion packet` to the `associated IOCP`."
+        + The **actual** `receipt` of data **occurs later**
+            - triggered by the client's send operation or some other socket event
 - **Parameters**
     * `s`
         + A `descriptor` that identifies a connected `socket`
@@ -455,7 +482,7 @@ WSACleanup();
         + This parameter is **ignored** for **nonoverlapped** `sockets`
     * `lpCompletionRoutine`
         + A `pointer` to the `completion routine` **called** when the `receive` operation has been **completed**
-        * This parameter is **ignored** for **nonoverlapped** `sockets`
+        + This parameter is **ignored** for **nonoverlapped** `sockets`
 - **Return Value**
     * If **no error** occurs and the `receive` operation has **completed immediately**
         + `WSARecv()` returns `zero`
