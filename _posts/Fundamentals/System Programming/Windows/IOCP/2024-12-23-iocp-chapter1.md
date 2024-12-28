@@ -408,6 +408,7 @@ dataBuffers.buf = buffer;
 DWORD recvBytes;
 
 while (true) {
+    // unlike WSASend() where you can pass 0 as flags, you need to pass a valid pointer to flags
     flags = 0;
     // Similar code to standard recv()
     rc = WSARecv(ConnSocket, &DataBuf, 1, &RecvBytes, &flags, &RecvOverlapped, NULL);
