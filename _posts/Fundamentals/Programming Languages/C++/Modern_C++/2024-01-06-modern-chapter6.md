@@ -128,7 +128,7 @@ for (auto curElement : filters) {
 
 ### Use `decItype` on auto&& parameters to `std::forward` them
 In C++14, lambdas now can use `auto` in their parameter specifications
-- if you want to implement **perfect-forwarding** lmabda, write code like this:
+- if you want to implement **perfect-forwarding** lambda, write code like this:
     ```c++
     auto f = [](auto &&x) { return func(std::forward<decltype(x)>(x)); };
     ```
