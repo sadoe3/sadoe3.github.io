@@ -98,11 +98,11 @@ private:
     HealthCalcFunc pHealthCalc;
 };
 ```
-- 1. Non-Virtual Interface (NVI) idiom 
+- Non-Virtual Interface (NVI) idiom 
 - Strategy Pattern
-    * 2. classic use
-    * 3. via function pointer
-    * 4. via `std::function`
+    * classic use
+    * via function pointer
+    * via `std::function`
 
 
 ## Item 38
