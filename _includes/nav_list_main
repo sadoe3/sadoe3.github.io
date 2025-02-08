@@ -124,6 +124,23 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+
+        <span class="nav__sub-title">F-Lab</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "pintos" %}
+                        <li><a href="/categories/pintos" class="sidebar-category">PintOS ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "math" %}
+                        <li><a href="/categories/math" class="sidebar-category">Mathematics ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
         <span class="nav__sub-title">Practical Knowledge</span>
             <ul>
                 {% for category in site.categories %}
