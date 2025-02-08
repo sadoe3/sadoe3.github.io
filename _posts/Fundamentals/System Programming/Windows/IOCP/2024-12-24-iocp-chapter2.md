@@ -68,7 +68,7 @@ IOContext* ioContext = new IOContext(false);
 ioContext->addReference();
 
 // associate this socket to IOCP with the IOContext object
-CreateIoCompletionPort(reinterpret_cast<HANDLE>(sock), serverIOCP, reinterpret_cast<ULONG_PTR>(recvContext), 0);
+CreateIoCompletionPort(reinterpret_cast<HANDLE>(sock), serverIOCP, reinterpret_cast<ULONG_PTR>(ioContext), 0);
 
 DWORD flags = 0;
 // overlapped object must be reset before each call to WSARecv, WSASend, or any other function requiring an OVERLAPPED structure
