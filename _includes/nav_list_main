@@ -12,11 +12,29 @@
       </li>
       <li>
         <!--span 태그로 카테고리들을 크게 분류 -->
-        <span class="nav__sub-title">Programming Languages</span>
+        <span class="nav__sub-title">F-Lab</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
-                <!--C 카테고리 글들을 모아둔 페이지인 /categories/c 주소의 글로 링크 연결-->
+                <!--C 카테고리 글들을 모아둔 페이지인 /categories/pintos 주소의 글로 링크 연결-->
                 <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                {% for category in site.categories %}
+                    {% if category[0] == "pintos" %}
+                        <li><a href="/categories/pintos" class="sidebar-category">PintOS ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "math" %}
+                        <li><a href="/categories/math" class="sidebar-category">Mathematics ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+
+        <!--
+        <span class="nav__sub-title">Programming Languages</span>
+            <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "c" %}
                         <li><a href="/categories/c" class="sidebar-category">C ({{category[1].size}})</a></li>
@@ -124,23 +142,6 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-
-        <span class="nav__sub-title">F-Lab</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "pintos" %}
-                        <li><a href="/categories/pintos" class="sidebar-category">PintOS ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "math" %}
-                        <li><a href="/categories/math" class="sidebar-category">Mathematics ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-
         <span class="nav__sub-title">Practical Knowledge</span>
             <ul>
                 {% for category in site.categories %}
@@ -156,6 +157,8 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+
+            -->
       </li>
   </ul>
 </nav>
