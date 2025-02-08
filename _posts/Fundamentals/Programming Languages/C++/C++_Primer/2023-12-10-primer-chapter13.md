@@ -126,7 +126,7 @@ public:
     * `destruction part` destroys the data members in **reverse** order from the order in which they were initialized
         + because it's **implicit**, there's nothing akin to the **constructor initializer list** in **destructor**
 - when the data member is destroyed, if it's a
-    * class type : **destructor** calls `it's destructor`
+    * class type : **destructor** calls `its destructor`
     * built-in type : **destructor** does nothing
         + the same thing happens as the local built-in type object is destroyed
         + note that `the member's destructor` is not called when the member is a reference or a normal pointer (**not smart pointer**) to an object of the class type 
@@ -228,7 +228,10 @@ int&& b = std::move(a);     // rvalue reference
         + `const Type & name = rvalue;`
     * `rvalue` reference
         + `Type && name = rvalue;`
-- if the `rvalue` is bound to the one of these references, they **steal** resources from the `rvalue` (the resources are **moved**)
+- if the `rvalue` is bound to the `rvalue reference`, they **steal** resources from the `rvalue` (the resource is **moved**)
+    * it's worth noting that if `lvalue` reference to `const` gets the `rvalue`, then the resource is **not moved**
+        + this is because the `rvalue` is bound to the reference as a **temporary object** (also known as an `xvalue`)
+        + if an `rvalue` is assigned, a **temporary object** is created, and the reference binds to it without transferring ownership
 - the `rvalue` references can refer to only `rvalue`s, hence if you want `rvalue` reference to denote to `lvalue`
     * you must cast it to `rvalue` by calling `std::move()` function defined in the `<utility>` header
         + we can destroy a moved-from object and can assign a new value to it, but we should not use the value of a moved-from object

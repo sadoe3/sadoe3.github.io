@@ -23,7 +23,7 @@ date: 2023-12-12
 
 ### Overloaded Operators
 The basic concept of **overloaded operators** is covered in the [previous chapter](https://sadoe3.github.io/cpp/chapter13/)
-- except for the overloaded `function-call opeartor `, an overloaded operator may not have default arguments
+- except for the overloaded `function-call opeartor`, an overloaded operator may not have default arguments
 - if an operator function is a **member function**, the left-hand operand is bound to the implicit `this` pointer
     * in this case, the member operator functions have one less (explicit) parameter than the number of operands
 - an operator function must either be a member of a class or have at least one parameter of class type

@@ -287,7 +287,7 @@ Derived b;  // ok;
 - if the derived class overrides the **pure** `virtual` method, then you can create the object of the derived class
 
 ### Refactoring
-**Refactoring** involves redesigning a class hierarchy to move operations and/or data from oe class to another
+**Refactoring** involves redesigning a class hierarchy to move operations and/or data from one class to another
 
 
 ## Access Control and Inheritance
