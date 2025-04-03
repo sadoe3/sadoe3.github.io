@@ -13,7 +13,7 @@
                 <li><a href="/pintos/pintos-project2" class="sidebar-category">Project 2: System Calls</a></li>
             </ul>
             <ul>
-                <li><a href="/pintos/pintos-project3" class="sidebar-category">Project 3: Memory Management</a></li>
+                <li><a href="/pintos/pintos-project3" class="sidebar-category">Project 3: Memory</a></li>
             </ul>
             <ul>
                 <li><a href="/pintos/pintos-project4" class="sidebar-category">Project 4: File Systems</a></li>
