@@ -2,7 +2,7 @@
 title: "Project 2: System Calls"
 
 categories:
-    - pintos-1
+    - pintos
 
 tags:
     - [Operating Systems, PintOS, Linux, System Call, Argument Passing]
