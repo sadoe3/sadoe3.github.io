@@ -16,6 +16,13 @@
             <ul>
                 <li><a href="/pintos/pintos-project4" class="sidebar-category">Project 4: File Systems</a></li>
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "pintos" %}
+                        <li><a href="/categories/pintos" class="sidebar-category">pintos ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         <span class="nav__sub-title">Ray Tracing</span>
             <ul>
                 <li><a href="/ray/ray-project1" class="sidebar-category">Ray Tracing 1: </a></li>
