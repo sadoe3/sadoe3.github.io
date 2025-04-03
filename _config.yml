@@ -15,7 +15,7 @@
 minimal_mistakes_skin    : "dark" # list: "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "ko-KR"
+locale                   : "en-US"
 title                    : "Dev Blog"
 title_separator          : "|"
 subtitle                 : # a short tagline 
