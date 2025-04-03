@@ -1,0 +1,23 @@
+---
+title: "Project 2: System Calls"
+
+categories:
+    - pintos-1
+
+tags:
+    - [Operating Systems, PintOS, Linux, System Call, Argument Passing]
+
+toc: true
+toc_label: "목차"
+toc_sticky: false
+classes: wide
+
+date: 2025-04-03
+---
+
+# PintOS : Project 2
+
+temp
+
+
+[맨 위로 이동하기](#){: .btn .btn--primary }{: .align-right}
