@@ -1,8 +1,8 @@
 ---
-title: "PintOS : Project 1"
+title: "Project 1: Threads"
 
 categories:
-    - pintos
+    - pintos-1
 
 tags:
     - [Operating Systems, PintOS, Linux, Threads, Scheduling, sleep]
