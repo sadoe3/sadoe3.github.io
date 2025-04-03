@@ -16,28 +16,28 @@
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "pintos" %}
+                    {% if category[0] == "pintos-1" %}
                         <li><a href="/categories/pintos-1" class="sidebar-category">Project 1: Threads</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "pintos" %}
+                    {% if category[0] == "pintos-2" %}
                         <li><a href="/categories/pintos-2" class="sidebar-category">Project 2: System Calls</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "pintos" %}
+                    {% if category[0] == "pintos-3" %}
                         <li><a href="/categories/pintos-3" class="sidebar-category">Project 3: Memory Management</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "pintos" %}
+                    {% if category[0] == "pintos-4" %}
                         <li><a href="/categories/pintos-4" class="sidebar-category">Project 4: File Systems</a></li>
                     {% endif %}
                 {% endfor %}
@@ -46,8 +46,8 @@
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "math" %}
-                        <li><a href="/categories/ray-1" class="sidebar-category">Project 1</a></li>
+                    {% if category[0] == "ray-1" %}
+                        <li><a href="/categories/ray-1" class="sidebar-category">Ray Tracing 1: </a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
