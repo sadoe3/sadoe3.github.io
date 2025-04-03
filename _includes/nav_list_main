@@ -5,20 +5,20 @@
       <li>
         <span class="nav__sub-title">PintOS</span>
             <ul>
-                <li><a href="/pintos/pintos-project1" class="sidebar-category">Project 1: Threads</a></li>
+                <li><a href="/pintos/project1" class="sidebar-category">Project 1: Threads</a></li>
             </ul>
             <ul>
-                <li><a href="/pintos/pintos-project2" class="sidebar-category">Project 2: System Calls</a></li>
+                <li><a href="/pintos/project2" class="sidebar-category">Project 2: System Calls</a></li>
             </ul>
             <ul>
-                <li><a href="/pintos/pintos-project3" class="sidebar-category">Project 3: Memory</a></li>
+                <li><a href="/pintos/project3" class="sidebar-category">Project 3: Memory</a></li>
             </ul>
             <ul>
-                <li><a href="/pintos/pintos-project4" class="sidebar-category">Project 4: File Systems</a></li>
+                <li><a href="/pintos/project4" class="sidebar-category">Project 4: File Systems</a></li>
             </ul>
         <span class="nav__sub-title">Ray Tracing</span>
             <ul>
-                <li><a href="/ray/ray-project1" class="sidebar-category">Ray Tracing 1: </a></li>
+                <li><a href="/ray/project1" class="sidebar-category">Ray Tracing 1: </a></li>
             </ul>
 
         <!--
