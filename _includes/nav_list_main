@@ -18,9 +18,12 @@
             </ul>
         <span class="nav__sub-title">Ray Tracing</span>
             <ul>
-                <li><a href="/ray/project1" class="sidebar-category">Ray Tracing 1: </a></li>
+                <li><a href="/raytracing/project1" class="sidebar-category">Ray Tracing 1: </a></li>
             </ul>
-
+        <span class="nav__sub-title">Game Physics</span>
+            <ul>
+                <li><a href="/physics/project1" class="sidebar-category">Game Physics 1: </a></li>
+            </ul>
         <!--
         <span class="nav__sub-title">Programming Languages</span>
             <ul>
