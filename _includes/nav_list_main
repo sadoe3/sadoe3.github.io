@@ -16,13 +16,25 @@
             <ul>
                 <li><a href="/pintos/project4" class="sidebar-category">Project 4: File Systems</a></li>
             </ul>
-        <span class="nav__sub-title">Ray Tracing</span>
+        <span class="nav__sub-title">Computer Graphics</span>
             <ul>
-                <li><a href="/raytracing/project1" class="sidebar-category">Ray Tracing 1: </a></li>
+                <li><a href="/graphics/post1" class="sidebar-category">Post 1: Colors</a></li>
+            </ul>
+            <ul>
+                <li><a href="/graphics/post2" class="sidebar-category">Post 2: Materials</a></li>
+            </ul>
+            <ul>
+                <li><a href="/graphics/post3" class="sidebar-category">Post 3: Camera</a></li>
+            </ul>
+            <ul>
+                <li><a href="/graphics/post4" class="sidebar-category">Post 4: Others</a></li>
             </ul>
         <span class="nav__sub-title">Game Physics</span>
             <ul>
-                <li><a href="/physics/project1" class="sidebar-category">Game Physics 1: </a></li>
+                <li><a href="/physics/project1" class="sidebar-category">Project 1: Stress Test</a></li>
+            </ul>
+            <ul>
+                <li><a href="/physics/project2" class="sidebar-category">Project 2: Sandbox</a></li>
             </ul>
         <!--
         <span class="nav__sub-title">Programming Languages</span>
