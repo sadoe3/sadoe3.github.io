@@ -1,5 +1,5 @@
 ---
-title: "Game Physics"
+title: "Physics Engine"
 layout: archive
 permalink: categories/physics
 author_profile: true
