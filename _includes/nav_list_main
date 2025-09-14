@@ -29,7 +29,7 @@
             <ul>
                 <li><a href="/graphics/post4" class="sidebar-category">Post 4: Others</a></li>
             </ul>
-        <span class="nav__sub-title">Game Physics</span>
+        <span class="nav__sub-title">Physics Engine</span>
             <ul>
                 <li><a href="/physics/project1" class="sidebar-category">Project 1: Stress Test</a></li>
             </ul>
