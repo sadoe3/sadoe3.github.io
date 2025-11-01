@@ -29,12 +29,9 @@
             <ul>
                 <li><a href="/graphics/post4" class="sidebar-category">Post 4: Others</a></li>
             </ul>
-        <span class="nav__sub-title">Physics Engine</span>
+        <span class="nav__sub-title">3D Physics Engine</span>
             <ul>
-                <li><a href="/physics/project1" class="sidebar-category">Project 1: Stress Test</a></li>
-            </ul>
-            <ul>
-                <li><a href="/physics/project2" class="sidebar-category">Project 2: Sandbox</a></li>
+                <li><a href="/physics/project1" class="sidebar-category">Full Project Details</a></li>
             </ul>
         <!--
         <span class="nav__sub-title">Programming Languages</span>
