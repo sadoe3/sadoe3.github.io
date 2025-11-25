@@ -27,7 +27,13 @@
                 <li><a href="/graphics/post3" class="sidebar-category">Post 3: Camera</a></li>
             </ul>
             <ul>
-                <li><a href="/graphics/post4" class="sidebar-category">Post 4: Others</a></li>
+                <li><a href="/graphics/post4" class="sidebar-category">Post 4: Optimization</a></li>
+            </ul>
+            <ul>
+                <li><a href="/graphics/post5" class="sidebar-category">Post 5: Textures</a></li>
+            </ul>
+            <ul>
+                <li><a href="/graphics/post6" class="sidebar-category">Post 6: Miscellaneous</a></li>
             </ul>
         <span class="nav__sub-title">3D Physics Engine</span>
             <ul>
