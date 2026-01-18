@@ -113,7 +113,7 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/sadoe3"
     - label: "Resume"
-      icon: "fas fa-file-alt"
+      icon: "fas fa-fw fa-file-alt"
       url: "https://sadoe3.github.io/resume/cv/"
 
 # Site Footer
@@ -126,7 +126,7 @@ footer:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/sadoe3"
     - label: "Resume"
-      icon: "fas fa-file-invoice"
+      icon: "fas fa-fw fa-file-alt"
       url: "https://sadoe3.github.io/resume/cv/"
 
       
