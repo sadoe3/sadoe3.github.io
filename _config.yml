@@ -112,6 +112,9 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/sadoe3"
+    - label: "Resume"
+      icon: "fab fa-fw fa-file-alt"
+      url: "https://sadoe3.github.io/resume/cv/"
 
 # Site Footer
 footer:
@@ -122,8 +125,11 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/sadoe3"
-      
+    - label: "Resume"
+      icon: "fab fa-fw fa-file-alt"
+      url: "https://sadoe3.github.io/resume/cv/"
 
+      
 # Reading Files
 include:
   - .htaccess
